@@ -1,0 +1,94 @@
+# ============================================================================
+# Masked Party — Nginx equivalent of ../.htaccess
+# Use this only if your host runs Nginx instead of Apache. Drop the
+# `location` blocks inside your existing `server { ... }` block for the
+# site, alongside your TLS cert config.
+# ============================================================================
+
+server {
+  # ... your existing listen / ssl_certificate / server_name lines ...
+
+  root /var/www/masked-party;
+  index screens/auth/splash.html;
+
+  # Force HTTPS
+  if ($scheme != "https") {
+    return 301 https://$host$request_uri;
+  }
+
+  # Block dotfiles
+  location ~ /\. { deny all; }
+
+  # Never expose a raw .html URL
+  location ~ \.html$ {
+    return 404;
+  }
+
+  # Clean URL map — auth flow
+  location = /            { try_files /screens/auth/splash.html =404; }
+  location = /welcome     { try_files /screens/auth/welcome.html =404; }
+  location = /role        { try_files /screens/auth/role-selection.html =404; }
+  location = /login       { try_files /screens/auth/login.html =404; }
+  location = /register/client     { try_files /screens/auth/client-register.html =404; }
+  location = /register/influencer { try_files /screens/auth/influencer-register.html =404; }
+  location = /verify-otp  { try_files /screens/auth/otp-verification.html =404; }
+  location = /forgot-password { try_files /screens/auth/forgot-password.html =404; }
+  location = /reset-password  { try_files /screens/auth/reset-password.html =404; }
+  location = /privacy         { try_files /screens/shared/privacy.html =404; }
+  location = /notifications   { try_files /screens/client/notifications.html =404; }
+  location = /client-profile  { try_files /screens/client/profile.html =404; }
+  location = /edit-profile    { try_files /screens/client/edit-profile.html =404; }
+  location = /client-chat     { try_files /screens/client/chat.html =404; }
+  location ~ ^/chat/[0-9]+/?$ { try_files /screens/shared/chat-detail.html =404; }
+  location = /wallet           { try_files /screens/client/wallet.html =404; }
+  location = /buy-coins        { try_files /screens/client/buy-coins.html =404; }
+  location = /payment/callback { try_files /screens/shared/payment-callback.html =404; }
+  location = /call             { try_files /screens/client/video-call.html =404; }
+  location = /rate-influencer  { try_files /screens/client/rate-influencer.html =404; }
+  location = /saved                { try_files /screens/client/save.html =404; }
+  location = /transaction-history  { try_files /screens/client/transaction-history.html =404; }
+  location ~ ^/post/[0-9]+/?$      { try_files /screens/client/post-detail.html =404; }
+  location = /referrals            { try_files /screens/shared/referrals.html =404; }
+  location = /chat-support         { try_files /screens/shared/chat-support.html =404; }
+  location = /rate-support         { try_files /screens/shared/rate-support.html =404; }
+
+  # App shells
+  location = /client-home      { try_files /screens/client/home.html =404; }
+  location = /discover         { try_files /screens/client/discover.html =404; }
+  location ~ ^/influencer/[0-9]+/?$ { try_files /screens/client/influencer-details.html =404; }
+  location = /influencer-home  { try_files /screens/influencer/home.html =404; }
+  location = /influencer-profile { try_files /screens/influencer/profile.html =404; }
+  location = /influencer-edit-profile { try_files /screens/influencer/edit-profile.html =404; }
+  location = /influencer-chat  { try_files /screens/influencer/chat.html =404; }
+  location = /influencer-notifications { try_files /screens/influencer/notifications.html =404; }
+  location = /earnings         { try_files /screens/influencer/earnings.html =404; }
+  location = /withdrawal       { try_files /screens/influencer/withdrawal.html =404; }
+  location = /gallery          { try_files /screens/influencer/gallery.html =404; }
+  location = /create-post      { try_files /screens/influencer/create-post.html =404; }
+  location = /followers        { try_files /screens/influencer/followers.html =404; }
+  location = /rate-client      { try_files /screens/influencer/rate-client.html =404; }
+  location = /verification     { try_files /screens/influencer/verification.html =404; }
+  location = /influencer-call  { try_files /screens/influencer/video-call.html =404; }
+  location = /complete-profile { try_files /screens/influencer/complete-profile.html =404; }
+
+  # Static assets / shared services JS — served normally, long-cached
+  location /services/ { add_header Cache-Control "public, max-age=3600"; }
+  location /assets/   { add_header Cache-Control "public, max-age=604800"; }
+
+  # Never cache the HTML shells themselves
+  location ~* \.(html)$ {
+    add_header Cache-Control "no-store, no-cache, must-revalidate, private";
+  }
+
+  error_page 404 /404.html;
+  autoindex off;
+
+  add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+  add_header X-Content-Type-Options "nosniff" always;
+  add_header X-Frame-Options "DENY" always;
+  add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+  add_header Permissions-Policy "geolocation=(), microphone=(self), camera=(self), payment=(self), usb=(), magnetometer=(), gyroscope=()" always;
+  add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://sdk.videosdk.live; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: blob: https://maskedparty.name.ng; media-src 'self' blob: https://maskedparty.name.ng; connect-src 'self' https://maskedparty.name.ng wss://*.videosdk.live https://*.videosdk.live; font-src 'self' https://cdn.jsdelivr.net; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests" always;
+  add_header Cross-Origin-Opener-Policy "same-origin" always;
+  add_header Cross-Origin-Resource-Policy "same-origin" always;
+}

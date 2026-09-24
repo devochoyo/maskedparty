@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Masked Party</title>
+<script src="/widgets/phosphor_icons.js"></script>
+<script>PhosphorIcons.load();</script>
+<style>
+  :root{--primary-pink:#E91E63;--soft-pink:#FF6B8B;--light-pink:#FFE4EC;--bg:#F8F9FE;--card:#fff;--text-dark:#1A1D2E;--text-medium:#6B7280;--text-light:#9CA3AF;--success:#00C853;--gold:#FFC107;--info:#2196F3;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text-dark);padding-bottom:80px;}
+
+  header{background:#fff;border-bottom:1px solid rgba(255,228,236,.3);}
+  .head-row{max-width:600px;margin:0 auto;display:flex;align-items:center;padding:12px 12px 12px 16px;gap:10px;}
+  .h-avatar-ring{padding:2.5px;border-radius:26px;background:linear-gradient(135deg,var(--primary-pink),var(--soft-pink));flex:none;}
+  .h-avatar{width:44px;height:44px;border-radius:22px;background:#fff;padding:2px;}
+  .h-avatar img,.h-avatar .fb{width:100%;height:100%;border-radius:20px;object-fit:cover;background:linear-gradient(135deg,var(--primary-pink),var(--soft-pink));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;}
+  .h-name{font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .h-loc{margin-top:2px;font-size:11px;color:var(--text-medium);}
+  .h-bell{margin-left:auto;width:38px;height:38px;border-radius:12px;background:#fff;border:1px solid rgba(255,228,236,.6);font-size:16px;cursor:pointer;flex:none;}
+
+  main{max-width:600px;margin:0 auto;padding:20px 16px;}
+  .refresh-spin{display:flex;justify-content:center;margin-bottom:8px;}
+  .mini-spin{width:16px;height:16px;border:2px solid rgba(233,30,99,.2);border-top-color:var(--primary-pink);border-radius:50%;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .balance-card{padding:20px;border-radius:20px;background:linear-gradient(135deg,var(--primary-pink),var(--soft-pink));color:#fff;box-shadow:0 8px 20px rgba(233,30,99,.3);}
+  .bc-top{display:flex;justify-content:space-between;align-items:center;}
+  .bc-label{font-size:13px;font-weight:500;}
+  .bc-icon{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--gold);}
+  .bc-balance{margin-top:8px;display:flex;align-items:flex-end;gap:6px;}
+  .bc-balance .num{font-size:34px;font-weight:700;line-height:1;}
+  .bc-balance .u{font-size:14px;padding-bottom:4px;}
+  .bc-divider{margin-top:14px;height:1px;background:rgba(255,255,255,.2);}
+  .bc-bottom{margin-top:12px;display:flex;justify-content:space-between;align-items:center;}
+  .bc-today-lab{font-size:11px;}
+  .bc-today-val{margin-top:3px;font-size:20px;font-weight:700;}
+  .withdraw-btn{background:#fff;color:var(--primary-pink);border:none;border-radius:12px;padding:8px 14px;font-weight:700;font-size:12px;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.08);}
+
+  .stats-row{margin-top:16px;display:flex;gap:10px;}
+  .stat-card{flex:1;background:var(--card);border-radius:18px;padding:14px;text-align:center;border:1px solid rgba(255,228,236,.4);box-shadow:0 2px 8px rgba(0,0,0,.03);}
+  .stat-ic{width:32px;height:32px;margin:0 auto;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+  .stat-val{margin-top:8px;font-weight:700;font-size:16px;}
+  .stat-lab{margin-top:2px;font-size:9px;color:var(--text-medium);font-weight:500;}
+
+  .status-card{margin-top:16px;padding:14px;border-radius:16px;background:var(--card);border:1px solid rgba(255,228,236,.4);display:flex;align-items:center;gap:12px;}
+  .status-ic{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex:none;}
+  .status-title{font-weight:700;font-size:13px;}
+  .status-sub{margin-top:2px;font-size:11px;color:var(--text-medium);}
+  .validate-btn{margin-left:auto;flex:none;background:linear-gradient(135deg,var(--primary-pink),var(--soft-pink));color:#fff;border:none;border-radius:10px;padding:8px 16px;font-weight:600;font-size:11px;cursor:pointer;}
+  .toggle{margin-left:auto;flex:none;width:46px;height:26px;border-radius:14px;border:none;position:relative;cursor:pointer;background:#ccc;transition:background .2s;}
+  .toggle.on{background:var(--primary-pink);}
+  .toggle .knob{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.3);}
+  .toggle.on .knob{left:23px;}
+
+  .activity-head{margin-top:24px;font-size:16px;font-weight:700;}
+  .activity-empty{margin-top:12px;padding:32px;text-align:center;background:var(--card);border-radius:18px;border:1px solid rgba(255,228,236,.4);color:var(--text-light);font-size:13px;}
+  .activity-list{margin-top:12px;background:var(--card);border-radius:18px;border:1px solid rgba(255,228,236,.4);overflow:hidden;}
+  .activity-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid rgba(255,228,236,.3);}
+  .activity-item:last-child{border-bottom:none;}
+  .activity-ic{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;flex:none;background:rgba(233,30,99,.1);color:var(--primary-pink);}
+  .activity-desc{font-weight:600;font-size:12px;}
+  .activity-time{margin-top:2px;font-size:10px;color:var(--text-light);}
+
+  .spinner-wrap{display:flex;justify-content:center;padding:100px 0;}
+  .spinner{width:32px;height:32px;border:3px solid rgba(233,30,99,.2);border-top-color:var(--primary-pink);border-radius:50%;animation:spin .8s linear infinite;}
+
+
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9500;display:flex;align-items:center;justify-content:center;padding:24px;}
+  .wo-modal{background:#fff;border-radius:24px;padding:24px;max-width:420px;width:100%;}
+  .wo-modal h3{font-size:17px;font-weight:700;}
+  .wo-modal p{margin-top:6px;font-size:13px;color:var(--text-medium);}
+  .wo-modal textarea{margin-top:14px;width:100%;padding:12px;background:rgba(255,228,236,.2);border:none;border-radius:14px;font-size:14px;font-family:inherit;resize:none;}
+  .wo-error{margin-top:6px;font-size:12px;color:#D32F2F;}
+  .wo-submit{margin-top:14px;width:100%;height:46px;border:none;border-radius:12px;background:var(--primary-pink);color:#fff;font-weight:700;font-size:14px;cursor:pointer;}
+  .wo-submit:disabled{opacity:.6;}
+
+  .toast{position:fixed;left:16px;right:16px;bottom:90px;background:#D32F2F;color:#fff;padding:14px 16px;border-radius:12px;font-size:14px;text-align:center;max-width:420px;margin:0 auto;z-index:9800;}
+  .toast.success{background:var(--success);}
+</style>
+</head>
+<body>
+  <header>
+    <div class="head-row">
+      <div class="h-avatar-ring"><div class="h-avatar" id="hAvatar"><div class="fb">?</div></div></div>
+      <div style="min-width:0"><div class="h-name" id="hName">Influencer</div><div class="h-loc" id="hLoc"></div></div>
+      <button class="h-bell" id="bellBtn" aria-label="Notifications"><i class="ph ph-bell"></i></button>
+    </div>
+  </header>
+
+  <main id="root"><div class="spinner-wrap"><div class="spinner" role="status" aria-label="Loading"></div></div></main>
+
+  <script src="/widgets/phosphor_icons.js"></script>
+  <script src="/widgets/influencer_bottom_nav.js"></script>
+  <script>InfluencerBottomNav.mount("home");</script>
+
+<script src="/services/api.js"></script>
+<script src="/services/api_endpoints.js"></script>
+<script src="/services/session_manager.js"></script>
+<script src="/services/route_guard.js"></script>
+<script>RouteGuard.require("influencer");</script>
+<script src="/services/auth_service.js"></script>
+<script src="/services/authentication_service.js"></script>
+<script src="/services/profile_service.js"></script>
+<script src="/services/influencer_service.js"></script>
+<script src="/services/wallet_service.js"></script>
+<script src="/services/call_service.js"></script>
+<script src="/services/payg_service.js"></script>
+<script src="/widgets/incoming_call_screen.js"></script>
+<script>
+  (function () {
+    var root = document.getElementById("root");
+    var profile = null, earnings = null, recentActivities = [];
+    var walletBalance = 0, isOnline = false, isTogglingOnline = false, isRefreshing = false, isLoading = true;
+    var pendingCall = null, respondingToCall = false;
+    var whatOfferPromptShown = false;
+    var pendingCallPoller = null, heartbeatTimer = null, noAnswerTimer = null;
+    var incomingCallController = null;
+
+    function escapeHtml(s) {
+      return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    }
+    function toNum(v) { if (v == null) return 0; if (typeof v === "number") return v; var n = parseFloat(v); return isNaN(n) ? 0 : n; }
+    function showToast(message, kind) {
+      var t = document.createElement("div");
+      t.className = "toast" + (kind ? " " + kind : "");
+      t.textContent = message;
+      document.body.appendChild(t);
+      setTimeout(function () { t.remove(); }, 3200);
+    }
+
+    document.getElementById("bellBtn").addEventListener("click", function () { window.location.href = "/influencer-notifications"; });
+
+    function renderHeader() {
+      var name = (profile && profile.mystery_name) || "Influencer";
+      var country = profile && profile.country_name;
+      var photo = profile && profile.profile_photo;
+      document.getElementById("hName").textContent = name;
+      document.getElementById("hLoc").innerHTML = country ? '<i class="ph ph-map-pin"></i> ' + escapeHtml(country) : "";
+      var avatarEl = document.getElementById("hAvatar");
+      avatarEl.innerHTML = photo ? '<img src="' + photo + '" alt="">' : '<div class="fb">' + name.charAt(0).toUpperCase() + "</div>";
+    }
+
+    async function maybePromptWhatOffer(token) {
+      if (whatOfferPromptShown) return;
+      whatOfferPromptShown = true;
+      var result;
+      try { result = await PaygService.getWhatOffer(token); } catch (e) { whatOfferPromptShown = false; return; }
+      if (!result || result.success !== true) { whatOfferPromptShown = false; return; }
+      var data = result.data || {};
+      var status = data.status;
+      var offer = data.what_offer ? String(data.what_offer).trim() : "";
+      if (status === 1 || offer) return;
+
+      var backdrop = document.createElement("div");
+      backdrop.className = "modal-backdrop";
+      backdrop.innerHTML =
+        '<div class="wo-modal">' +
+        "<h3>What will you be offering on the video call?</h3>" +
+        "<p>Tell clients what they can expect from you during a video call.</p>" +
+        '<textarea id="woInput" rows="5" placeholder="Example: Friendly conversation, games, advice, entertainment..."></textarea>' +
+        '<div class="wo-error" id="woError" style="display:none"></div>' +
+        '<button class="wo-submit" id="woSubmit">Submit</button>' +
+        "</div>";
+      document.body.appendChild(backdrop);
+
+      document.getElementById("woSubmit").addEventListener("click", async function () {
+        var value = document.getElementById("woInput").value.trim();
+        var errorEl = document.getElementById("woError");
+        if (!value) { errorEl.textContent = "Please enter what you will offer."; errorEl.style.display = "block"; return; }
+        var btn = document.getElementById("woSubmit");
+        btn.disabled = true; btn.textContent = "Saving...";
+        var save = await PaygService.saveWhatOffer(token, value);
+        if (save && save.success === true) {
+          backdrop.remove();
+          profile = Object.assign({}, profile, { what_offer: value, what_offer_status: 1 });
+          showToast("What I Offer saved successfully.", "success");
+        } else {
+          btn.disabled = false; btn.textContent = "Submit";
+          errorEl.textContent = (save && save.message) || "Failed to save. Please try again.";
+          errorEl.style.display = "block";
+        }
+      });
+    }
+
+    async function sendHeartbeat() {
+      if (!isOnline) return;
+      var token = SessionManager.getToken();
+      if (!token) return;
+      try { await ApiConfig.post(ApiEndpoints.influencerHeartbeat, token, undefined); } catch (e) {}
+    }
+    function startHeartbeat() {
+      clearInterval(heartbeatTimer);
+      sendHeartbeat();
+      heartbeatTimer = setInterval(sendHeartbeat, 15000);
+    }
+
+    async function toggleOnline() {
+      var token = SessionManager.getToken();
+      if (!token) { window.location.href = "/login"; return; }
+      isTogglingOnline = true;
+      renderStatusCard();
+      var result = await InfluencerService.updateOnlineStatus(token, isOnline ? "offline" : "online");
+      isTogglingOnline = false;
+      if (result && result.success === true) {
+        isOnline = !isOnline;
+        if (isOnline) startHeartbeat(); else clearInterval(heartbeatTimer);
+      } else {
+        showToast((result && result.message) || "Failed to update status");
+      }
+      renderStatusCard();
+    }
+
+    async function pollForIncomingCall() {
+      if (!isOnline || respondingToCall) return;
+      var token = SessionManager.getToken();
+      if (!token) return;
+      try {
+        var result = await CallService.getPendingCall(token);
+        if (result && result.success === true && result.data) {
+          var newCall = result.data;
+          var newRequestId = newCall.request_id != null ? String(newCall.request_id) : null;
+          var currentRequestId = pendingCall ? String(pendingCall.request_id) : null;
+          if (newRequestId && newRequestId !== currentRequestId) {
+            pendingCall = newCall;
+            showIncomingCallScreen();
+          }
+        } else if (result && result.success === true && !result.data) {
+          if (pendingCall) {
+            pendingCall = null;
+            if (incomingCallController) { incomingCallController.close(); incomingCallController = null; }
+            clearTimeout(noAnswerTimer);
+          }
+        }
+      } catch (e) {}
+    }
+
+    function showIncomingCallScreen() {
+      var call = pendingCall;
+      if (!call) return;
+      var requestId = String(call.request_id || "");
+      var callerName = call.client_mystery_name || "A client";
+      var callerImage = call.client_profile_photo;
+
+      incomingCallController = IncomingCallScreen.show({
+        callerName: callerName,
+        callerPhoto: callerImage,
+        isResponding: respondingToCall,
+        onAccept: function () { acceptCall(requestId, callerName); },
+        onReject: function () { rejectCall(requestId); },
+      });
+
+      clearTimeout(noAnswerTimer);
+      noAnswerTimer = setTimeout(function () { handleCallTimeout(requestId); }, 40000);
+    }
+
+    async function acceptCall(requestId, clientName) {
+      var token = SessionManager.getToken();
+      if (!token) { window.location.href = "/login"; return; }
+      respondingToCall = true;
+      if (incomingCallController) incomingCallController.update({ isResponding: true });
+      var result = await CallService.acceptCall(token, requestId);
+      respondingToCall = false;
+      pendingCall = null;
+      clearTimeout(noAnswerTimer);
+      if (incomingCallController) { incomingCallController.close(); incomingCallController = null; }
+
+      if (result && result.success === true) {
+        window.location.href = "/influencer-call?request_id=" + encodeURIComponent(requestId) + "&client_name=" + encodeURIComponent(clientName);
+      }
+    }
+
+    async function rejectCall(requestId) {
+      var token = SessionManager.getToken();
+      if (!token) { window.location.href = "/login"; return; }
+      respondingToCall = true;
+      await CallService.rejectCall(token, requestId);
+      respondingToCall = false;
+      pendingCall = null;
+      clearTimeout(noAnswerTimer);
+      if (incomingCallController) { incomingCallController.close(); incomingCallController = null; }
+    }
+
+    function handleCallTimeout(requestId) {
+      var currentRequestId = pendingCall ? String(pendingCall.request_id) : null;
+      pendingCall = null;
+      respondingToCall = false;
+      if (incomingCallController) { incomingCallController.close(); incomingCallController = null; }
+      if (currentRequestId === requestId) autoRejectExpiredCall(requestId);
+    }
+
+    async function autoRejectExpiredCall(requestId) {
+      var token = SessionManager.getToken();
+      if (!token) return;
+      try { await CallService.rejectCall(token, requestId); } catch (e) {}
+    }
+
+    function renderStatusCard() {
+      var el = document.getElementById("statusCard");
+      if (!el) return;
+      var verificationStatus = profile && profile.verification_status;
+      var isVerified = verificationStatus === "verified" || verificationStatus === "approved";
+      el.innerHTML =
+        '<div class="status-ic" style="background:' + (isVerified ? "rgba(0,200,83,.12)" : "rgba(255,152,0,.12)") + ";color:" + (isVerified ? "#00C853" : "#FF9800") + '">' + (isVerified ? "<i class='ph ph-check'></i>" : "<i class='ph ph-hourglass'></i>") + "</div>" +
+        '<div><div class="status-title" style="color:' + (isVerified ? "#00C853" : "#FF9800") + '">' + (isVerified ? "I'm available for calls" : "Pending Validation") + "</div>" +
+        '<div class="status-sub">' + (isVerified ? "You can go online now" : "Complete verification") + "</div></div>" +
+        (isVerified
+          ? isTogglingOnline
+            ? '<div class="mini-spin" style="margin-left:auto"></div>'
+            : '<button class="toggle' + (isOnline ? " on" : "") + '" id="onlineToggle" aria-label="Toggle online"><span class="knob"></span></button>'
+          : '<button class="validate-btn" id="validateBtn">Validate</button>');
+
+      var toggleBtn = document.getElementById("onlineToggle");
+      if (toggleBtn) toggleBtn.addEventListener("click", toggleOnline);
+      var validateBtn = document.getElementById("validateBtn");
+      if (validateBtn) validateBtn.addEventListener("click", function () { window.location.href = "/verification"; });
+    }
+
+    function activityIcon(type) {
+      var icons = { escrow_release: "<i class='ph ph-money'></i>", withdrawal: "<i class='ph ph-bank'></i>", call: "<i class='ph ph-phone'></i>", coin_purchase: "<i class='ph ph-coins'></i>" };
+      return icons[type] || "<i class='ph ph-receipt'></i>";
+    }
+    function timeAgo(dateStr) {
+      if (!dateStr) return "";
+      try {
+        var dt = new Date(dateStr);
+        var diffMs = Date.now() - dt.getTime();
+        var mins = Math.floor(diffMs / 60000), hours = Math.floor(mins / 60), days = Math.floor(hours / 24);
+        if (days > 7) return dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+        if (days > 0) return days + "d ago";
+        if (hours > 0) return hours + "h ago";
+        if (mins > 0) return mins + "m ago";
+        return "Just now";
+      } catch (e) { return ""; }
+    }
+
+    function render() {
+      var todayEarnings = toNum(earnings && earnings.earnings && earnings.earnings.today);
+      var todayCalls = toNum(earnings && earnings.today_calls);
+      var totalCalls = toNum(earnings && earnings.total_calls);
+      var rating = (profile && profile.average_rating) || "0.0";
+
+      root.innerHTML =
+        (isRefreshing ? '<div class="refresh-spin"><div class="mini-spin"></div></div>' : "") +
+        '<div class="balance-card">' +
+        '<div class="bc-top"><div class="bc-label">Available Balance</div><div class="bc-icon"><i class="ph ph-credit-card"></i></div></div>' +
+        '<div class="bc-balance"><div class="num">' + toNum(walletBalance) + '</div><div class="u">Coins</div></div>' +
+        '<div class="bc-divider"></div>' +
+        '<div class="bc-bottom"><div><div class="bc-today-lab">Today\'s Earnings</div><div class="bc-today-val">+' + todayEarnings + ' Coins</div></div>' +
+        '<button class="withdraw-btn" id="withdrawBtn"><i class="ph ph-credit-card"></i> Withdraw</button></div>' +
+        "</div>" +
+        '<div class="stats-row">' +
+        '<div class="stat-card"><div class="stat-ic" style="background:rgba(233,30,99,.1);color:#E91E63"><i class="ph ph-phone"></i></div><div class="stat-val">' + todayCalls + '</div><div class="stat-lab">TODAY CALLS</div></div>' +
+        '<div class="stat-card"><div class="stat-ic" style="background:rgba(33,150,243,.1);color:#2196F3"><i class="ph ph-phone"></i></div><div class="stat-val">' + totalCalls + '</div><div class="stat-lab">TOTAL CALLS</div></div>' +
+        '<div class="stat-card"><div class="stat-ic" style="background:rgba(255,193,7,.1);color:#FFC107"><i class="ph-fill ph-star"></i></div><div class="stat-val">' + rating + '</div><div class="stat-lab">RATING</div></div>' +
+        "</div>" +
+        '<div class="status-card" id="statusCard"></div>' +
+        '<div class="activity-head">Recent Activity</div>' +
+        '<div id="activityRoot"></div>';
+
+      document.getElementById("withdrawBtn").addEventListener("click", function () { window.location.href = "/withdrawal"; });
+      renderStatusCard();
+      renderActivity();
+    }
+
+    function renderActivity() {
+      var el = document.getElementById("activityRoot");
+      if (recentActivities.length === 0) {
+        el.innerHTML = '<div class="activity-empty"><i class="ph ph-receipt"></i> No recent activity</div>';
+        return;
+      }
+      el.innerHTML = '<div class="activity-list">' + recentActivities.map(function (item) {
+        var description = item.description || item.type || "";
+        return (
+          '<div class="activity-item"><div class="activity-ic">' + activityIcon(item.type) + "</div>" +
+          '<div><div class="activity-desc">' + escapeHtml(description) + '</div><div class="activity-time">' + timeAgo(item.created_at || item.date) + "</div></div></div>"
+        );
+      }).join("") + "</div>";
+    }
+
+    async function loadData(silent) {
+      var token = SessionManager.getToken();
+      if (!token) { window.location.href = "/login"; return; }
+      if (profile && silent) { isRefreshing = true; render(); }
+
+      try {
+        var results = await Promise.all([
+          ProfileService.getProfile(token),
+          InfluencerService.getEarnings(token),
+          WalletService.getHistory(token, { limit: 5 }),
+        ]);
+        var profResult = results[0], earningsResult = results[1], historyResult = results[2];
+
+        if (profResult && profResult.success === true && profResult.data) {
+          profile = profResult.data;
+          isOnline = profile.online_status === "online";
+          var profileBalance = profile.wallet_balance;
+          if (profileBalance != null) walletBalance = toNum(profileBalance);
+        }
+        if (earningsResult && earningsResult.success === true && earningsResult.data) {
+          earnings = earningsResult.data;
+          var earningsBalance = earnings.wallet_balance;
+          if (earningsBalance != null && walletBalance === 0) walletBalance = toNum(earningsBalance);
+        }
+        if (historyResult && historyResult.success === true) {
+          var raw = historyResult.data;
+          var list = Array.isArray(raw) ? raw : (raw && (raw.history || raw.transactions)) || [];
+          recentActivities = list.slice(0, 5);
+        }
+
+        isLoading = false; isRefreshing = false;
+        renderHeader();
+        render();
+        fetchWalletBalance(token);
+        maybePromptWhatOffer(token);
+        if (isOnline) startHeartbeat();
+      } catch (e) {
+        isLoading = false; isRefreshing = false;
+        render();
+      }
+    }
+
+    async function fetchWalletBalance(token) {
+      try {
+        var result = await WalletService.getBalance(token);
+        if (result && result.success === true && result.data) {
+          var balance = result.data.available_balance != null ? result.data.available_balance : result.data.current_balance;
+          if (balance != null) {
+            var parsed = toNum(balance);
+            if (parsed !== walletBalance) { walletBalance = parsed; render(); }
+          }
+        }
+      } catch (e) {}
+    }
+
+    async function checkAuthAndInit() {
+      var token = SessionManager.getToken();
+      if (!token) { window.location.href = "/login"; return; }
+      var user = SessionManager.getUser();
+      var email = (user && user.email) || "";
+      try {
+        var statusResult = await AuthenticationService.checkStatus(email);
+        if (statusResult && statusResult.success === true && statusResult.data && statusResult.data.authenticated === false) {
+          await AuthenticationService.sendOtp(email);
+          window.location.href = "/verify-otp?email=" + encodeURIComponent(email) + "&token=" + encodeURIComponent(token) + "&role=influencer";
+          return;
+        }
+      } catch (e) {}
+
+      try {
+        var result = await AuthService.checkProfileCompletion(token);
+        if (result.success === true && result.profile_completed === false) {
+          window.location.href = "/complete-profile";
+          return;
+        }
+      } catch (e) {}
+
+      loadData(false);
+      pendingCallPoller = setInterval(pollForIncomingCall, 5000);
+    }
+
+    window.addEventListener("beforeunload", function () {
+      clearInterval(pendingCallPoller); clearInterval(heartbeatTimer); clearTimeout(noAnswerTimer);
+    });
+
+    checkAuthAndInit();
+  })();
+</script>
+</body>
+</html>

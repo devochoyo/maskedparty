@@ -1,0 +1,20 @@
+[01-Aug-2026 09:06:40 UTC] PHP Warning:  require_once(/home/bexsmmna/mp.bexsmm.name.ng/api/influencer/../../config/database.php): Failed to open stream: No such file or directory in /home/bexsmmna/mp.bexsmm.name.ng/api/influencer/earnings.php on line 11
+[01-Aug-2026 09:06:40 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/bexsmmna/mp.bexsmm.name.ng/api/influencer/../../config/database.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/bexsmmna/mp.bexsmm.name.ng/api/influencer/earnings.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/bexsmmna/mp.bexsmm.name.ng/api/influencer/earnings.php on line 11
+[01-Aug-2026 09:06:43 UTC] PHP Warning:  require_once(/home/bexsmmna/mp.bexsmm.name.ng/api/influencer/../../config/database.php): Failed to open stream: No such file or directory in /home/bexsmmna/mp.bexsmm.name.ng/api/influencer/earnings.php on line 11
+[01-Aug-2026 09:06:43 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/bexsmmna/mp.bexsmm.name.ng/api/influencer/../../config/database.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/bexsmmna/mp.bexsmm.name.ng/api/influencer/earnings.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/bexsmmna/mp.bexsmm.name.ng/api/influencer/earnings.php on line 11
+[01-Aug-2026 09:06:48 UTC] PHP Warning:  require_once(/home/bexsmmna/mp.bexsmm.name.ng/api/influencer/../../config/database.php): Failed to open stream: No such file or directory in /home/bexsmmna/mp.bexsmm.name.ng/api/influencer/earnings.php on line 11
+[01-Aug-2026 09:06:48 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/bexsmmna/mp.bexsmm.name.ng/api/influencer/../../config/database.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/bexsmmna/mp.bexsmm.name.ng/api/influencer/earnings.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/bexsmmna/mp.bexsmm.name.ng/api/influencer/earnings.php on line 11
+[01-Aug-2026 09:06:51 UTC] PHP Warning:  require_once(/home/bexsmmna/mp.bexsmm.name.ng/api/influencer/../../config/database.php): Failed to open stream: No such file or directory in /home/bexsmmna/mp.bexsmm.name.ng/api/influencer/earnings.php on line 11
+[01-Aug-2026 09:06:51 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/bexsmmna/mp.bexsmm.name.ng/api/influencer/../../config/database.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/bexsmmna/mp.bexsmm.name.ng/api/influencer/earnings.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/bexsmmna/mp.bexsmm.name.ng/api/influencer/earnings.php on line 11

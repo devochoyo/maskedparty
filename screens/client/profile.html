@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Profile — Masked Party</title>
+<script src="/widgets/phosphor_icons.js"></script>
+<script>PhosphorIcons.load();</script>
+<style>
+  :root{--primary-pink:#E91E63;--soft-pink:#FF6B8B;--light-pink:#FFE4EC;--bg:#F8F9FE;--card:#fff;--text-dark:#1A1D2E;--text-medium:#6B7280;--text-light:#9CA3AF;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text-dark);padding-bottom:76px;}
+
+  main{max-width:520px;margin:0 auto;padding:32px 20px;}
+
+  /* Guest state */
+  .guest{display:flex;flex-direction:column;align-items:center;text-align:center;padding:60px 12px;}
+  .guest-icon{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,rgba(233,30,99,.1),rgba(255,107,139,.05));border:2px solid rgba(233,30,99,.2);display:flex;align-items:center;justify-content:center;font-size:44px;}
+  .guest h2{margin-top:24px;font-size:20px;font-weight:700;}
+  .guest p{margin-top:8px;font-size:14px;color:var(--text-medium);line-height:1.4;}
+  .guest .btn-primary{margin-top:32px;width:100%;height:50px;border:none;border-radius:14px;background:linear-gradient(to right,var(--primary-pink),var(--soft-pink));color:#fff;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 4px 12px rgba(233,30,99,.3);}
+  .guest .btn-outline{margin-top:14px;width:100%;height:50px;border-radius:14px;border:2px solid var(--primary-pink);background:#fff;color:var(--primary-pink);font-weight:700;font-size:16px;cursor:pointer;}
+
+  /* Logged-in state */
+  .p-header{display:flex;flex-direction:column;align-items:center;text-align:center;}
+  .p-avatar-ring{width:114px;height:114px;border-radius:50%;padding:3px;background:linear-gradient(135deg,var(--primary-pink),var(--soft-pink));}
+  .p-avatar{width:100%;height:100%;border-radius:50%;padding:3px;background:#fff;}
+  .p-avatar img,.p-avatar .fb{width:100%;height:100%;border-radius:50%;object-fit:cover;display:flex;align-items:center;justify-content:center;font-size:44px;color:rgba(233,30,99,.4);background:linear-gradient(135deg,rgba(255,228,236,.5),#fff);}
+  .p-name{margin-top:16px;font-size:24px;font-weight:700;letter-spacing:-.3px;}
+  .p-loc{margin-top:6px;display:inline-flex;align-items:center;gap:4px;padding:4px 12px;background:rgba(233,30,99,.1);border:1px solid rgba(233,30,99,.2);border-radius:20px;font-size:12px;font-weight:500;color:rgba(233,30,99,.8);}
+
+  .menu-card{margin-top:24px;background:var(--card);border-radius:20px;box-shadow:0 4px 15px rgba(233,30,99,.06);border:1px solid rgba(255,228,236,.5);overflow:hidden;}
+  .menu-item{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;border-bottom:1px solid rgba(255,228,236,.3);background:none;border-left:none;border-right:none;border-top:none;width:100%;text-align:left;}
+  .menu-item:last-child{border-bottom:none;}
+  .menu-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex:none;}
+  .menu-title{font-weight:600;font-size:15px;}
+  .menu-sub{margin-top:2px;font-size:12px;color:var(--text-medium);}
+  .menu-arrow{margin-left:auto;color:var(--text-light);font-size:14px;}
+
+  .logout-card{margin-top:12px;background:var(--card);border-radius:20px;box-shadow:0 4px 15px rgba(233,30,99,.06);border:1px solid rgba(233,30,99,.15);}
+  .logout-item{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;background:none;border:none;width:100%;text-align:left;}
+  .logout-item .menu-icon{background:rgba(233,30,99,.1);color:var(--primary-pink);}
+  .logout-item .menu-title{color:var(--primary-pink);}
+
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9500;display:flex;align-items:center;justify-content:center;padding:24px;}
+  .confirm-card{background:#fff;border-radius:24px;padding:24px;max-width:360px;width:100%;}
+  .confirm-title{display:flex;align-items:center;gap:12px;font-size:20px;font-weight:700;}
+  .confirm-body{margin-top:12px;font-size:15px;color:var(--text-medium);line-height:1.4;}
+  .confirm-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px;}
+  .confirm-actions button{padding:10px 20px;border-radius:12px;font-weight:600;font-size:14px;cursor:pointer;border:none;}
+  .confirm-actions .cancel{background:none;color:var(--text-medium);}
+  .confirm-actions .confirm{background:var(--primary-pink);color:#fff;}
+
+  .spinner-wrap{display:flex;justify-content:center;padding:80px 0;}
+  .spinner{width:32px;height:32px;border:3px solid rgba(233,30,99,.2);border-top-color:var(--primary-pink);border-radius:50%;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+</style>
+</head>
+<body>
+  <main id="root">
+    <div class="spinner-wrap"><div class="spinner" role="status" aria-label="Loading"></div></div>
+  </main>
+
+  <script src="/widgets/phosphor_icons.js"></script>
+  <script src="/widgets/client_bottom_nav.js"></script>
+  <script>ClientBottomNav.mount("profile");</script>
+
+<script src="/services/api.js"></script>
+<script src="/services/api_endpoints.js"></script>
+<script src="/services/session_manager.js"></script>
+<script src="/services/auth_service.js"></script>
+<script src="/services/profile_service.js"></script>
+<script>
+  (function () {
+    var root = document.getElementById("root");
+
+    function escapeHtml(s) {
+      return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    }
+
+    function renderGuest() {
+      root.innerHTML =
+        '<div class="guest">' +
+        '<div class="guest-icon"><i class="ph ph-user"></i></div>' +
+        "<h2>Login or Register to continue</h2>" +
+        "<p>Create an account to manage your profile, coins and more</p>" +
+        '<button class="btn-primary" id="registerBtn">Register</button>' +
+        '<button class="btn-outline" id="loginBtn">Login</button>' +
+        "</div>";
+      document.getElementById("registerBtn").addEventListener("click", function () { window.location.href = "/role"; });
+      document.getElementById("loginBtn").addEventListener("click", function () { window.location.href = "/login"; });
+    }
+
+    function renderProfile(profile) {
+      var photo = profile.profile_photo;
+      var name = profile.mystery_name || "User";
+      var country = profile.country_name;
+
+      root.innerHTML =
+        '<div class="p-header">' +
+        '<div class="p-avatar-ring"><div class="p-avatar">' +
+        (photo ? '<img src="' + photo + '" alt="">' : '<div class="fb"><i class="ph ph-user"></i></div>') +
+        "</div></div>" +
+        '<div class="p-name">' + escapeHtml(name) + "</div>" +
+        (country ? '<div class="p-loc"><i class="ph ph-map-pin"></i> ' + escapeHtml(country) + "</div>" : "") +
+        "</div>" +
+        '<div class="menu-card">' +
+        '<button class="menu-item" id="editProfileBtn"><div class="menu-icon" style="background:rgba(233,30,99,.1);color:var(--primary-pink)"><i class="ph ph-pencil-simple"></i></div><div><div class="menu-title">Edit Profile</div><div class="menu-sub">Update your personal information</div></div><span class="menu-arrow"><i class="ph ph-caret-right"></i></span></button>' +
+        '<button class="menu-item" id="referralsBtn"><div class="menu-icon" style="background:rgba(156,39,176,.1);color:#9C27B0"><i class="ph ph-gift"></i></div><div><div class="menu-title">Referrals</div><div class="menu-sub">Invite friends &amp; earn rewards</div></div><span class="menu-arrow"><i class="ph ph-caret-right"></i></span></button>' +
+        '<button class="menu-item" id="savedBtn"><div class="menu-icon" style="background:rgba(255,193,7,.1);color:#FFC107"><i class="ph-fill ph-bookmark-simple"></i></div><div><div class="menu-title">Saved Influencers</div><div class="menu-sub">View your bookmarked creators</div></div><span class="menu-arrow"><i class="ph ph-caret-right"></i></span></button>' +
+        "</div>" +
+        '<div class="logout-card"><button class="logout-item" id="logoutBtn"><div class="menu-icon"><i class="ph ph-sign-out"></i></div><div><div class="menu-title">Logout</div><div class="menu-sub">Sign out of your account</div></div><span class="menu-arrow" style="color:var(--primary-pink)"><i class="ph ph-caret-right"></i></span></button></div>';
+
+      document.getElementById("editProfileBtn").addEventListener("click", function () { window.location.href = "/edit-profile"; });
+      document.getElementById("referralsBtn").addEventListener("click", function () { window.location.href = "/referrals"; });
+      document.getElementById("savedBtn").addEventListener("click", function () { window.location.href = "/saved"; });
+      document.getElementById("logoutBtn").addEventListener("click", confirmLogout);
+    }
+
+    function confirmLogout() {
+      var backdrop = document.createElement("div");
+      backdrop.className = "modal-backdrop";
+      backdrop.innerHTML =
+        '<div class="confirm-card">' +
+        '<div class="confirm-title"><i class="ph ph-sign-out"></i> Logout</div>' +
+        '<div class="confirm-body">Are you sure you want to logout?</div>' +
+        '<div class="confirm-actions"><button class="cancel" id="cancelLogout">Cancel</button><button class="confirm" id="confirmLogout">Logout</button></div>' +
+        "</div>";
+      document.body.appendChild(backdrop);
+      backdrop.addEventListener("click", function (e) { if (e.target === backdrop) backdrop.remove(); });
+      backdrop.querySelector("#cancelLogout").addEventListener("click", function () { backdrop.remove(); });
+      backdrop.querySelector("#confirmLogout").addEventListener("click", async function () {
+        backdrop.remove();
+        var token = SessionManager.getToken();
+        if (token) await AuthService.logout(token);
+        SessionManager.clearSession();
+        window.location.href = "/login";
+      });
+    }
+
+    async function load() {
+      var token = SessionManager.getToken();
+      if (!token) { renderGuest(); return; }
+      var result = await ProfileService.getProfile(token);
+      if (result && result.success === true) {
+        renderProfile(result.data || {});
+      } else {
+        renderProfile({});
+      }
+    }
+
+    load();
+  })();
+</script>
+</body>
+</html>

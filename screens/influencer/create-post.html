@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Create Post — Masked Party</title>
+<script src="/widgets/phosphor_icons.js"></script>
+<script>PhosphorIcons.load();</script>
+<style>
+  :root{--primary-pink:#E91E63;--soft-pink:#FF6B8B;--light-pink:#FFE4EC;--bg:#F8F9FE;--text-dark:#1A1D2E;--text-medium:#6B7280;--text-light:#9CA3AF;--success:#00C853;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text-dark);}
+  header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid rgba(255,228,236,.4);}
+  .head-row{max-width:520px;margin:0 auto;display:flex;align-items:center;padding:14px 16px;gap:12px;}
+  .back-btn{width:34px;height:34px;border:none;background:none;font-size:18px;color:var(--text-dark);cursor:pointer;}
+  h1{flex:1;font-size:20px;font-weight:700;}
+  main{max-width:520px;margin:0 auto;padding:20px 16px 40px;}
+
+  .card{background:#fff;border-radius:20px;padding:18px;box-shadow:0 2px 10px rgba(0,0,0,.04);}
+  label{display:block;font-size:13px;font-weight:600;margin-bottom:8px;}
+  textarea{width:100%;padding:14px;background:var(--bg);border:1px solid #e5e5e5;border-radius:14px;font-size:14px;color:var(--text-dark);font-family:inherit;resize:none;}
+  textarea:focus{outline:none;border-color:var(--primary-pink);}
+  .char-count{margin-top:6px;text-align:right;font-size:11px;color:var(--text-light);}
+
+  .images-grid{margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .img-tile{position:relative;aspect-ratio:1;border-radius:14px;overflow:hidden;background:var(--light-pink);}
+  .img-tile img{width:100%;height:100%;object-fit:cover;}
+  .img-remove{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.55);border:none;color:#fff;font-size:12px;cursor:pointer;}
+  .img-add{border:2px dashed rgba(233,30,99,.3);background:rgba(233,30,99,.04);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--primary-pink);cursor:pointer;}
+  .img-add .plus{font-size:22px;}
+  .img-add .lab{font-size:9px;font-weight:700;}
+
+  .submit-btn{margin-top:24px;width:100%;height:54px;border:none;border-radius:16px;background:linear-gradient(to right,var(--primary-pink),var(--soft-pink));color:#fff;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 5px 15px rgba(233,30,99,.3);}
+  .submit-btn:disabled{opacity:.6;cursor:not-allowed;}
+
+  .toast{position:fixed;left:16px;right:16px;bottom:24px;background:#D32F2F;color:#fff;padding:14px 16px;border-radius:12px;font-size:14px;text-align:center;max-width:420px;margin:0 auto;z-index:9800;}
+  .toast.success{background:var(--success);}
+</style>
+</head>
+<body>
+  <header><div class="head-row"><button class="back-btn" id="backBtn" aria-label="Back"><i class="ph ph-arrow-left"></i></button><h1>Create Post</h1></div></header>
+  <main>
+    <div class="card">
+      <label for="captionInput">Caption</label>
+      <textarea id="captionInput" rows="2" maxlength="255" placeholder="Write a catchy caption…"></textarea>
+      <div class="char-count" id="captionCount">0/255</div>
+
+      <label for="bodyInput" style="margin-top:16px">Details (optional)</label>
+      <textarea id="bodyInput" rows="4" placeholder="Share more details…"></textarea>
+
+      <label style="margin-top:16px">Photos (up to 6)</label>
+      <div class="images-grid" id="imagesGrid"></div>
+    </div>
+    <button class="submit-btn" id="submitBtn"><span id="submitLabel">Publish Post</span></button>
+  </main>
+
+<script src="/services/api.js"></script>
+<script src="/services/api_endpoints.js"></script>
+<script src="/services/session_manager.js"></script>
+<script src="/services/route_guard.js"></script>
+<script>RouteGuard.require("influencer");</script>
+<script src="/services/post_service.js"></script>
+<script>
+  (function () {
+    document.getElementById("backBtn").addEventListener("click", function () { window.history.back(); });
+
+    var images = []; // File objects
+    var MAX_IMAGES = 6;
+    var isSubmitting = false;
+
+    function showToast(message, kind) {
+      var t = document.createElement("div");
+      t.className = "toast" + (kind ? " " + kind : "");
+      t.textContent = message;
+      document.body.appendChild(t);
+      setTimeout(function () { t.remove(); }, 3200);
+    }
+
+    var captionInput = document.getElementById("captionInput");
+    captionInput.addEventListener("input", function () {
+      document.getElementById("captionCount").textContent = captionInput.value.length + "/255";
+    });
+
+    function renderImages() {
+      var grid = document.getElementById("imagesGrid");
+      var tiles = images.map(function (file, i) {
+        var url = URL.createObjectURL(file);
+        return '<div class="img-tile"><img src="' + url + '" alt=""><button class="img-remove" data-i="' + i + '" aria-label="Remove photo"><i class="ph ph-x"></i></button></div>';
+      }).join("");
+      var addTile = images.length < MAX_IMAGES ? '<div class="img-tile img-add" id="addImgTile"><div class="plus"><i class="ph-bold ph-plus"></i></div><div class="lab">ADD</div></div>' : "";
+      grid.innerHTML = tiles + addTile;
+
+      var add = document.getElementById("addImgTile");
+      if (add) add.addEventListener("click", pickImages);
+      grid.querySelectorAll(".img-remove").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          images.splice(parseInt(btn.getAttribute("data-i"), 10), 1);
+          renderImages();
+        });
+      });
+    }
+
+    function pickImages() {
+      var input = document.createElement("input");
+      input.type = "file";
+      input.accept = "image/*";
+      input.multiple = true;
+      input.addEventListener("change", function () {
+        Array.from(input.files).forEach(function (file) {
+          if (images.length < MAX_IMAGES) images.push(file);
+        });
+        renderImages();
+      });
+      input.click();
+    }
+
+    function setSubmitting(loading) {
+      isSubmitting = loading;
+      var btn = document.getElementById("submitBtn");
+      var label = document.getElementById("submitLabel");
+      btn.disabled = loading;
+      label.textContent = loading ? "Publishing..." : "Publish Post";
+    }
+
+    document.getElementById("submitBtn").addEventListener("click", async function () {
+      var caption = captionInput.value.trim();
+      if (!caption) { showToast("Caption is required"); return; }
+      if (isSubmitting) return;
+      setSubmitting(true);
+
+      var body = document.getElementById("bodyInput").value.trim();
+      var result = await PostService.createPost({ caption: caption, body: body || undefined, images: images.length ? images : undefined });
+      setSubmitting(false);
+
+      if (result && result.success === true) {
+        showToast("Post published! <i class='ph-fill ph-confetti'></i>", "success");
+        setTimeout(function () { window.location.href = "/influencer-home"; }, 900);
+      } else {
+        showToast((result && result.message) || "Failed");
+      }
+    });
+
+    renderImages();
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Influencer — Masked Party</title>
+<script src="/widgets/phosphor_icons.js"></script>
+<script>PhosphorIcons.load();</script>
+<style>
+  :root{--primary-pink:#E91E63;--soft-pink:#FF6B8B;--light-pink:#FFE4EC;--bg:#F8F9FE;--card:#fff;--text-dark:#1A1D2E;--text-medium:#6B7280;--text-light:#9CA3AF;--success:#00C853;--gold:#FFC107;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text-dark);padding-bottom:220px;}
+
+  .hero{position:relative;height:38vh;max-height:280px;min-height:200px;border-radius:0 0 32px 32px;overflow:hidden;background:linear-gradient(135deg,var(--primary-pink),var(--soft-pink));}
+  .hero img{width:100%;height:100%;object-fit:cover;cursor:pointer;}
+  .hero .fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:64px;color:rgba(255,255,255,.6);}
+  .hero-scrim{position:absolute;left:0;right:0;bottom:0;height:100px;background:linear-gradient(to top, rgba(0,0,0,.6), transparent);}
+  .hero-topbar{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 10px) 12px 0;}
+  .round-btn{width:38px;height:38px;border-radius:50%;background:#fff;border:none;box-shadow:0 2px 8px rgba(0,0,0,.1);font-size:16px;cursor:pointer;color:var(--text-dark);}
+  .round-btn.pink{color:var(--primary-pink);}
+  .hero-actions{display:flex;gap:8px;position:relative;}
+  .hero-bottom{position:absolute;left:20px;right:20px;bottom:16px;color:#fff;}
+  .hero-name-row{display:flex;align-items:center;gap:8px;}
+  .hero-name{font-size:24px;font-weight:700;letter-spacing:-.4px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .status-pill{display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;flex:none;}
+  .status-pill .dot{width:6px;height:6px;border-radius:50%;background:#fff;}
+  .status-pill.online{background:var(--success);}
+  .status-pill.offline{background:var(--text-light);}
+  .hero-loc{margin-top:4px;font-size:13px;font-weight:500;}
+
+  .menu{position:absolute;top:46px;right:0;background:#fff;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.15);padding:6px;z-index:20;min-width:140px;}
+  .menu button{display:block;width:100%;text-align:left;padding:10px 14px;background:none;border:none;font-size:14px;color:var(--text-dark);cursor:pointer;border-radius:8px;}
+  .menu button:hover{background:var(--bg);}
+
+  main{padding:16px 16px 0;max-width:600px;margin:0 auto;}
+
+  .stats-row{display:flex;gap:10px;}
+  .stat-card{flex:1;background:var(--card);border-radius:16px;padding:14px 8px;text-align:center;border:1px solid rgba(255,228,236,.5);}
+  .stat-card .ic{font-size:20px;}
+  .stat-card .val{margin-top:4px;font-weight:700;font-size:16px;}
+  .stat-card .lab{margin-top:2px;font-size:11px;color:var(--text-medium);}
+
+  .info-card{margin-top:16px;background:var(--card);border-radius:16px;border:1px solid rgba(255,228,236,.5);padding:12px 16px;display:flex;gap:12px;align-items:flex-start;}
+  .info-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,rgba(233,30,99,.12),rgba(255,107,139,.06));display:flex;align-items:center;justify-content:center;font-size:20px;flex:none;}
+  .info-title{font-weight:700;font-size:14px;}
+  .info-sub{margin-top:2px;font-size:12px;color:var(--text-medium);}
+
+  h2.section-title{margin-top:22px;font-size:17px;font-weight:700;}
+  .text-card{margin-top:10px;background:var(--card);border-radius:14px;border:1px solid rgba(255,228,236,.4);padding:14px 16px;font-size:14px;color:var(--text-medium);line-height:1.6;}
+
+  .gallery-row{margin-top:10px;display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;}
+  .gallery-row img{width:100px;height:100px;border-radius:14px;object-fit:cover;flex:none;cursor:pointer;background:var(--light-pink);}
+
+  .bottom-sheet{position:fixed;left:0;right:0;bottom:0;background:#fff;border-radius:28px 28px 0 0;box-shadow:0 -6px 20px rgba(233,30,99,.1);padding:16px 16px calc(16px + env(safe-area-inset-bottom));z-index:30;}
+  .duration-row{display:flex;gap:6px;}
+  .duration-opt{flex:1;padding:10px 4px;border-radius:14px;border:1.5px solid rgba(255,228,236,.6);background:rgba(255,228,236,.3);text-align:center;cursor:pointer;}
+  .duration-opt.selected{background:linear-gradient(135deg,var(--primary-pink),var(--soft-pink));border-color:var(--primary-pink);color:#fff;}
+  .duration-opt .mins{font-weight:700;font-size:16px;}
+  .duration-opt .u{font-size:9px;opacity:.85;}
+  .duration-opt .coins{margin-top:2px;font-size:11px;font-weight:600;color:var(--primary-pink);}
+  .duration-opt.selected .coins{color:#fff;}
+
+  .payg-btn{margin-top:10px;width:100%;height:48px;border-radius:16px;border:1.5px solid var(--primary-pink);background:#fff;color:var(--primary-pink);font-weight:700;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;}
+  .call-btn{margin-top:8px;width:100%;height:52px;border-radius:16px;border:none;background:linear-gradient(to right,var(--primary-pink),var(--soft-pink));color:#fff;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 4px 12px rgba(233,30,99,.3);display:flex;align-items:center;justify-content:center;gap:8px;}
+  .call-btn:disabled{background:#e0e0e0;box-shadow:none;color:#9e9e9e;cursor:not-allowed;}
+  .msg-btn{margin-top:8px;width:100%;height:46px;border-radius:16px;border:1.5px solid var(--primary-pink);background:#fff;color:var(--primary-pink);font-weight:600;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
+
+  .spinner{width:32px;height:32px;border:3px solid rgba(233,30,99,.2);border-top-color:var(--primary-pink);border-radius:50%;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .spinner-wrap{display:flex;justify-content:center;padding:80px 0;}
+
+  .lightbox{position:fixed;inset:0;background:#000;z-index:9700;display:flex;align-items:center;justify-content:center;}
+  .lightbox img{max-width:100%;max-height:100%;object-fit:contain;}
+  .lightbox-close{position:absolute;top:40px;right:16px;width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,.7);border:none;color:#fff;font-size:20px;cursor:pointer;}
+
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9500;display:flex;align-items:flex-end;justify-content:center;}
+  .modal-sheet{width:100%;max-width:480px;background:#fff;border-radius:28px 28px 0 0;padding:20px 20px 28px;text-align:center;}
+  .modal-icon{width:52px;height:52px;margin:0 auto;border-radius:14px;background:linear-gradient(135deg,var(--primary-pink),var(--soft-pink));display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;}
+  .modal-title{margin-top:12px;font-size:20px;font-weight:700;}
+  .modal-sub{margin-top:6px;font-size:13px;color:var(--text-medium);}
+  .payg-choice{margin-top:12px;width:100%;text-align:left;padding:14px;background:rgba(255,228,236,.25);border:1px solid rgba(255,228,236,.8);border-radius:16px;cursor:pointer;display:flex;align-items:center;gap:12px;}
+  .payg-choice .ic{width:36px;height:36px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--primary-pink);flex:none;}
+  .payg-choice .t{font-weight:700;font-size:14px;}
+  .payg-choice .s{font-size:11px;color:var(--text-medium);}
+  .payg-choice .p{margin-top:4px;font-size:12px;font-weight:700;color:var(--primary-pink);}
+
+  .report-field{width:100%;padding:12px 14px;background:rgba(255,228,236,.25);border:none;border-radius:12px;font-size:14px;margin-top:10px;font-family:inherit;}
+  .report-actions{display:flex;justify-content:flex-end;gap:16px;margin-top:16px;}
+  .report-actions button{background:none;border:none;font-weight:700;font-size:14px;cursor:pointer;padding:8px;}
+
+  .toast{position:fixed;left:16px;right:16px;bottom:230px;background:#D32F2F;color:#fff;padding:14px 16px;border-radius:12px;font-size:14px;text-align:center;max-width:420px;margin:0 auto;z-index:9800;}
+</style>
+</head>
+<body>
+  <div id="root">
+    <div class="spinner-wrap"><div class="spinner" role="status" aria-label="Loading"></div></div>
+  </div>
+
+<script src="/services/api.js"></script>
+<script src="/services/api_endpoints.js"></script>
+<script src="/services/session_manager.js"></script>
+<script src="/services/client_service.js"></script>
+<script src="/services/call_service.js"></script>
+<script src="/widgets/call_warning_dialog.js"></script>
+<script>
+  (function () {
+    var influencerId = window.location.pathname.replace(/^\/influencer\//, "").split("/")[0];
+    if (!influencerId) { window.location.href = "/discover"; return; }
+    if (!SessionManager.isLoggedIn()) {
+      window.location.replace("/login?next=" + encodeURIComponent(window.location.pathname));
+      return;
+    }
+
+    var root = document.getElementById("root");
+    var influencer = null;
+    var isSaved = false;
+    var isRequestingCall = false;
+    var minuteTiers = [];
+    var paygPricing = null;
+    var activeStatus = null;
+    var selectedMinutes = 5;
+    var statusTimer = null;
+
+    function escapeHtml(s) {
+      return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    }
+    function toDouble(v) { return typeof v === "number" ? v : parseFloat(v) || 0; }
+    function toInt(v) { return typeof v === "number" ? Math.trunc(v) : parseInt(v, 10) || 0; }
+    function formatCoins(n) { return n % 1 === 0 ? String(Math.trunc(n)) : n.toFixed(1); }
+    function isTrulyOnline() { return activeStatus && activeStatus.is_truly_online === true; }
+    function costForMinutes(mins, pricePerMinute) {
+      var tier = minuteTiers.find(function (t) { return t.minutes === mins; });
+      return tier ? tier.coinCost : pricePerMinute * mins;
+    }
+
+    function showToast(message) {
+      var t = document.createElement("div");
+      t.className = "toast";
+      t.textContent = message;
+      document.body.appendChild(t);
+      setTimeout(function () { t.remove(); }, 3500);
+    }
+    function showFullImage(url) {
+      var lb = document.createElement("div");
+      lb.className = "lightbox";
+      lb.innerHTML = '<img src="' + url + '" alt=""><button class="lightbox-close" aria-label="Close"><i class="ph ph-x"></i></button>';
+      lb.querySelector("button").addEventListener("click", function () { lb.remove(); });
+      lb.addEventListener("click", function (e) { if (e.target === lb) lb.remove(); });
+      document.body.appendChild(lb);
+    }
+
+    async function loadDetails() {
+      var token = SessionManager.getToken();
+      var result = await ClientService.getInfluencerDetails(token, influencerId);
+      if (result && result.success === true) {
+        influencer = result.data;
+        isSaved = influencer && influencer.is_saved === true;
+      } else {
+        influencer = null;
+      }
+      render();
+    }
+
+    async function loadActiveStatus() {
+      var token = SessionManager.getToken();
+      var result = await ApiConfig.get(ApiEndpoints.influencerActiveStatus, token, { id: influencerId });
+      if (result && result.success === true) activeStatus = result.data;
+      renderBottomSheet();
+      renderHeroStatus();
+    }
+
+    async function loadMinuteCostTiers() {
+      var token = SessionManager.getToken();
+      var result = await CallService.getCallMinuteCosts(token);
+      if (result) {
+        minuteTiers = result.tiers || [];
+        if (minuteTiers.length) selectedMinutes = minuteTiers[0].minutes;
+      }
+      renderBottomSheet();
+    }
+
+    async function loadPaygPricing() {
+      var token = SessionManager.getToken();
+      var result = await ApiConfig.get(ApiEndpoints.paygPricing, token);
+      if (result && result.success === true && result.data) {
+        paygPricing = { perMinute: toDouble(result.data.per_minute), perSecond: toDouble(result.data.per_second) };
+      }
+    }
+
+    async function toggleSave() {
+      var token = SessionManager.getToken();
+      isSaved = !isSaved;
+      renderHeroActions();
+      var result = isSaved
+        ? await ClientService.saveInfluencer(token, influencerId)
+        : await ClientService.removeSavedInfluencer(token, influencerId);
+      if (!result || result.success !== true) {
+        isSaved = !isSaved;
+        renderHeroActions();
+        showToast("Failed to update saved influencers");
+      }
+    }
+
+    async function requestCall(billingMode) {
+      if (isRequestingCall) return;
+      if (!isTrulyOnline()) {
+        showToast("This influencer is currently offline. Please try again later.");
+        return;
+      }
+      var agreed = await CallWarningDialog.show();
+      if (!agreed) return;
+
+      isRequestingCall = true;
+      renderBottomSheet();
+      var token = SessionManager.getToken();
+      var result = billingMode
+        ? await CallService.requestCall(token, influencerId, billingMode)
+        : await CallService.requestCall(token, influencerId);
+      isRequestingCall = false;
+      renderBottomSheet();
+
+      if (result && result.success === true) {
+        var data = result.data || {};
+        var requestId = data.request_id || data.id;
+        if (!requestId) { showToast("Call server did not return a request id"); return; }
+        var name = influencer ? influencer.mystery_name || "" : "";
+        var minutes = billingMode ? 1 : selectedMinutes;
+        window.location.href =
+          "/call?request_id=" + encodeURIComponent(requestId) +
+          "&influencer_id=" + encodeURIComponent(influencerId) +
+          "&influencer_name=" + encodeURIComponent(name) +
+          "&minutes=" + minutes +
+          (billingMode ? "&billing_mode=" + encodeURIComponent(billingMode) : "");
+      } else {
+        showToast((result && result.message) || "Failed to request call");
+      }
+    }
+
+    function openChat() {
+      window.location.href = "/chat/" + influencerId;
+    }
+
+    function openPaygOptions() {
+      if (!isTrulyOnline() || isRequestingCall) return;
+      if (!paygPricing) { showToast("Pay As You Go pricing is currently unavailable."); return; }
+      var backdrop = document.createElement("div");
+      backdrop.className = "modal-backdrop";
+      backdrop.innerHTML =
+        '<div class="modal-sheet">' +
+        '<div class="modal-icon"><i class="ph ph-lightning"></i></div>' +
+        '<div class="modal-title">Pay As You Go</div>' +
+        '<div class="modal-sub">Choose how you want your video call to be billed.</div>' +
+        '<button class="payg-choice" id="paygMinute"><span class="ic"><i class="ph ph-timer"></i></span><span><span class="t">Pay per minute</span><br><span class="s">Charged for each minute used</span><br><span class="p">' + formatCoins(paygPricing.perMinute) + ' coins / minute</span></span></button>' +
+        '<button class="payg-choice" id="paygSecond"><span class="ic"><i class="ph ph-lightning"></i></span><span><span class="t">Pay per second</span><br><span class="s">Charged precisely for seconds used</span><br><span class="p">' + formatCoins(paygPricing.perSecond) + ' coins / second</span></span></button>' +
+        "</div>";
+      document.body.appendChild(backdrop);
+      backdrop.addEventListener("click", function (e) { if (e.target === backdrop) backdrop.remove(); });
+      backdrop.querySelector("#paygMinute").addEventListener("click", function () { backdrop.remove(); requestCall("payg_minute"); });
+      backdrop.querySelector("#paygSecond").addEventListener("click", function () { backdrop.remove(); requestCall("payg_second"); });
+    }
+
+    async function reportUser() {
+      var backdrop = document.createElement("div");
+      backdrop.className = "modal-backdrop";
+      backdrop.innerHTML =
+        '<div class="modal-sheet" style="text-align:left">' +
+        '<div class="modal-title" style="text-align:left">Report User</div>' +
+        '<input type="text" class="report-field" id="reportReason" placeholder="Reason (e.g. inappropriate behavior)">' +
+        '<textarea class="report-field" id="reportDesc" rows="3" placeholder="Describe the issue..."></textarea>' +
+        '<div class="report-actions"><button id="reportCancel">Cancel</button><button id="reportSubmit" style="color:#D32F2F">Submit</button></div>' +
+        "</div>";
+      document.body.appendChild(backdrop);
+      function close() { backdrop.remove(); }
+      backdrop.querySelector("#reportCancel").addEventListener("click", close);
+      backdrop.addEventListener("click", function (e) { if (e.target === backdrop) close(); });
+      backdrop.querySelector("#reportSubmit").addEventListener("click", async function () {
+        var reason = backdrop.querySelector("#reportReason").value.trim();
+        var description = backdrop.querySelector("#reportDesc").value.trim();
+        close();
+        if (!reason) return;
+        var token = SessionManager.getToken();
+        var result = await ApiConfig.post(ApiEndpoints.reviewReport, token, {
+          reported_user_id: influencerId,
+          call_id: "",
+          reason: reason,
+          description: description,
+        });
+        showToast(result && result.success === true ? "Report submitted" : ((result && result.message) || "Failed to submit report"));
+      });
+    }
+
+    function renderHeroActions() {
+      var el = document.getElementById("heroActions");
+      if (el) el.querySelector("#saveBtn").innerHTML = isSaved ? '<i class="ph-fill ph-bookmark-simple"></i>' : '<i class="ph ph-bookmark-simple"></i>';
+    }
+
+    function renderHeroStatus() {
+      var pill = document.getElementById("statusPill");
+      if (!pill) return;
+      var online = isTrulyOnline();
+      pill.className = "status-pill " + (online ? "online" : "offline");
+      pill.innerHTML = '<span class="dot"></span>' + (online ? "Online" : "Offline");
+    }
+
+    function renderBottomSheet() {
+      var sheet = document.getElementById("bottomSheet");
+      if (!sheet || !influencer) return;
+      var pricePerMinute = toDouble(influencer.price_per_minute);
+      var durationOptions = minuteTiers.length ? minuteTiers.map(function (t) { return t.minutes; }) : [5, 10, 15, 20];
+      var online = isTrulyOnline();
+
+      sheet.innerHTML =
+        '<div class="duration-row">' +
+        durationOptions.map(function (mins) {
+          return (
+            '<div class="duration-opt' + (selectedMinutes === mins ? " selected" : "") + '" data-mins="' + mins + '">' +
+            '<div class="mins">' + mins + '</div><div class="u">mins</div>' +
+            '<div class="coins">' + formatCoins(costForMinutes(mins, pricePerMinute)) + '</div><div class="u">coins</div>' +
+            "</div>"
+          );
+        }).join("") +
+        "</div>" +
+        (online ? '<button class="payg-btn" id="paygBtn"><i class="ph ph-lightning"></i> Pay As You Go</button>' : "") +
+        '<button class="call-btn" id="callBtn" ' + (!online || isRequestingCall ? "disabled" : "") + '>' +
+        (isRequestingCall ? "…" : (online ? "<i class='ph ph-video-camera'></i> Start Video Call" : "Influencer Offline")) +
+        "</button>" +
+        '<button class="msg-btn" id="msgBtn"><i class="ph ph-chat-circle"></i> Send Message</button>';
+
+      sheet.querySelectorAll(".duration-opt").forEach(function (el) {
+        el.addEventListener("click", function () {
+          selectedMinutes = parseInt(el.getAttribute("data-mins"), 10);
+          renderBottomSheet();
+        });
+      });
+      var paygBtn = sheet.querySelector("#paygBtn");
+      if (paygBtn) paygBtn.addEventListener("click", openPaygOptions);
+      sheet.querySelector("#callBtn").addEventListener("click", function () { requestCall(null); });
+      sheet.querySelector("#msgBtn").addEventListener("click", openChat);
+    }
+
+    function render() {
+      if (!influencer) {
+        root.innerHTML = '<div class="spinner-wrap"><div class="spinner" role="status" aria-label="Loading"></div></div>';
+        return;
+      }
+
+      var name = influencer.mystery_name || "";
+      var country = influencer.country_name || "";
+      var biography = influencer.biography;
+      var whatOffer = influencer.what_offer ? String(influencer.what_offer).trim() : "";
+      var rating = toDouble(influencer.average_rating);
+      var reviewCount = toInt(influencer.review_count != null ? influencer.review_count : influencer.total_calls);
+      var pricePerMinute = toDouble(influencer.price_per_minute);
+      var mainPhoto = influencer.profile_photo;
+      var gallery = Array.isArray(influencer.gallery) ? influencer.gallery : [];
+      var isWearingMask = !influencer.mask_status || String(influencer.mask_status).toLowerCase() !== "unmasked";
+      var maskLabel = isWearingMask ? "Does Wear a Vail" : "Doesn't Wear a Vail";
+      var maskSub = isWearingMask ? "This influencer uses a face covering during calls" : "This influencer does not wear a face covering";
+
+      root.innerHTML =
+        '<div class="hero">' +
+        (mainPhoto ? '<img src="' + mainPhoto + '" alt="" id="heroImg">' : '<div class="fallback"><i class="ph ph-user"></i></div>') +
+        '<div class="hero-scrim"></div>' +
+        '<div class="hero-topbar">' +
+        '<button class="round-btn" id="backBtn" aria-label="Back"><i class="ph ph-arrow-left"></i></button>' +
+        '<div class="hero-actions" id="heroActions">' +
+        '<button class="round-btn pink" id="saveBtn" aria-label="Save" style="margin-right:8px">' + (isSaved ? "<i class='ph-fill ph-bookmark-simple'></i>" : "<i class='ph ph-bookmark-simple'></i>") + "</button>" +
+        '<button class="round-btn" id="moreBtn" aria-label="More options"><i class="ph ph-dots-three"></i></button>' +
+        "</div></div>" +
+        '<div class="hero-bottom">' +
+        '<div class="hero-name-row"><div class="hero-name">' + escapeHtml(name) + '</div><span class="status-pill offline" id="statusPill"><span class="dot"></span>Offline</span></div>' +
+        (country ? '<div class="hero-loc"><i class="ph ph-map-pin"></i> ' + escapeHtml(country) + "</div>" : "") +
+        "</div>" +
+        "</div>" +
+        '<main>' +
+        '<div class="stats-row">' +
+        '<div class="stat-card"><div class="ic"><i class="ph-fill ph-star"></i></div><div class="val">' + rating.toFixed(1) + '</div><div class="lab">Rating</div></div>' +
+        '<div class="stat-card"><div class="ic"><i class="ph ph-users"></i></div><div class="val">' + reviewCount + '</div><div class="lab">Reviews</div></div>' +
+        '<div class="stat-card"><div class="ic"><i class="ph ph-timer"></i></div><div class="val">' + formatCoins(pricePerMinute) + '</div><div class="lab">Coins/min</div></div>' +
+        "</div>" +
+        '<div class="info-card"><div class="info-icon"><i class="ph ph-mask-happy"></i></div><div><div class="info-title">' + maskLabel + '</div><div class="info-sub">' + maskSub + "</div></div></div>" +
+        (gallery.length
+          ? '<h2 class="section-title">Gallery</h2><div class="gallery-row" id="galleryRow">' +
+            gallery.map(function (item) {
+              var url = typeof item === "string" ? item : item && item.url;
+              return url ? '<img src="' + url + '" alt="" data-url="' + url + '">' : "";
+            }).join("") +
+            "</div>"
+          : "") +
+        '<h2 class="section-title">About Me</h2>' +
+        '<div class="text-card">' + escapeHtml(biography || "No biography available yet.") + "</div>" +
+        (whatOffer
+          ? '<h2 class="section-title">What I will offer on the video call</h2><div class="text-card">' + escapeHtml(whatOffer) + "</div>"
+          : "") +
+        "</main>" +
+        '<div class="bottom-sheet" id="bottomSheet"></div>';
+
+      document.getElementById("backBtn").addEventListener("click", function () { window.history.back(); });
+      document.getElementById("saveBtn").addEventListener("click", toggleSave);
+      document.getElementById("moreBtn").addEventListener("click", function (e) {
+        e.stopPropagation();
+        var menu = document.createElement("div");
+        menu.className = "menu";
+        menu.innerHTML = "<button>Report User</button>";
+        menu.querySelector("button").addEventListener("click", function () { menu.remove(); reportUser(); });
+        document.getElementById("heroActions").appendChild(menu);
+        setTimeout(function () {
+          document.addEventListener("click", function onDoc() { menu.remove(); document.removeEventListener("click", onDoc); }, { once: true });
+        });
+      });
+      if (mainPhoto) document.getElementById("heroImg").addEventListener("click", function () { showFullImage(mainPhoto); });
+      var galleryRow = document.getElementById("galleryRow");
+      if (galleryRow) {
+        galleryRow.querySelectorAll("img").forEach(function (img) {
+          img.addEventListener("click", function () { showFullImage(img.getAttribute("data-url")); });
+        });
+      }
+
+      renderHeroStatus();
+      renderBottomSheet();
+    }
+
+    loadDetails();
+    loadMinuteCostTiers();
+    loadPaygPricing();
+    loadActiveStatus();
+    statusTimer = setInterval(loadActiveStatus, 15000);
+    window.addEventListener("beforeunload", function () { clearInterval(statusTimer); });
+  })();
+</script>
+</body>
+</html>

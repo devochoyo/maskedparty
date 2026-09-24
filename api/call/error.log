@@ -1,0 +1,2544 @@
+
+[2026-07-31 20:43:25] === START CALL STARTED ===
+[2026-07-31 20:43:25] User ID: 2
+[2026-07-31 20:43:25] Request ID: 38
+[2026-07-31 20:43:25] START: Request found - Status: pending
+[2026-07-31 20:43:25] START: Request not accepted - Status: pending
+[2026-07-31 20:43:28] === START CALL STARTED ===
+[2026-07-31 20:43:28] User ID: 2
+[2026-07-31 20:43:28] Request ID: 38
+[2026-07-31 20:43:28] START: Request found - Status: pending
+[2026-07-31 20:43:28] START: Request not accepted - Status: pending
+[2026-07-31 20:43:31] === START CALL STARTED ===
+[2026-07-31 20:43:31] User ID: 2
+[2026-07-31 20:43:31] Request ID: 38
+[2026-07-31 20:43:31] START: Request found - Status: pending
+[2026-07-31 20:43:31] START: Request not accepted - Status: pending
+[2026-07-31 20:43:34] === START CALL STARTED ===
+[2026-07-31 20:43:34] User ID: 2
+[2026-07-31 20:43:34] Request ID: 38
+[2026-07-31 20:43:34] START: Request found - Status: pending
+[2026-07-31 20:43:34] START: Request not accepted - Status: pending
+[2026-07-31 20:43:37] === START CALL STARTED ===
+[2026-07-31 20:43:37] User ID: 2
+[2026-07-31 20:43:37] Request ID: 38
+[2026-07-31 20:43:37] START: Request found - Status: pending
+[2026-07-31 20:43:37] START: Request not accepted - Status: pending
+[2026-07-31 20:43:40] === START CALL STARTED ===
+[2026-07-31 20:43:40] User ID: 2
+[2026-07-31 20:43:40] Request ID: 38
+[2026-07-31 20:43:40] START: Request found - Status: pending
+[2026-07-31 20:43:40] START: Request not accepted - Status: pending
+[2026-07-31 20:43:43] === START CALL STARTED ===
+[2026-07-31 20:43:43] User ID: 2
+[2026-07-31 20:43:43] Request ID: 38
+[2026-07-31 20:43:43] START: Request found - Status: pending
+[2026-07-31 20:43:43] START: Request not accepted - Status: pending
+[2026-07-31 20:43:46] === START CALL STARTED ===
+[2026-07-31 20:43:46] User ID: 2
+[2026-07-31 20:43:46] Request ID: 38
+[2026-07-31 20:43:46] START: Request found - Status: pending
+[2026-07-31 20:43:46] START: Request not accepted - Status: pending
+[2026-07-31 20:43:48] === ACCEPT CALL STARTED ===
+[2026-07-31 20:43:48] User ID: 1
+[2026-07-31 20:43:48] Request ID: 38
+[2026-07-31 20:43:48] ACCEPT: Request found - Status: pending
+[2026-07-31 20:43:48] ACCEPT: Creating VideoSDK room...
+[2026-07-31 20:43:49] === START CALL STARTED ===
+[2026-07-31 20:43:49] User ID: 2
+[2026-07-31 20:43:49] Request ID: 38
+[2026-07-31 20:43:49] ACCEPT: Room created: tfa6-f0gr-l1ct
+[2026-07-31 20:43:49] ACCEPT: Generating token...
+[2026-07-31 20:43:49] ACCEPT: Token generated: yes
+[2026-07-31 20:43:49] ACCEPT: Updated to accepted. Meeting ID: tfa6-f0gr-l1ct
+[2026-07-31 20:43:49] START: Request found - Status: accepted
+[2026-07-31 20:43:49] START: Client ID: 2, Influencer ID: 1
+[2026-07-31 20:43:49] START: Client balance: 7264
+[2026-07-31 20:43:49] START: Price per minute (from packages): 1
+[2026-07-31 20:43:49] START: Escrow hold applied - Amount: 1
+[2026-07-31 20:43:49] START: Wallet transaction logged
+[2026-07-31 20:43:49] START: meeting_id length: 14, meeting_token length: 281
+[2026-07-31 20:43:49] START: video_calls row created - Call ID: 26
+[2026-07-31 20:43:49] ACCEPT: SUCCESS
+[2026-07-31 20:43:49] START: SUCCESS - Call ID: 26
+[2026-07-31 20:43:57] === START CALL STARTED ===
+[2026-07-31 20:43:57] User ID: 1
+[2026-07-31 20:43:57] Request ID: 38
+[2026-07-31 20:43:57] START: Request found - Status: accepted
+[2026-07-31 20:43:57] START: Existing call found - Call ID: 26
+[2026-07-31 21:14:14] === ACCEPT CALL STARTED ===
+[2026-07-31 21:14:14] User ID: 1
+[2026-07-31 21:14:14] Request ID: 39
+[2026-07-31 21:14:15] ACCEPT: Request found - Status: pending
+[2026-07-31 21:14:15] ACCEPT: Creating VideoSDK room...
+[2026-07-31 21:14:15] === START CALL STARTED ===
+[2026-07-31 21:14:15] User ID: 2
+[2026-07-31 21:14:15] Request ID: 39
+[2026-07-31 21:14:16] ACCEPT: Room created: 78kf-j0wf-egrw
+[2026-07-31 21:14:16] ACCEPT: Generating token...
+[2026-07-31 21:14:16] ACCEPT: Token generated: yes
+[2026-07-31 21:14:16] ACCEPT: Updated to accepted. Meeting ID: 78kf-j0wf-egrw
+[2026-07-31 21:14:16] ACCEPT: SUCCESS
+[2026-07-31 21:14:16] START: Request found - Status: accepted
+[2026-07-31 21:14:16] START: Client ID: 2, Influencer ID: 1
+[2026-07-31 21:14:16] START: Client balance: 7259
+[2026-07-31 21:14:16] START: Price per minute (from packages): 1
+[2026-07-31 21:14:16] START: Escrow hold applied - Amount: 1
+[2026-07-31 21:14:16] START: Wallet transaction logged
+[2026-07-31 21:14:16] START: meeting_id length: 14, meeting_token length: 281
+[2026-07-31 21:14:17] START: video_calls row created - Call ID: 27
+[2026-07-31 21:14:17] START: SUCCESS - Call ID: 27
+[2026-07-31 21:14:18] === START CALL STARTED ===
+[2026-07-31 21:14:18] User ID: 2
+[2026-07-31 21:14:18] Request ID: 39
+[2026-07-31 21:14:19] START: Request found - Status: accepted
+[2026-07-31 21:14:19] START: Existing call found - Call ID: 27
+[2026-07-31 21:14:21] === START CALL STARTED ===
+[2026-07-31 21:14:21] User ID: 1
+[2026-07-31 21:14:21] Request ID: 39
+[2026-07-31 21:14:21] START: Request found - Status: accepted
+[2026-07-31 21:14:21] START: Existing call found - Call ID: 27
+[2026-07-31 21:37:21] === START CALL STARTED ===
+[2026-07-31 21:37:21] User ID: 2
+[2026-07-31 21:37:21] Request ID: 40
+[2026-07-31 21:37:21] START: Request found - Status: pending
+[2026-07-31 21:37:21] START: Request not accepted - Status: pending
+[2026-07-31 21:37:22] === ACCEPT CALL STARTED ===
+[2026-07-31 21:37:22] User ID: 1
+[2026-07-31 21:37:22] Request ID: 40
+[2026-07-31 21:37:23] ACCEPT: Request found - Status: pending
+[2026-07-31 21:37:23] ACCEPT: Creating VideoSDK room...
+[2026-07-31 21:37:23] ACCEPT: Room created: z774-kfmc-2mkd
+[2026-07-31 21:37:23] ACCEPT: Generating token...
+[2026-07-31 21:37:23] ACCEPT: Token generated: yes
+[2026-07-31 21:37:23] ACCEPT: Updated to accepted. Meeting ID: z774-kfmc-2mkd
+[2026-07-31 21:37:23] ACCEPT: SUCCESS
+[2026-07-31 21:37:24] === START CALL STARTED ===
+[2026-07-31 21:37:24] User ID: 2
+[2026-07-31 21:37:24] Request ID: 40
+[2026-07-31 21:37:24] START: Request found - Status: accepted
+[2026-07-31 21:37:24] START: Client ID: 2, Influencer ID: 1
+[2026-07-31 21:37:24] START: Client balance: 7254
+[2026-07-31 21:37:24] START: Price per minute (from packages): 1
+[2026-07-31 21:37:24] START: Escrow hold applied - Amount: 1
+[2026-07-31 21:37:24] START: Wallet transaction logged
+[2026-07-31 21:37:24] START: meeting_id length: 14, meeting_token length: 281
+[2026-07-31 21:37:24] START: video_calls row created - Call ID: 28
+[2026-07-31 21:37:24] START: SUCCESS - Call ID: 28
+[2026-07-31 21:37:25] === START CALL STARTED ===
+[2026-07-31 21:37:25] User ID: 1
+[2026-07-31 21:37:25] Request ID: 40
+[2026-07-31 21:37:25] START: Request found - Status: accepted
+[2026-07-31 21:37:25] START: Existing call found - Call ID: 28
+[2026-07-31 22:04:11] === START CALL STARTED ===
+[2026-07-31 22:04:11] User ID: 2
+[2026-07-31 22:04:11] Request ID: 41
+[2026-07-31 22:04:11] START: Request found - Status: pending
+[2026-07-31 22:04:11] START: Request not accepted - Status: pending
+[2026-07-31 22:04:13] === ACCEPT CALL STARTED ===
+[2026-07-31 22:04:13] User ID: 1
+[2026-07-31 22:04:13] Request ID: 41
+[2026-07-31 22:04:13] ACCEPT: Request found - Status: pending
+[2026-07-31 22:04:13] ACCEPT: Creating VideoSDK room...
+[2026-07-31 22:04:14] ACCEPT: Room created: n6pt-1jtf-a2jg
+[2026-07-31 22:04:14] ACCEPT: Generating token...
+[2026-07-31 22:04:14] ACCEPT: Token generated: yes
+[2026-07-31 22:04:14] ACCEPT: Updated to accepted. Meeting ID: n6pt-1jtf-a2jg
+[2026-07-31 22:04:14] ACCEPT: SUCCESS
+[2026-07-31 22:04:15] === START CALL STARTED ===
+[2026-07-31 22:04:15] User ID: 2
+[2026-07-31 22:04:15] Request ID: 41
+[2026-07-31 22:04:15] START: Request found - Status: accepted
+[2026-07-31 22:04:15] START: Client ID: 2, Influencer ID: 1
+[2026-07-31 22:04:15] START: Client balance: 7249
+[2026-07-31 22:04:15] START: Price per minute (from packages): 1
+[2026-07-31 22:04:15] START: Escrow hold applied - Amount: 1
+[2026-07-31 22:04:15] START: Wallet transaction logged
+[2026-07-31 22:04:15] START: meeting_id length: 14, meeting_token length: 281
+[2026-07-31 22:04:15] START: video_calls row created - Call ID: 29
+[2026-07-31 22:04:15] START: SUCCESS - Call ID: 29
+[2026-07-31 22:04:16] === START CALL STARTED ===
+[2026-07-31 22:04:16] User ID: 1
+[2026-07-31 22:04:16] Request ID: 41
+[2026-07-31 22:04:16] START: Request found - Status: accepted
+[2026-07-31 22:04:16] START: Existing call found - Call ID: 29
+[2026-07-31 22:50:46] === START CALL STARTED ===
+[2026-07-31 22:50:46] User ID: 2
+[2026-07-31 22:50:46] Request ID: 42
+[2026-07-31 22:50:46] START: Request found - Status: pending
+[2026-07-31 22:50:46] START: Request not accepted - Status: pending
+[2026-07-31 22:50:48] === ACCEPT CALL STARTED ===
+[2026-07-31 22:50:48] User ID: 1
+[2026-07-31 22:50:48] Request ID: 42
+[2026-07-31 22:50:48] ACCEPT: Request found - Status: pending
+[2026-07-31 22:50:48] ACCEPT: Creating VideoSDK room...
+[2026-07-31 22:50:48] === START CALL STARTED ===
+[2026-07-31 22:50:48] User ID: 2
+[2026-07-31 22:50:48] Request ID: 42
+[2026-07-31 22:50:50] ACCEPT: Room created: v7xb-wqc1-ddkj
+[2026-07-31 22:50:50] ACCEPT: Generating token...
+[2026-07-31 22:50:50] ACCEPT: Token generated: yes
+[2026-07-31 22:50:50] ACCEPT: Updated to accepted. Meeting ID: v7xb-wqc1-ddkj
+[2026-07-31 22:50:50] START: Request found - Status: accepted
+[2026-07-31 22:50:50] START: Client ID: 2, Influencer ID: 1
+[2026-07-31 22:50:50] ACCEPT: SUCCESS
+[2026-07-31 22:50:50] START: Client balance: 7244
+[2026-07-31 22:50:50] START: Price per minute (from packages): 1
+[2026-07-31 22:50:50] START: Escrow hold applied - Amount: 1
+[2026-07-31 22:50:50] START: Wallet transaction logged
+[2026-07-31 22:50:50] START: meeting_id length: 14, meeting_token length: 281
+[2026-07-31 22:50:50] START: video_calls row created - Call ID: 30
+[2026-07-31 22:50:50] START: SUCCESS - Call ID: 30
+[2026-07-31 22:50:51] === START CALL STARTED ===
+[2026-07-31 22:50:51] User ID: 2
+[2026-07-31 22:50:51] Request ID: 42
+[2026-07-31 22:50:51] START: Request found - Status: accepted
+[2026-07-31 22:50:51] START: Existing call found - Call ID: 30
+[2026-07-31 22:50:51] === START CALL STARTED ===
+[2026-07-31 22:50:51] User ID: 1
+[2026-07-31 22:50:51] Request ID: 42
+[2026-07-31 22:50:51] START: Request found - Status: accepted
+[2026-07-31 22:50:51] START: Existing call found - Call ID: 30
+[2026-07-31 23:10:20] === ACCEPT CALL STARTED ===
+[2026-07-31 23:10:20] User ID: 1
+[2026-07-31 23:10:20] Request ID: 43
+[2026-07-31 23:10:20] ACCEPT: Request found - Status: pending
+[2026-07-31 23:10:20] ACCEPT: Creating VideoSDK room...
+[2026-07-31 23:10:21] ACCEPT: Room created: waqb-tgi1-mc5a
+[2026-07-31 23:10:21] ACCEPT: Generating token...
+[2026-07-31 23:10:21] ACCEPT: Token generated: yes
+[2026-07-31 23:10:21] ACCEPT: Updated to accepted. Meeting ID: waqb-tgi1-mc5a
+[2026-07-31 23:10:21] ACCEPT: SUCCESS
+[2026-07-31 23:10:21] === START CALL STARTED ===
+[2026-07-31 23:10:21] User ID: 2
+[2026-07-31 23:10:21] Request ID: 43
+[2026-07-31 23:10:21] START: Request found - Status: accepted
+[2026-07-31 23:10:21] START: Client ID: 2, Influencer ID: 1
+[2026-07-31 23:10:21] START: Client balance: 7239
+[2026-07-31 23:10:21] START: Price per minute (from packages): 1
+[2026-07-31 23:10:21] START: Escrow hold applied - Amount: 1
+[2026-07-31 23:10:21] START: Wallet transaction logged
+[2026-07-31 23:10:21] START: meeting_id length: 14, meeting_token length: 281
+[2026-07-31 23:10:21] START: video_calls row created - Call ID: 31
+[2026-07-31 23:10:21] START: SUCCESS - Call ID: 31
+[2026-07-31 23:10:23] === START CALL STARTED ===
+[2026-07-31 23:10:23] User ID: 1
+[2026-07-31 23:10:23] Request ID: 43
+[2026-07-31 23:10:23] START: Request found - Status: accepted
+[2026-07-31 23:10:23] START: Existing call found - Call ID: 31
+[2026-07-31 23:15:50] === START CALL STARTED ===
+[2026-07-31 23:15:50] User ID: 2
+[2026-07-31 23:15:50] Request ID: 44
+[2026-07-31 23:15:50] START: Request found - Status: pending
+[2026-07-31 23:15:50] START: Request not accepted - Status: pending
+[2026-07-31 23:15:51] === ACCEPT CALL STARTED ===
+[2026-07-31 23:15:51] User ID: 1
+[2026-07-31 23:15:51] Request ID: 44
+[2026-07-31 23:15:51] ACCEPT: Request found - Status: pending
+[2026-07-31 23:15:51] ACCEPT: Creating VideoSDK room...
+[2026-07-31 23:15:52] ACCEPT: Room created: rhnc-ed3i-tjc2
+[2026-07-31 23:15:52] ACCEPT: Generating token...
+[2026-07-31 23:15:52] ACCEPT: Token generated: yes
+[2026-07-31 23:15:52] ACCEPT: Updated to accepted. Meeting ID: rhnc-ed3i-tjc2
+[2026-07-31 23:15:52] ACCEPT: SUCCESS
+[2026-07-31 23:15:53] === START CALL STARTED ===
+[2026-07-31 23:15:53] User ID: 1
+[2026-07-31 23:15:53] Request ID: 44
+[2026-07-31 23:15:53] START: Request found - Status: accepted
+[2026-07-31 23:15:53] START: Client ID: 2, Influencer ID: 1
+[2026-07-31 23:15:53] START: Client balance: 7234
+[2026-07-31 23:15:53] START: Price per minute (from packages): 1
+[2026-07-31 23:15:53] START: Escrow hold applied - Amount: 1
+[2026-07-31 23:15:53] START: Wallet transaction logged
+[2026-07-31 23:15:53] START: meeting_id length: 14, meeting_token length: 281
+[2026-07-31 23:15:53] START: video_calls row created - Call ID: 32
+[2026-07-31 23:15:53] START: SUCCESS - Call ID: 32
+[2026-07-31 23:15:53] === START CALL STARTED ===
+[2026-07-31 23:15:53] User ID: 2
+[2026-07-31 23:15:53] Request ID: 44
+[2026-07-31 23:15:53] START: Request found - Status: accepted
+[2026-07-31 23:15:53] START: Existing call found - Call ID: 32
+[2026-07-31 23:27:09] === START CALL STARTED ===
+[2026-07-31 23:27:09] User ID: 2
+[2026-07-31 23:27:09] Request ID: 45
+[2026-07-31 23:27:09] START: Request found - Status: pending
+[2026-07-31 23:27:09] START: Request not accepted - Status: pending
+[2026-07-31 23:27:12] === START CALL STARTED ===
+[2026-07-31 23:27:12] User ID: 2
+[2026-07-31 23:27:12] Request ID: 45
+[2026-07-31 23:27:12] START: Request found - Status: pending
+[2026-07-31 23:27:12] START: Request not accepted - Status: pending
+[2026-07-31 23:27:16] === START CALL STARTED ===
+[2026-07-31 23:27:16] User ID: 2
+[2026-07-31 23:27:16] Request ID: 45
+[2026-07-31 23:27:16] START: Request found - Status: pending
+[2026-07-31 23:27:16] START: Request not accepted - Status: pending
+[2026-07-31 23:27:18] === START CALL STARTED ===
+[2026-07-31 23:27:18] User ID: 2
+[2026-07-31 23:27:18] Request ID: 45
+[2026-07-31 23:27:18] START: Request found - Status: pending
+[2026-07-31 23:27:18] START: Request not accepted - Status: pending
+[2026-07-31 23:27:21] === START CALL STARTED ===
+[2026-07-31 23:27:21] User ID: 2
+[2026-07-31 23:27:21] Request ID: 45
+[2026-07-31 23:27:21] START: Request found - Status: pending
+[2026-07-31 23:27:21] START: Request not accepted - Status: pending
+[2026-07-31 23:27:21] === ACCEPT CALL STARTED ===
+[2026-07-31 23:27:21] User ID: 1
+[2026-07-31 23:27:21] Request ID: 45
+[2026-07-31 23:27:21] ACCEPT: Request found - Status: pending
+[2026-07-31 23:27:21] ACCEPT: Creating VideoSDK room...
+[2026-07-31 23:27:22] ACCEPT: Room created: vguy-o0bu-9or4
+[2026-07-31 23:27:22] ACCEPT: Generating token...
+[2026-07-31 23:27:22] ACCEPT: Token generated: yes
+[2026-07-31 23:27:22] ACCEPT: Updated to accepted. Meeting ID: vguy-o0bu-9or4
+[2026-07-31 23:27:22] ACCEPT: SUCCESS
+[2026-07-31 23:27:24] === START CALL STARTED ===
+[2026-07-31 23:27:24] User ID: 1
+[2026-07-31 23:27:24] Request ID: 45
+[2026-07-31 23:27:24] START: Request found - Status: accepted
+[2026-07-31 23:27:24] START: Client ID: 2, Influencer ID: 1
+[2026-07-31 23:27:24] START: Client balance: 7229
+[2026-07-31 23:27:24] START: Price per minute (from packages): 1
+[2026-07-31 23:27:24] START: Escrow hold applied - Amount: 1
+[2026-07-31 23:27:24] START: Wallet transaction logged
+[2026-07-31 23:27:24] START: meeting_id length: 14, meeting_token length: 281
+[2026-07-31 23:27:24] START: video_calls row created - Call ID: 33
+[2026-07-31 23:27:24] START: SUCCESS - Call ID: 33
+[2026-07-31 23:27:24] === START CALL STARTED ===
+[2026-07-31 23:27:24] User ID: 2
+[2026-07-31 23:27:24] Request ID: 45
+[2026-07-31 23:27:24] START: Request found - Status: accepted
+[2026-07-31 23:27:24] START: Existing call found - Call ID: 33
+[2026-07-31 23:31:33] === ACCEPT CALL STARTED ===
+[2026-07-31 23:31:33] User ID: 1
+[2026-07-31 23:31:33] Request ID: 46
+[2026-07-31 23:31:33] ACCEPT: Request found - Status: pending
+[2026-07-31 23:31:33] ACCEPT: Creating VideoSDK room...
+[2026-07-31 23:31:34] === START CALL STARTED ===
+[2026-07-31 23:31:34] User ID: 2
+[2026-07-31 23:31:34] Request ID: 46
+[2026-07-31 23:31:34] ACCEPT: Room created: su5p-52u8-337v
+[2026-07-31 23:31:34] ACCEPT: Generating token...
+[2026-07-31 23:31:34] ACCEPT: Token generated: yes
+[2026-07-31 23:31:34] ACCEPT: Updated to accepted. Meeting ID: su5p-52u8-337v
+[2026-07-31 23:31:34] START: Request found - Status: accepted
+[2026-07-31 23:31:34] START: Client ID: 2, Influencer ID: 1
+[2026-07-31 23:31:34] START: Client balance: 7224
+[2026-07-31 23:31:34] ACCEPT: SUCCESS
+[2026-07-31 23:31:34] START: Price per minute (from packages): 1
+[2026-07-31 23:31:34] START: Escrow hold applied - Amount: 1
+[2026-07-31 23:31:34] START: Wallet transaction logged
+[2026-07-31 23:31:34] START: meeting_id length: 14, meeting_token length: 281
+[2026-07-31 23:31:34] START: video_calls row created - Call ID: 34
+[2026-07-31 23:31:34] START: SUCCESS - Call ID: 34
+[2026-07-31 23:31:35] === START CALL STARTED ===
+[2026-07-31 23:31:35] User ID: 1
+[2026-07-31 23:31:35] Request ID: 46
+[2026-07-31 23:31:35] START: Request found - Status: accepted
+[2026-07-31 23:31:35] START: Existing call found - Call ID: 34
+[2026-07-31 23:48:25] === START CALL STARTED ===
+[2026-07-31 23:48:25] User ID: 2
+[2026-07-31 23:48:25] Request ID: 47
+[2026-07-31 23:48:25] START: Request found - Status: pending
+[2026-07-31 23:48:25] START: Request not accepted - Status: pending
+[2026-07-31 23:48:28] === START CALL STARTED ===
+[2026-07-31 23:48:28] User ID: 2
+[2026-07-31 23:48:28] Request ID: 47
+[2026-07-31 23:48:28] START: Request found - Status: pending
+[2026-07-31 23:48:28] START: Request not accepted - Status: pending
+[2026-07-31 23:48:31] === START CALL STARTED ===
+[2026-07-31 23:48:31] User ID: 2
+[2026-07-31 23:48:31] Request ID: 47
+[2026-07-31 23:48:31] START: Request found - Status: pending
+[2026-07-31 23:48:31] START: Request not accepted - Status: pending
+[2026-07-31 23:48:34] === START CALL STARTED ===
+[2026-07-31 23:48:34] User ID: 2
+[2026-07-31 23:48:34] Request ID: 47
+[2026-07-31 23:48:34] START: Request found - Status: pending
+[2026-07-31 23:48:34] START: Request not accepted - Status: pending
+[2026-07-31 23:48:37] === ACCEPT CALL STARTED ===
+[2026-07-31 23:48:37] User ID: 1
+[2026-07-31 23:48:37] Request ID: 47
+[2026-07-31 23:48:37] ACCEPT: Request found - Status: pending
+[2026-07-31 23:48:37] ACCEPT: Creating VideoSDK room...
+[2026-07-31 23:48:37] === START CALL STARTED ===
+[2026-07-31 23:48:37] User ID: 2
+[2026-07-31 23:48:37] Request ID: 47
+[2026-07-31 23:48:37] ACCEPT: Room created: 658y-6swo-f6x7
+[2026-07-31 23:48:37] ACCEPT: Generating token...
+[2026-07-31 23:48:37] ACCEPT: Token generated: yes
+[2026-07-31 23:48:37] ACCEPT: Updated to accepted. Meeting ID: 658y-6swo-f6x7
+[2026-07-31 23:48:37] START: Request found - Status: accepted
+[2026-07-31 23:48:37] START: Client ID: 2, Influencer ID: 1
+[2026-07-31 23:48:37] START: Client balance: 7219
+[2026-07-31 23:48:37] START: Price per minute (from packages): 1
+[2026-07-31 23:48:37] START: Escrow hold applied - Amount: 1
+[2026-07-31 23:48:37] START: Wallet transaction logged
+[2026-07-31 23:48:37] START: meeting_id length: 14, meeting_token length: 281
+[2026-07-31 23:48:37] ACCEPT: SUCCESS
+[2026-07-31 23:48:37] START: video_calls row created - Call ID: 35
+[2026-07-31 23:48:37] START: SUCCESS - Call ID: 35
+[2026-07-31 23:48:39] === START CALL STARTED ===
+[2026-07-31 23:48:39] User ID: 1
+[2026-07-31 23:48:39] Request ID: 47
+[2026-07-31 23:48:39] START: Request found - Status: accepted
+[2026-07-31 23:48:39] START: Existing call found - Call ID: 35
+[2026-07-31 23:53:34] === START CALL STARTED ===
+[2026-07-31 23:53:34] User ID: 2
+[2026-07-31 23:53:34] Request ID: 48
+[2026-07-31 23:53:34] START: Request found - Status: pending
+[2026-07-31 23:53:34] START: Request not accepted - Status: pending
+[2026-07-31 23:53:37] === START CALL STARTED ===
+[2026-07-31 23:53:37] User ID: 2
+[2026-07-31 23:53:37] Request ID: 48
+[2026-07-31 23:53:37] START: Request found - Status: pending
+[2026-07-31 23:53:37] START: Request not accepted - Status: pending
+[2026-07-31 23:53:40] === START CALL STARTED ===
+[2026-07-31 23:53:40] User ID: 2
+[2026-07-31 23:53:40] Request ID: 48
+[2026-07-31 23:53:40] START: Request found - Status: pending
+[2026-07-31 23:53:40] START: Request not accepted - Status: pending
+[2026-07-31 23:53:43] === START CALL STARTED ===
+[2026-07-31 23:53:43] User ID: 2
+[2026-07-31 23:53:43] Request ID: 48
+[2026-07-31 23:53:43] START: Request found - Status: pending
+[2026-07-31 23:53:43] START: Request not accepted - Status: pending
+[2026-07-31 23:53:47] === START CALL STARTED ===
+[2026-07-31 23:53:47] User ID: 2
+[2026-07-31 23:53:47] Request ID: 48
+[2026-07-31 23:53:47] START: Request found - Status: pending
+[2026-07-31 23:53:47] START: Request not accepted - Status: pending
+[2026-07-31 23:53:50] === START CALL STARTED ===
+[2026-07-31 23:53:50] User ID: 2
+[2026-07-31 23:53:50] Request ID: 48
+[2026-07-31 23:53:50] START: Request found - Status: pending
+[2026-07-31 23:53:50] START: Request not accepted - Status: pending
+[2026-07-31 23:53:52] === START CALL STARTED ===
+[2026-07-31 23:53:52] User ID: 2
+[2026-07-31 23:53:52] Request ID: 48
+[2026-07-31 23:53:52] START: Request found - Status: pending
+[2026-07-31 23:53:52] START: Request not accepted - Status: pending
+[2026-07-31 23:53:55] === ACCEPT CALL STARTED ===
+[2026-07-31 23:53:55] User ID: 1
+[2026-07-31 23:53:55] Request ID: 48
+[2026-07-31 23:53:55] ACCEPT: Request found - Status: pending
+[2026-07-31 23:53:55] ACCEPT: Creating VideoSDK room...
+[2026-07-31 23:53:55] === START CALL STARTED ===
+[2026-07-31 23:53:55] User ID: 2
+[2026-07-31 23:53:55] Request ID: 48
+[2026-07-31 23:53:56] ACCEPT: Room created: 34sv-dq2n-le6e
+[2026-07-31 23:53:56] ACCEPT: Generating token...
+[2026-07-31 23:53:56] ACCEPT: Token generated: yes
+[2026-07-31 23:53:56] ACCEPT: Updated to accepted. Meeting ID: 34sv-dq2n-le6e
+[2026-07-31 23:53:56] START: Request found - Status: accepted
+[2026-07-31 23:53:56] START: Client ID: 2, Influencer ID: 1
+[2026-07-31 23:53:56] START: Client balance: 7214
+[2026-07-31 23:53:56] START: Price per minute (from packages): 1
+[2026-07-31 23:53:56] START: Escrow hold applied - Amount: 1
+[2026-07-31 23:53:56] START: Wallet transaction logged
+[2026-07-31 23:53:56] START: meeting_id length: 14, meeting_token length: 281
+[2026-07-31 23:53:56] START: video_calls row created - Call ID: 36
+[2026-07-31 23:53:56] ACCEPT: SUCCESS
+[2026-07-31 23:53:56] START: SUCCESS - Call ID: 36
+[2026-07-31 23:53:57] === START CALL STARTED ===
+[2026-07-31 23:53:57] User ID: 1
+[2026-07-31 23:53:57] Request ID: 48
+[2026-07-31 23:53:57] START: Request found - Status: accepted
+[2026-07-31 23:53:57] START: Existing call found - Call ID: 36
+[2026-08-01 00:03:39] === ACCEPT CALL STARTED ===
+[2026-08-01 00:03:39] User ID: 1
+[2026-08-01 00:03:39] Request ID: 49
+[2026-08-01 00:03:39] ACCEPT: Request found - Status: pending
+[2026-08-01 00:03:39] ACCEPT: Creating VideoSDK room...
+[2026-08-01 00:03:39] ACCEPT: Room created: 39qi-fipq-56zl
+[2026-08-01 00:03:39] ACCEPT: Generating token...
+[2026-08-01 00:03:39] ACCEPT: Token generated: yes
+[2026-08-01 00:03:40] ACCEPT: Updated to accepted. Meeting ID: 39qi-fipq-56zl
+[2026-08-01 00:03:40] === START CALL STARTED ===
+[2026-08-01 00:03:40] User ID: 2
+[2026-08-01 00:03:40] Request ID: 49
+[2026-08-01 00:03:40] START: Request found - Status: accepted
+[2026-08-01 00:03:40] START: Client ID: 2, Influencer ID: 1
+[2026-08-01 00:03:40] START: Client balance: 7209
+[2026-08-01 00:03:40] ACCEPT: SUCCESS
+[2026-08-01 00:03:40] START: Price per minute (from packages): 1
+[2026-08-01 00:03:40] START: Escrow hold applied - Amount: 1
+[2026-08-01 00:03:40] START: Wallet transaction logged
+[2026-08-01 00:03:40] START: meeting_id length: 14, meeting_token length: 281
+[2026-08-01 00:03:40] START: video_calls row created - Call ID: 37
+[2026-08-01 00:03:40] START: SUCCESS - Call ID: 37
+[2026-08-01 00:03:41] === START CALL STARTED ===
+[2026-08-01 00:03:41] User ID: 1
+[2026-08-01 00:03:41] Request ID: 49
+[2026-08-01 00:03:41] START: Request found - Status: accepted
+[2026-08-01 00:03:41] START: Existing call found - Call ID: 37
+[2026-08-01 00:10:00] === START CALL STARTED ===
+[2026-08-01 00:10:00] User ID: 2
+[2026-08-01 00:10:00] Request ID: 50
+[2026-08-01 00:10:00] START: Request found - Status: pending
+[2026-08-01 00:10:00] START: Request not accepted - Status: pending
+[2026-08-01 00:10:04] === START CALL STARTED ===
+[2026-08-01 00:10:04] User ID: 2
+[2026-08-01 00:10:04] Request ID: 50
+[2026-08-01 00:10:04] START: Request found - Status: pending
+[2026-08-01 00:10:04] START: Request not accepted - Status: pending
+[2026-08-01 00:10:04] === ACCEPT CALL STARTED ===
+[2026-08-01 00:10:04] User ID: 1
+[2026-08-01 00:10:04] Request ID: 50
+[2026-08-01 00:10:04] ACCEPT: Request found - Status: pending
+[2026-08-01 00:10:04] ACCEPT: Creating VideoSDK room...
+[2026-08-01 00:10:05] ACCEPT: Room created: six7-y9qv-t2v3
+[2026-08-01 00:10:05] ACCEPT: Generating token...
+[2026-08-01 00:10:05] ACCEPT: Token generated: yes
+[2026-08-01 00:10:05] ACCEPT: Updated to accepted. Meeting ID: six7-y9qv-t2v3
+[2026-08-01 00:10:05] ACCEPT: SUCCESS
+[2026-08-01 00:10:06] === START CALL STARTED ===
+[2026-08-01 00:10:06] User ID: 2
+[2026-08-01 00:10:06] Request ID: 50
+[2026-08-01 00:10:07] START: Request found - Status: accepted
+[2026-08-01 00:10:07] START: Client ID: 2, Influencer ID: 1
+[2026-08-01 00:10:07] START: Client balance: 7204
+[2026-08-01 00:10:07] START: Price per minute (from packages): 1
+[2026-08-01 00:10:07] START: Escrow hold applied - Amount: 1
+[2026-08-01 00:10:07] START: Wallet transaction logged
+[2026-08-01 00:10:07] START: meeting_id length: 14, meeting_token length: 281
+[2026-08-01 00:10:07] START: video_calls row created - Call ID: 38
+[2026-08-01 00:10:07] START: SUCCESS - Call ID: 38
+[2026-08-01 00:10:07] === START CALL STARTED ===
+[2026-08-01 00:10:07] User ID: 1
+[2026-08-01 00:10:07] Request ID: 50
+[2026-08-01 00:10:07] START: Request found - Status: accepted
+[2026-08-01 00:10:07] START: Existing call found - Call ID: 38
+[2026-08-01 00:59:18] === START CALL STARTED ===
+[2026-08-01 00:59:18] User ID: 2
+[2026-08-01 00:59:18] Request ID: 51
+[2026-08-01 00:59:18] START: Request found - Status: pending
+[2026-08-01 00:59:18] START: Request not accepted - Status: pending
+[2026-08-01 00:59:21] === START CALL STARTED ===
+[2026-08-01 00:59:21] User ID: 2
+[2026-08-01 00:59:21] Request ID: 51
+[2026-08-01 00:59:21] START: Request found - Status: pending
+[2026-08-01 00:59:21] START: Request not accepted - Status: pending
+[2026-08-01 00:59:22] === ACCEPT CALL STARTED ===
+[2026-08-01 00:59:22] User ID: 1
+[2026-08-01 00:59:22] Request ID: 51
+[2026-08-01 00:59:22] ACCEPT: Request found - Status: pending
+[2026-08-01 00:59:22] ACCEPT: Creating VideoSDK room...
+[2026-08-01 00:59:23] ACCEPT: Room created: ennx-bqxl-i7am
+[2026-08-01 00:59:23] ACCEPT: Generating token...
+[2026-08-01 00:59:23] ACCEPT: Token generated: yes
+[2026-08-01 00:59:23] ACCEPT: Updated to accepted. Meeting ID: ennx-bqxl-i7am
+[2026-08-01 00:59:23] ACCEPT: SUCCESS
+[2026-08-01 00:59:24] === START CALL STARTED ===
+[2026-08-01 00:59:24] User ID: 2
+[2026-08-01 00:59:24] Request ID: 51
+[2026-08-01 00:59:24] START: Request found - Status: accepted
+[2026-08-01 00:59:24] START: Client ID: 2, Influencer ID: 1
+[2026-08-01 00:59:24] START: Client balance: 7199
+[2026-08-01 00:59:24] START: Price per minute (from packages): 1
+[2026-08-01 00:59:24] START: Escrow hold applied - Amount: 1
+[2026-08-01 00:59:24] START: Wallet transaction logged
+[2026-08-01 00:59:24] START: meeting_id length: 14, meeting_token length: 281
+[2026-08-01 00:59:24] START: video_calls row created - Call ID: 39
+[2026-08-01 00:59:24] START: SUCCESS - Call ID: 39
+[2026-08-01 00:59:24] === START CALL STARTED ===
+[2026-08-01 00:59:24] User ID: 1
+[2026-08-01 00:59:24] Request ID: 51
+[2026-08-01 00:59:24] START: Request found - Status: accepted
+[2026-08-01 00:59:24] START: Existing call found - Call ID: 39
+[2026-08-03 09:47:48] === START CALL STARTED ===
+[2026-08-03 09:47:48] User ID: 2
+[2026-08-03 09:47:48] Request ID: 52
+[2026-08-03 09:47:48] START: Request found - Status: pending
+[2026-08-03 09:47:48] START: Request not accepted - Status: pending
+[2026-08-03 09:47:51] === START CALL STARTED ===
+[2026-08-03 09:47:51] User ID: 2
+[2026-08-03 09:47:51] Request ID: 52
+[2026-08-03 09:47:51] START: Request found - Status: pending
+[2026-08-03 09:47:51] START: Request not accepted - Status: pending
+[2026-08-03 09:47:55] === START CALL STARTED ===
+[2026-08-03 09:47:55] User ID: 2
+[2026-08-03 09:47:55] Request ID: 52
+[2026-08-03 09:47:55] START: Request found - Status: pending
+[2026-08-03 09:47:55] START: Request not accepted - Status: pending
+[2026-08-03 09:47:57] === START CALL STARTED ===
+[2026-08-03 09:47:57] User ID: 2
+[2026-08-03 09:47:57] Request ID: 52
+[2026-08-03 09:47:57] START: Request found - Status: pending
+[2026-08-03 09:47:57] START: Request not accepted - Status: pending
+[2026-08-03 09:48:00] === START CALL STARTED ===
+[2026-08-03 09:48:00] User ID: 2
+[2026-08-03 09:48:00] Request ID: 52
+[2026-08-03 09:48:00] START: Request found - Status: pending
+[2026-08-03 09:48:00] START: Request not accepted - Status: pending
+[2026-08-03 09:48:03] === START CALL STARTED ===
+[2026-08-03 09:48:03] User ID: 2
+[2026-08-03 09:48:03] Request ID: 52
+[2026-08-03 09:48:03] START: Request found - Status: pending
+[2026-08-03 09:48:03] START: Request not accepted - Status: pending
+[2026-08-03 09:48:06] === START CALL STARTED ===
+[2026-08-03 09:48:06] User ID: 2
+[2026-08-03 09:48:06] Request ID: 52
+[2026-08-03 09:48:06] START: Request found - Status: pending
+[2026-08-03 09:48:06] START: Request not accepted - Status: pending
+[2026-08-03 09:48:09] === START CALL STARTED ===
+[2026-08-03 09:48:09] User ID: 2
+[2026-08-03 09:48:09] Request ID: 52
+[2026-08-03 09:48:09] START: Request found - Status: pending
+[2026-08-03 09:48:09] START: Request not accepted - Status: pending
+[2026-08-03 09:48:12] === START CALL STARTED ===
+[2026-08-03 09:48:12] User ID: 2
+[2026-08-03 09:48:12] Request ID: 52
+[2026-08-03 09:48:12] START: Request found - Status: pending
+[2026-08-03 09:48:12] START: Request not accepted - Status: pending
+[2026-08-03 09:48:15] === START CALL STARTED ===
+[2026-08-03 09:48:15] User ID: 2
+[2026-08-03 09:48:15] Request ID: 52
+[2026-08-03 09:48:15] START: Request found - Status: pending
+[2026-08-03 09:48:15] START: Request not accepted - Status: pending
+[2026-08-03 09:48:18] === START CALL STARTED ===
+[2026-08-03 09:48:18] User ID: 2
+[2026-08-03 09:48:18] Request ID: 52
+[2026-08-03 09:48:18] START: Request found - Status: pending
+[2026-08-03 09:48:18] START: Request not accepted - Status: pending
+[2026-08-03 09:48:21] === START CALL STARTED ===
+[2026-08-03 09:48:21] User ID: 2
+[2026-08-03 09:48:21] Request ID: 52
+[2026-08-03 09:48:21] START: Request found - Status: pending
+[2026-08-03 09:48:21] START: Request not accepted - Status: pending
+[2026-08-03 09:48:23] === ACCEPT CALL STARTED ===
+[2026-08-03 09:48:23] User ID: 1
+[2026-08-03 09:48:23] Request ID: 52
+[2026-08-03 09:48:23] ACCEPT: Request found - Status: pending
+[2026-08-03 09:48:23] ACCEPT: Creating VideoSDK room...
+[2026-08-03 09:48:24] === START CALL STARTED ===
+[2026-08-03 09:48:24] User ID: 2
+[2026-08-03 09:48:24] Request ID: 52
+[2026-08-03 09:48:24] ACCEPT: Room created: q4mr-3unk-kkf0
+[2026-08-03 09:48:24] ACCEPT: Generating token...
+[2026-08-03 09:48:24] ACCEPT: Token generated: yes
+[2026-08-03 09:48:24] ACCEPT: Updated to accepted. Meeting ID: q4mr-3unk-kkf0
+[2026-08-03 09:48:24] START: Request found - Status: accepted
+[2026-08-03 09:48:24] START: Client ID: 2, Influencer ID: 1
+[2026-08-03 09:48:24] START: Client balance: 7234
+[2026-08-03 09:48:24] ACCEPT: SUCCESS
+[2026-08-03 09:48:24] START: Price per minute (from call_minute_costs): 6
+[2026-08-03 09:48:24] START: Escrow hold applied - Amount: 6
+[2026-08-03 09:48:24] START: Wallet transaction logged
+[2026-08-03 09:48:24] START: meeting_id length: 14, meeting_token length: 281
+[2026-08-03 09:48:24] START: video_calls row created - Call ID: 40
+[2026-08-03 09:48:24] START: SUCCESS - Call ID: 40
+[2026-08-03 09:48:26] === START CALL STARTED ===
+[2026-08-03 09:48:26] User ID: 1
+[2026-08-03 09:48:26] Request ID: 52
+[2026-08-03 09:48:26] START: Request found - Status: accepted
+[2026-08-03 09:48:26] START: Existing call found - Call ID: 40
+[2026-08-03 13:12:22] === START CALL STARTED ===
+[2026-08-03 13:12:22] User ID: 2
+[2026-08-03 13:12:22] Request ID: 53
+[2026-08-03 13:12:22] START: Request found - Status: pending
+[2026-08-03 13:12:22] START: Request not accepted - Status: pending
+[2026-08-03 13:12:25] === START CALL STARTED ===
+[2026-08-03 13:12:25] User ID: 2
+[2026-08-03 13:12:25] Request ID: 53
+[2026-08-03 13:12:25] START: Request found - Status: pending
+[2026-08-03 13:12:25] START: Request not accepted - Status: pending
+[2026-08-03 13:12:31] === START CALL STARTED ===
+[2026-08-03 13:12:31] User ID: 2
+[2026-08-03 13:12:31] Request ID: 53
+[2026-08-03 13:12:31] START: Request found - Status: pending
+[2026-08-03 13:12:31] START: Request not accepted - Status: pending
+[2026-08-03 13:12:31] === START CALL STARTED ===
+[2026-08-03 13:12:31] User ID: 2
+[2026-08-03 13:12:31] Request ID: 53
+[2026-08-03 13:12:31] START: Request found - Status: pending
+[2026-08-03 13:12:31] START: Request not accepted - Status: pending
+[2026-08-03 13:12:34] === START CALL STARTED ===
+[2026-08-03 13:12:34] User ID: 2
+[2026-08-03 13:12:34] Request ID: 53
+[2026-08-03 13:12:34] START: Request found - Status: pending
+[2026-08-03 13:12:34] START: Request not accepted - Status: pending
+[2026-08-03 13:12:38] === START CALL STARTED ===
+[2026-08-03 13:12:38] User ID: 2
+[2026-08-03 13:12:38] Request ID: 53
+[2026-08-03 13:12:38] START: Request found - Status: pending
+[2026-08-03 13:12:38] START: Request not accepted - Status: pending
+[2026-08-03 13:12:40] === START CALL STARTED ===
+[2026-08-03 13:12:40] User ID: 2
+[2026-08-03 13:12:40] Request ID: 53
+[2026-08-03 13:12:40] START: Request found - Status: pending
+[2026-08-03 13:12:40] START: Request not accepted - Status: pending
+[2026-08-03 13:12:45] === START CALL STARTED ===
+[2026-08-03 13:12:45] User ID: 2
+[2026-08-03 13:12:45] Request ID: 53
+[2026-08-03 13:12:45] START: Request found - Status: pending
+[2026-08-03 13:12:45] START: Request not accepted - Status: pending
+[2026-08-03 13:12:46] === START CALL STARTED ===
+[2026-08-03 13:12:46] User ID: 2
+[2026-08-03 13:12:46] Request ID: 53
+[2026-08-03 13:12:46] START: Request found - Status: pending
+[2026-08-03 13:12:46] START: Request not accepted - Status: pending
+[2026-08-03 13:12:49] === START CALL STARTED ===
+[2026-08-03 13:12:49] User ID: 2
+[2026-08-03 13:12:49] Request ID: 53
+[2026-08-03 13:12:49] START: Request found - Status: rejected
+[2026-08-03 13:12:49] START: Request not accepted - Status: rejected
+[2026-08-03 13:12:52] === START CALL STARTED ===
+[2026-08-03 13:12:52] User ID: 2
+[2026-08-03 13:12:52] Request ID: 53
+[2026-08-03 13:12:52] START: Request found - Status: rejected
+[2026-08-03 13:12:52] START: Request not accepted - Status: rejected
+[2026-08-03 13:12:57] === START CALL STARTED ===
+[2026-08-03 13:12:57] User ID: 2
+[2026-08-03 13:12:57] Request ID: 53
+[2026-08-03 13:12:57] START: Request found - Status: rejected
+[2026-08-03 13:12:57] START: Request not accepted - Status: rejected
+[2026-08-03 13:12:58] === START CALL STARTED ===
+[2026-08-03 13:12:58] User ID: 2
+[2026-08-03 13:12:58] Request ID: 53
+[2026-08-03 13:12:58] START: Request found - Status: rejected
+[2026-08-03 13:12:58] START: Request not accepted - Status: rejected
+[2026-08-03 13:13:01] === START CALL STARTED ===
+[2026-08-03 13:13:01] User ID: 2
+[2026-08-03 13:13:01] Request ID: 53
+[2026-08-03 13:13:01] START: Request found - Status: rejected
+[2026-08-03 13:13:01] START: Request not accepted - Status: rejected
+[2026-08-03 13:13:05] === START CALL STARTED ===
+[2026-08-03 13:13:05] User ID: 2
+[2026-08-03 13:13:05] Request ID: 53
+[2026-08-03 13:13:05] START: Request found - Status: rejected
+[2026-08-03 13:13:05] START: Request not accepted - Status: rejected
+[2026-08-03 13:13:07] === START CALL STARTED ===
+[2026-08-03 13:13:07] User ID: 2
+[2026-08-03 13:13:07] Request ID: 53
+[2026-08-03 13:13:07] START: Request found - Status: rejected
+[2026-08-03 13:13:07] START: Request not accepted - Status: rejected
+[2026-08-03 13:13:10] === START CALL STARTED ===
+[2026-08-03 13:13:10] User ID: 2
+[2026-08-03 13:13:10] Request ID: 53
+[2026-08-03 13:13:10] START: Request found - Status: rejected
+[2026-08-03 13:13:10] START: Request not accepted - Status: rejected
+[2026-08-03 13:13:13] === START CALL STARTED ===
+[2026-08-03 13:13:13] User ID: 2
+[2026-08-03 13:13:13] Request ID: 53
+[2026-08-03 13:13:13] START: Request found - Status: rejected
+[2026-08-03 13:13:13] START: Request not accepted - Status: rejected
+[2026-08-03 13:13:17] === START CALL STARTED ===
+[2026-08-03 13:13:17] User ID: 2
+[2026-08-03 13:13:17] Request ID: 53
+[2026-08-03 13:13:17] START: Request found - Status: rejected
+[2026-08-03 13:13:17] START: Request not accepted - Status: rejected
+[2026-08-03 13:13:19] === START CALL STARTED ===
+[2026-08-03 13:13:19] User ID: 2
+[2026-08-03 13:13:19] Request ID: 53
+[2026-08-03 13:13:19] START: Request found - Status: rejected
+[2026-08-03 13:13:19] START: Request not accepted - Status: rejected
+[2026-08-03 13:13:22] === START CALL STARTED ===
+[2026-08-03 13:13:22] User ID: 2
+[2026-08-03 13:13:22] Request ID: 53
+[2026-08-03 13:13:22] START: Request found - Status: rejected
+[2026-08-03 13:13:22] START: Request not accepted - Status: rejected
+[2026-08-03 13:13:25] === START CALL STARTED ===
+[2026-08-03 13:13:25] User ID: 2
+[2026-08-03 13:13:25] Request ID: 53
+[2026-08-03 13:13:25] START: Request found - Status: rejected
+[2026-08-03 13:13:25] START: Request not accepted - Status: rejected
+[2026-08-03 13:13:28] === START CALL STARTED ===
+[2026-08-03 13:13:28] User ID: 2
+[2026-08-03 13:13:28] Request ID: 53
+[2026-08-03 13:13:28] START: Request found - Status: rejected
+[2026-08-03 13:13:28] START: Request not accepted - Status: rejected
+[2026-08-03 13:13:31] === START CALL STARTED ===
+[2026-08-03 13:13:31] User ID: 2
+[2026-08-03 13:13:31] Request ID: 53
+[2026-08-03 13:13:31] START: Request found - Status: rejected
+[2026-08-03 13:13:31] START: Request not accepted - Status: rejected
+[2026-08-03 13:13:34] === START CALL STARTED ===
+[2026-08-03 13:13:34] User ID: 2
+[2026-08-03 13:13:34] Request ID: 53
+[2026-08-03 13:13:34] START: Request found - Status: rejected
+[2026-08-03 13:13:34] START: Request not accepted - Status: rejected
+[2026-08-03 13:13:37] === START CALL STARTED ===
+[2026-08-03 13:13:37] User ID: 2
+[2026-08-03 13:13:37] Request ID: 53
+[2026-08-03 13:13:37] START: Request found - Status: rejected
+[2026-08-03 13:13:37] START: Request not accepted - Status: rejected
+[2026-08-03 13:13:41] === START CALL STARTED ===
+[2026-08-03 13:13:41] User ID: 2
+[2026-08-03 13:13:41] Request ID: 53
+[2026-08-03 13:13:41] START: Request found - Status: rejected
+[2026-08-03 13:13:41] START: Request not accepted - Status: rejected
+[2026-08-03 13:13:43] === START CALL STARTED ===
+[2026-08-03 13:13:43] User ID: 2
+[2026-08-03 13:13:43] Request ID: 53
+[2026-08-03 13:13:43] START: Request found - Status: rejected
+[2026-08-03 13:13:43] START: Request not accepted - Status: rejected
+[2026-08-03 13:13:46] === START CALL STARTED ===
+[2026-08-03 13:13:46] User ID: 2
+[2026-08-03 13:13:46] Request ID: 53
+[2026-08-03 13:13:46] START: Request found - Status: rejected
+[2026-08-03 13:13:46] START: Request not accepted - Status: rejected
+[2026-08-03 13:13:49] === START CALL STARTED ===
+[2026-08-03 13:13:49] User ID: 2
+[2026-08-03 13:13:49] Request ID: 53
+[2026-08-03 13:13:49] START: Request found - Status: rejected
+[2026-08-03 13:13:49] START: Request not accepted - Status: rejected
+[2026-08-03 13:13:52] === START CALL STARTED ===
+[2026-08-03 13:13:52] User ID: 2
+[2026-08-03 13:13:52] Request ID: 53
+[2026-08-03 13:13:52] START: Request found - Status: rejected
+[2026-08-03 13:13:52] START: Request not accepted - Status: rejected
+[2026-08-03 13:13:55] === START CALL STARTED ===
+[2026-08-03 13:13:55] User ID: 2
+[2026-08-03 13:13:55] Request ID: 53
+[2026-08-03 13:13:55] START: Request found - Status: rejected
+[2026-08-03 13:13:55] START: Request not accepted - Status: rejected
+[2026-08-03 13:13:58] === START CALL STARTED ===
+[2026-08-03 13:13:58] User ID: 2
+[2026-08-03 13:13:58] Request ID: 53
+[2026-08-03 13:13:58] START: Request found - Status: rejected
+[2026-08-03 13:13:58] START: Request not accepted - Status: rejected
+[2026-08-03 13:14:01] === START CALL STARTED ===
+[2026-08-03 13:14:01] User ID: 2
+[2026-08-03 13:14:01] Request ID: 53
+[2026-08-03 13:14:01] START: Request found - Status: rejected
+[2026-08-03 13:14:01] START: Request not accepted - Status: rejected
+[2026-08-03 13:14:08] === START CALL STARTED ===
+[2026-08-03 13:14:08] User ID: 2
+[2026-08-03 13:14:08] Request ID: 53
+[2026-08-03 13:14:08] START: Request found - Status: rejected
+[2026-08-03 13:14:08] START: Request not accepted - Status: rejected
+[2026-08-03 13:14:10] === START CALL STARTED ===
+[2026-08-03 13:14:10] User ID: 2
+[2026-08-03 13:14:10] Request ID: 53
+[2026-08-03 13:14:10] START: Request found - Status: rejected
+[2026-08-03 13:14:10] START: Request not accepted - Status: rejected
+[2026-08-03 13:14:13] === START CALL STARTED ===
+[2026-08-03 13:14:13] User ID: 2
+[2026-08-03 13:14:13] Request ID: 53
+[2026-08-03 13:14:13] START: Request found - Status: rejected
+[2026-08-03 13:14:13] START: Request not accepted - Status: rejected
+[2026-08-03 13:14:13] === START CALL STARTED ===
+[2026-08-03 13:14:13] User ID: 2
+[2026-08-03 13:14:13] Request ID: 53
+[2026-08-03 13:14:13] START: Request found - Status: rejected
+[2026-08-03 13:14:13] START: Request not accepted - Status: rejected
+[2026-08-03 13:14:16] === START CALL STARTED ===
+[2026-08-03 13:14:16] User ID: 2
+[2026-08-03 13:14:16] Request ID: 53
+[2026-08-03 13:14:16] START: Request found - Status: rejected
+[2026-08-03 13:14:16] START: Request not accepted - Status: rejected
+[2026-08-03 13:14:23] === START CALL STARTED ===
+[2026-08-03 13:14:23] User ID: 2
+[2026-08-03 13:14:23] Request ID: 53
+[2026-08-03 13:14:23] START: Request found - Status: rejected
+[2026-08-03 13:14:23] START: Request not accepted - Status: rejected
+[2026-08-03 13:14:25] === START CALL STARTED ===
+[2026-08-03 13:14:25] User ID: 2
+[2026-08-03 13:14:25] Request ID: 53
+[2026-08-03 13:14:25] START: Request found - Status: rejected
+[2026-08-03 13:14:25] START: Request not accepted - Status: rejected
+[2026-08-03 13:14:28] === START CALL STARTED ===
+[2026-08-03 13:14:28] User ID: 2
+[2026-08-03 13:14:28] Request ID: 53
+[2026-08-03 13:14:28] START: Request found - Status: rejected
+[2026-08-03 13:14:28] START: Request not accepted - Status: rejected
+[2026-08-03 13:14:33] === START CALL STARTED ===
+[2026-08-03 13:14:33] User ID: 2
+[2026-08-03 13:14:33] Request ID: 53
+[2026-08-03 13:14:33] START: Request found - Status: rejected
+[2026-08-03 13:14:33] START: Request not accepted - Status: rejected
+[2026-08-03 13:14:37] === START CALL STARTED ===
+[2026-08-03 13:14:37] User ID: 2
+[2026-08-03 13:14:37] Request ID: 53
+[2026-08-03 13:14:37] START: Request found - Status: rejected
+[2026-08-03 13:14:37] START: Request not accepted - Status: rejected
+[2026-08-03 13:14:37] === START CALL STARTED ===
+[2026-08-03 13:14:37] User ID: 2
+[2026-08-03 13:14:37] Request ID: 53
+[2026-08-03 13:14:37] START: Request found - Status: rejected
+[2026-08-03 13:14:37] START: Request not accepted - Status: rejected
+[2026-08-03 13:14:37] === START CALL STARTED ===
+[2026-08-03 13:14:37] User ID: 2
+[2026-08-03 13:14:37] Request ID: 53
+[2026-08-03 13:14:37] START: Request found - Status: rejected
+[2026-08-03 13:14:37] START: Request not accepted - Status: rejected
+[2026-08-03 13:14:40] === START CALL STARTED ===
+[2026-08-03 13:14:40] User ID: 2
+[2026-08-03 13:14:40] Request ID: 53
+[2026-08-03 13:14:40] START: Request found - Status: rejected
+[2026-08-03 13:14:40] START: Request not accepted - Status: rejected
+[2026-08-03 13:14:43] === START CALL STARTED ===
+[2026-08-03 13:14:43] User ID: 2
+[2026-08-03 13:14:43] Request ID: 53
+[2026-08-03 13:14:43] START: Request found - Status: rejected
+[2026-08-03 13:14:43] START: Request not accepted - Status: rejected
+[2026-08-03 13:14:46] === START CALL STARTED ===
+[2026-08-03 13:14:46] User ID: 2
+[2026-08-03 13:14:46] Request ID: 53
+[2026-08-03 13:14:46] START: Request found - Status: rejected
+[2026-08-03 13:14:46] START: Request not accepted - Status: rejected
+[2026-08-03 13:14:49] === START CALL STARTED ===
+[2026-08-03 13:14:49] User ID: 2
+[2026-08-03 13:14:49] Request ID: 53
+[2026-08-03 13:14:49] START: Request found - Status: rejected
+[2026-08-03 13:14:49] START: Request not accepted - Status: rejected
+[2026-08-03 13:14:52] === START CALL STARTED ===
+[2026-08-03 13:14:52] User ID: 2
+[2026-08-03 13:14:52] Request ID: 53
+[2026-08-03 13:14:52] START: Request found - Status: rejected
+[2026-08-03 13:14:52] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:02] === START CALL STARTED ===
+[2026-08-03 13:15:02] User ID: 2
+[2026-08-03 13:15:02] Request ID: 53
+[2026-08-03 13:15:02] START: Request found - Status: rejected
+[2026-08-03 13:15:02] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:02] === START CALL STARTED ===
+[2026-08-03 13:15:02] User ID: 2
+[2026-08-03 13:15:02] Request ID: 53
+[2026-08-03 13:15:03] === START CALL STARTED ===
+[2026-08-03 13:15:03] User ID: 2
+[2026-08-03 13:15:03] Request ID: 53
+[2026-08-03 13:15:03] START: Request found - Status: rejected
+[2026-08-03 13:15:03] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:03] START: Request found - Status: rejected
+[2026-08-03 13:15:03] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:04] === START CALL STARTED ===
+[2026-08-03 13:15:04] User ID: 2
+[2026-08-03 13:15:04] Request ID: 53
+[2026-08-03 13:15:04] START: Request found - Status: rejected
+[2026-08-03 13:15:04] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:07] === START CALL STARTED ===
+[2026-08-03 13:15:07] User ID: 2
+[2026-08-03 13:15:07] Request ID: 53
+[2026-08-03 13:15:07] START: Request found - Status: rejected
+[2026-08-03 13:15:07] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:22] === START CALL STARTED ===
+[2026-08-03 13:15:22] User ID: 2
+[2026-08-03 13:15:22] Request ID: 53
+[2026-08-03 13:15:22] START: Request found - Status: rejected
+[2026-08-03 13:15:22] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:22] === START CALL STARTED ===
+[2026-08-03 13:15:22] User ID: 2
+[2026-08-03 13:15:22] Request ID: 53
+[2026-08-03 13:15:22] === START CALL STARTED ===
+[2026-08-03 13:15:22] User ID: 2
+[2026-08-03 13:15:22] Request ID: 53
+[2026-08-03 13:15:22] === START CALL STARTED ===
+[2026-08-03 13:15:22] User ID: 2
+[2026-08-03 13:15:22] Request ID: 53
+[2026-08-03 13:15:22] START: Request found - Status: rejected
+[2026-08-03 13:15:22] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:22] START: Request found - Status: rejected
+[2026-08-03 13:15:22] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:22] START: Request found - Status: rejected
+[2026-08-03 13:15:22] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:22] === START CALL STARTED ===
+[2026-08-03 13:15:22] User ID: 2
+[2026-08-03 13:15:22] Request ID: 53
+[2026-08-03 13:15:22] START: Request found - Status: rejected
+[2026-08-03 13:15:22] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:25] === START CALL STARTED ===
+[2026-08-03 13:15:25] User ID: 2
+[2026-08-03 13:15:25] Request ID: 53
+[2026-08-03 13:15:25] START: Request found - Status: rejected
+[2026-08-03 13:15:25] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:30] === START CALL STARTED ===
+[2026-08-03 13:15:30] User ID: 2
+[2026-08-03 13:15:30] Request ID: 53
+[2026-08-03 13:15:30] START: Request found - Status: rejected
+[2026-08-03 13:15:30] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:31] === START CALL STARTED ===
+[2026-08-03 13:15:31] User ID: 2
+[2026-08-03 13:15:31] Request ID: 53
+[2026-08-03 13:15:31] START: Request found - Status: rejected
+[2026-08-03 13:15:31] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:34] === START CALL STARTED ===
+[2026-08-03 13:15:34] User ID: 2
+[2026-08-03 13:15:34] Request ID: 53
+[2026-08-03 13:15:34] START: Request found - Status: rejected
+[2026-08-03 13:15:34] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:40] === START CALL STARTED ===
+[2026-08-03 13:15:40] User ID: 2
+[2026-08-03 13:15:40] Request ID: 53
+[2026-08-03 13:15:40] START: Request found - Status: rejected
+[2026-08-03 13:15:40] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:40] === START CALL STARTED ===
+[2026-08-03 13:15:40] User ID: 2
+[2026-08-03 13:15:40] Request ID: 53
+[2026-08-03 13:15:40] START: Request found - Status: rejected
+[2026-08-03 13:15:40] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:43] === START CALL STARTED ===
+[2026-08-03 13:15:43] User ID: 2
+[2026-08-03 13:15:43] Request ID: 53
+[2026-08-03 13:15:43] START: Request found - Status: rejected
+[2026-08-03 13:15:43] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:48] === START CALL STARTED ===
+[2026-08-03 13:15:48] User ID: 2
+[2026-08-03 13:15:48] Request ID: 53
+[2026-08-03 13:15:48] START: Request found - Status: rejected
+[2026-08-03 13:15:48] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:49] === START CALL STARTED ===
+[2026-08-03 13:15:49] User ID: 2
+[2026-08-03 13:15:49] Request ID: 53
+[2026-08-03 13:15:49] START: Request found - Status: rejected
+[2026-08-03 13:15:49] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:52] === START CALL STARTED ===
+[2026-08-03 13:15:52] User ID: 2
+[2026-08-03 13:15:52] Request ID: 53
+[2026-08-03 13:15:52] START: Request found - Status: rejected
+[2026-08-03 13:15:52] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:57] === START CALL STARTED ===
+[2026-08-03 13:15:57] User ID: 2
+[2026-08-03 13:15:57] Request ID: 53
+[2026-08-03 13:15:57] START: Request found - Status: rejected
+[2026-08-03 13:15:57] START: Request not accepted - Status: rejected
+[2026-08-03 13:15:58] === START CALL STARTED ===
+[2026-08-03 13:15:58] User ID: 2
+[2026-08-03 13:15:58] Request ID: 53
+[2026-08-03 13:15:58] START: Request found - Status: rejected
+[2026-08-03 13:15:58] START: Request not accepted - Status: rejected
+[2026-08-03 13:16:01] === START CALL STARTED ===
+[2026-08-03 13:16:01] User ID: 2
+[2026-08-03 13:16:01] Request ID: 53
+[2026-08-03 13:16:01] START: Request found - Status: rejected
+[2026-08-03 13:16:01] START: Request not accepted - Status: rejected
+[2026-08-03 13:16:04] === START CALL STARTED ===
+[2026-08-03 13:16:04] User ID: 2
+[2026-08-03 13:16:04] Request ID: 53
+[2026-08-03 13:16:04] START: Request found - Status: rejected
+[2026-08-03 13:16:04] START: Request not accepted - Status: rejected
+[2026-08-03 13:16:07] === START CALL STARTED ===
+[2026-08-03 13:16:07] User ID: 2
+[2026-08-03 13:16:07] Request ID: 53
+[2026-08-03 13:16:07] START: Request found - Status: rejected
+[2026-08-03 13:16:07] START: Request not accepted - Status: rejected
+[2026-08-03 13:16:13] === START CALL STARTED ===
+[2026-08-03 13:16:13] User ID: 2
+[2026-08-03 13:16:13] Request ID: 53
+[2026-08-03 13:16:13] START: Request found - Status: rejected
+[2026-08-03 13:16:13] START: Request not accepted - Status: rejected
+[2026-08-03 13:16:13] === START CALL STARTED ===
+[2026-08-03 13:16:13] User ID: 2
+[2026-08-03 13:16:13] Request ID: 53
+[2026-08-03 13:16:13] START: Request found - Status: rejected
+[2026-08-03 13:16:13] START: Request not accepted - Status: rejected
+[2026-08-03 13:16:16] === START CALL STARTED ===
+[2026-08-03 13:16:16] User ID: 2
+[2026-08-03 13:16:16] Request ID: 53
+[2026-08-03 13:16:16] START: Request found - Status: rejected
+[2026-08-03 13:16:16] START: Request not accepted - Status: rejected
+[2026-08-03 13:16:23] === START CALL STARTED ===
+[2026-08-03 13:16:23] User ID: 2
+[2026-08-03 13:16:23] Request ID: 53
+[2026-08-03 13:16:23] START: Request found - Status: rejected
+[2026-08-03 13:16:23] START: Request not accepted - Status: rejected
+[2026-08-03 13:16:25] === START CALL STARTED ===
+[2026-08-03 13:16:25] User ID: 2
+[2026-08-03 13:16:25] Request ID: 53
+[2026-08-03 13:16:25] START: Request found - Status: rejected
+[2026-08-03 13:16:25] START: Request not accepted - Status: rejected
+[2026-08-03 13:16:28] === START CALL STARTED ===
+[2026-08-03 13:16:28] User ID: 2
+[2026-08-03 13:16:28] Request ID: 53
+[2026-08-03 13:16:28] START: Request found - Status: rejected
+[2026-08-03 13:16:28] START: Request not accepted - Status: rejected
+[2026-08-03 13:16:31] === START CALL STARTED ===
+[2026-08-03 13:16:31] User ID: 2
+[2026-08-03 13:16:31] Request ID: 53
+[2026-08-03 13:16:31] START: Request found - Status: rejected
+[2026-08-03 13:16:31] START: Request not accepted - Status: rejected
+[2026-08-03 13:16:32] === START CALL STARTED ===
+[2026-08-03 13:16:32] User ID: 2
+[2026-08-03 13:16:32] Request ID: 53
+[2026-08-03 13:16:32] START: Request found - Status: rejected
+[2026-08-03 13:16:32] START: Request not accepted - Status: rejected
+[2026-08-03 13:16:34] === START CALL STARTED ===
+[2026-08-03 13:16:34] User ID: 2
+[2026-08-03 13:16:34] Request ID: 53
+[2026-08-03 13:16:34] START: Request found - Status: rejected
+[2026-08-03 13:16:34] START: Request not accepted - Status: rejected
+[2026-08-03 13:16:37] === START CALL STARTED ===
+[2026-08-03 13:16:37] User ID: 2
+[2026-08-03 13:16:37] Request ID: 53
+[2026-08-03 13:16:37] START: Request found - Status: rejected
+[2026-08-03 13:16:37] START: Request not accepted - Status: rejected
+[2026-08-03 13:16:40] === START CALL STARTED ===
+[2026-08-03 13:16:40] User ID: 2
+[2026-08-03 13:16:40] Request ID: 53
+[2026-08-03 13:16:40] START: Request found - Status: rejected
+[2026-08-03 13:16:40] START: Request not accepted - Status: rejected
+[2026-08-03 13:16:43] === START CALL STARTED ===
+[2026-08-03 13:16:43] User ID: 2
+[2026-08-03 13:16:43] Request ID: 53
+[2026-08-03 13:16:43] START: Request found - Status: rejected
+[2026-08-03 13:16:43] START: Request not accepted - Status: rejected
+[2026-08-03 13:16:46] === START CALL STARTED ===
+[2026-08-03 13:16:46] User ID: 2
+[2026-08-03 13:16:46] Request ID: 53
+[2026-08-03 13:16:46] START: Request found - Status: rejected
+[2026-08-03 13:16:46] START: Request not accepted - Status: rejected
+[2026-08-03 13:16:49] === START CALL STARTED ===
+[2026-08-03 13:16:49] User ID: 2
+[2026-08-03 13:16:49] Request ID: 53
+[2026-08-03 13:16:49] START: Request found - Status: rejected
+[2026-08-03 13:16:49] START: Request not accepted - Status: rejected
+[2026-08-03 13:16:55] === START CALL STARTED ===
+[2026-08-03 13:16:55] User ID: 2
+[2026-08-03 13:16:55] Request ID: 53
+[2026-08-03 13:16:55] START: Request found - Status: rejected
+[2026-08-03 13:16:55] START: Request not accepted - Status: rejected
+[2026-08-03 13:16:57] === START CALL STARTED ===
+[2026-08-03 13:16:57] User ID: 2
+[2026-08-03 13:16:57] Request ID: 53
+[2026-08-03 13:16:57] START: Request found - Status: rejected
+[2026-08-03 13:16:57] START: Request not accepted - Status: rejected
+[2026-08-03 13:16:58] === START CALL STARTED ===
+[2026-08-03 13:16:58] User ID: 2
+[2026-08-03 13:16:58] Request ID: 53
+[2026-08-03 13:16:58] START: Request found - Status: rejected
+[2026-08-03 13:16:58] START: Request not accepted - Status: rejected
+[2026-08-03 13:17:01] === START CALL STARTED ===
+[2026-08-03 13:17:01] User ID: 2
+[2026-08-03 13:17:01] Request ID: 53
+[2026-08-03 13:17:01] START: Request found - Status: rejected
+[2026-08-03 13:17:01] START: Request not accepted - Status: rejected
+[2026-08-03 13:17:04] === START CALL STARTED ===
+[2026-08-03 13:17:04] User ID: 2
+[2026-08-03 13:17:04] Request ID: 53
+[2026-08-03 13:17:04] START: Request found - Status: rejected
+[2026-08-03 13:17:04] START: Request not accepted - Status: rejected
+[2026-08-03 13:17:07] === START CALL STARTED ===
+[2026-08-03 13:17:07] User ID: 2
+[2026-08-03 13:17:07] Request ID: 53
+[2026-08-03 13:17:07] START: Request found - Status: rejected
+[2026-08-03 13:17:07] START: Request not accepted - Status: rejected
+[2026-08-03 13:17:10] === START CALL STARTED ===
+[2026-08-03 13:17:10] User ID: 2
+[2026-08-03 13:17:10] Request ID: 53
+[2026-08-03 13:17:10] START: Request found - Status: rejected
+[2026-08-03 13:17:10] START: Request not accepted - Status: rejected
+[2026-08-03 13:17:13] === START CALL STARTED ===
+[2026-08-03 13:17:13] User ID: 2
+[2026-08-03 13:17:13] Request ID: 53
+[2026-08-03 13:17:13] START: Request found - Status: rejected
+[2026-08-03 13:17:13] START: Request not accepted - Status: rejected
+[2026-08-03 13:17:17] === START CALL STARTED ===
+[2026-08-03 13:17:17] User ID: 2
+[2026-08-03 13:17:17] Request ID: 53
+[2026-08-03 13:17:17] START: Request found - Status: rejected
+[2026-08-03 13:17:17] START: Request not accepted - Status: rejected
+[2026-08-03 13:17:19] === START CALL STARTED ===
+[2026-08-03 13:17:19] User ID: 2
+[2026-08-03 13:17:19] Request ID: 53
+[2026-08-03 13:17:19] START: Request found - Status: rejected
+[2026-08-03 13:17:19] START: Request not accepted - Status: rejected
+[2026-08-03 13:17:22] === START CALL STARTED ===
+[2026-08-03 13:17:22] User ID: 2
+[2026-08-03 13:17:22] Request ID: 53
+[2026-08-03 13:17:22] START: Request found - Status: rejected
+[2026-08-03 13:17:22] START: Request not accepted - Status: rejected
+[2026-08-03 13:17:55] === START CALL STARTED ===
+[2026-08-03 13:17:55] User ID: 2
+[2026-08-03 13:17:55] Request ID: 53
+[2026-08-03 13:17:55] START: Request found - Status: rejected
+[2026-08-03 13:17:55] START: Request not accepted - Status: rejected
+[2026-08-03 13:17:55] === START CALL STARTED ===
+[2026-08-03 13:17:55] User ID: 2
+[2026-08-03 13:17:55] Request ID: 53
+[2026-08-03 13:17:55] START: Request found - Status: rejected
+[2026-08-03 13:17:55] === START CALL STARTED ===
+[2026-08-03 13:17:55] User ID: 2
+[2026-08-03 13:17:55] Request ID: 53
+[2026-08-03 13:17:55] START: Request not accepted - Status: rejected
+[2026-08-03 13:17:55] === START CALL STARTED ===
+[2026-08-03 13:17:55] User ID: 2
+[2026-08-03 13:17:55] Request ID: 53
+[2026-08-03 13:17:55] START: Request found - Status: rejected
+[2026-08-03 13:17:55] START: Request not accepted - Status: rejected
+[2026-08-03 13:17:55] === START CALL STARTED ===
+[2026-08-03 13:17:55] User ID: 2
+[2026-08-03 13:17:55] Request ID: 53
+[2026-08-03 13:17:55] START: Request found - Status: rejected
+[2026-08-03 13:17:55] START: Request found - Status: rejected
+[2026-08-03 13:17:55] START: Request not accepted - Status: rejected
+[2026-08-03 13:17:55] START: Request not accepted - Status: rejected
+[2026-08-03 13:17:56] === START CALL STARTED ===
+[2026-08-03 13:17:56] User ID: 2
+[2026-08-03 13:17:56] Request ID: 53
+[2026-08-03 13:17:56] START: Request found - Status: rejected
+[2026-08-03 13:17:56] START: Request not accepted - Status: rejected
+[2026-08-03 13:17:58] === START CALL STARTED ===
+[2026-08-03 13:17:58] User ID: 2
+[2026-08-03 13:17:58] Request ID: 53
+[2026-08-03 13:17:58] START: Request found - Status: rejected
+[2026-08-03 13:17:58] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:01] === START CALL STARTED ===
+[2026-08-03 13:18:01] User ID: 2
+[2026-08-03 13:18:01] Request ID: 53
+[2026-08-03 13:18:01] START: Request found - Status: rejected
+[2026-08-03 13:18:01] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:04] === START CALL STARTED ===
+[2026-08-03 13:18:04] User ID: 2
+[2026-08-03 13:18:04] Request ID: 53
+[2026-08-03 13:18:04] START: Request found - Status: rejected
+[2026-08-03 13:18:04] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:09] === START CALL STARTED ===
+[2026-08-03 13:18:09] User ID: 2
+[2026-08-03 13:18:09] Request ID: 53
+[2026-08-03 13:18:09] START: Request found - Status: rejected
+[2026-08-03 13:18:09] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:10] === START CALL STARTED ===
+[2026-08-03 13:18:10] User ID: 2
+[2026-08-03 13:18:10] Request ID: 53
+[2026-08-03 13:18:10] START: Request found - Status: rejected
+[2026-08-03 13:18:10] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:13] === START CALL STARTED ===
+[2026-08-03 13:18:13] User ID: 2
+[2026-08-03 13:18:13] Request ID: 53
+[2026-08-03 13:18:13] START: Request found - Status: rejected
+[2026-08-03 13:18:13] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:32] === START CALL STARTED ===
+[2026-08-03 13:18:32] User ID: 2
+[2026-08-03 13:18:32] Request ID: 53
+[2026-08-03 13:18:32] === START CALL STARTED ===
+[2026-08-03 13:18:32] User ID: 2
+[2026-08-03 13:18:32] Request ID: 53
+[2026-08-03 13:18:32] START: Request found - Status: rejected
+[2026-08-03 13:18:32] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:32] START: Request found - Status: rejected
+[2026-08-03 13:18:32] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:33] === START CALL STARTED ===
+[2026-08-03 13:18:33] User ID: 2
+[2026-08-03 13:18:33] Request ID: 53
+[2026-08-03 13:18:33] === START CALL STARTED ===
+[2026-08-03 13:18:33] User ID: 2
+[2026-08-03 13:18:33] Request ID: 53
+[2026-08-03 13:18:33] START: Request found - Status: rejected
+[2026-08-03 13:18:33] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:33] === START CALL STARTED ===
+[2026-08-03 13:18:33] User ID: 2
+[2026-08-03 13:18:33] Request ID: 53
+[2026-08-03 13:18:33] === START CALL STARTED ===
+[2026-08-03 13:18:33] User ID: 2
+[2026-08-03 13:18:33] Request ID: 53
+[2026-08-03 13:18:33] START: Request found - Status: rejected
+[2026-08-03 13:18:33] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:33] === START CALL STARTED ===
+[2026-08-03 13:18:33] User ID: 2
+[2026-08-03 13:18:33] Request ID: 53
+[2026-08-03 13:18:33] === START CALL STARTED ===
+[2026-08-03 13:18:33] User ID: 2
+[2026-08-03 13:18:33] Request ID: 53
+[2026-08-03 13:18:33] START: Request found - Status: rejected
+[2026-08-03 13:18:33] START: Request found - Status: rejected
+[2026-08-03 13:18:33] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:33] START: Request found - Status: rejected
+[2026-08-03 13:18:33] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:33] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:33] START: Request found - Status: rejected
+[2026-08-03 13:18:33] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:34] === START CALL STARTED ===
+[2026-08-03 13:18:34] User ID: 2
+[2026-08-03 13:18:34] Request ID: 53
+[2026-08-03 13:18:34] START: Request found - Status: rejected
+[2026-08-03 13:18:34] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:37] === START CALL STARTED ===
+[2026-08-03 13:18:37] User ID: 2
+[2026-08-03 13:18:37] Request ID: 53
+[2026-08-03 13:18:37] START: Request found - Status: rejected
+[2026-08-03 13:18:37] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:43] === START CALL STARTED ===
+[2026-08-03 13:18:43] User ID: 2
+[2026-08-03 13:18:43] Request ID: 53
+[2026-08-03 13:18:43] START: Request found - Status: rejected
+[2026-08-03 13:18:43] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:44] === START CALL STARTED ===
+[2026-08-03 13:18:44] User ID: 2
+[2026-08-03 13:18:44] Request ID: 53
+[2026-08-03 13:18:44] START: Request found - Status: rejected
+[2026-08-03 13:18:44] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:48] === START CALL STARTED ===
+[2026-08-03 13:18:48] User ID: 2
+[2026-08-03 13:18:48] Request ID: 53
+[2026-08-03 13:18:48] START: Request found - Status: rejected
+[2026-08-03 13:18:48] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:50] === START CALL STARTED ===
+[2026-08-03 13:18:50] User ID: 2
+[2026-08-03 13:18:50] Request ID: 53
+[2026-08-03 13:18:50] START: Request found - Status: rejected
+[2026-08-03 13:18:50] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:52] === START CALL STARTED ===
+[2026-08-03 13:18:52] User ID: 2
+[2026-08-03 13:18:52] Request ID: 53
+[2026-08-03 13:18:52] START: Request found - Status: rejected
+[2026-08-03 13:18:52] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:55] === START CALL STARTED ===
+[2026-08-03 13:18:55] User ID: 2
+[2026-08-03 13:18:55] Request ID: 53
+[2026-08-03 13:18:55] START: Request found - Status: rejected
+[2026-08-03 13:18:55] START: Request not accepted - Status: rejected
+[2026-08-03 13:18:58] === START CALL STARTED ===
+[2026-08-03 13:18:58] User ID: 2
+[2026-08-03 13:18:58] Request ID: 53
+[2026-08-03 13:18:58] START: Request found - Status: rejected
+[2026-08-03 13:18:58] START: Request not accepted - Status: rejected
+[2026-08-03 13:19:01] === START CALL STARTED ===
+[2026-08-03 13:19:01] User ID: 2
+[2026-08-03 13:19:01] Request ID: 53
+[2026-08-03 13:19:01] START: Request found - Status: rejected
+[2026-08-03 13:19:01] START: Request not accepted - Status: rejected
+[2026-08-03 13:19:04] === START CALL STARTED ===
+[2026-08-03 13:19:04] User ID: 2
+[2026-08-03 13:19:04] Request ID: 53
+[2026-08-03 13:19:04] START: Request found - Status: rejected
+[2026-08-03 13:19:04] START: Request not accepted - Status: rejected
+[2026-08-03 13:19:07] === START CALL STARTED ===
+[2026-08-03 13:19:07] User ID: 2
+[2026-08-03 13:19:07] Request ID: 53
+[2026-08-03 13:19:07] START: Request found - Status: rejected
+[2026-08-03 13:19:07] START: Request not accepted - Status: rejected
+[2026-08-03 13:19:10] === START CALL STARTED ===
+[2026-08-03 13:19:10] User ID: 2
+[2026-08-03 13:19:10] Request ID: 53
+[2026-08-03 13:19:10] START: Request found - Status: rejected
+[2026-08-03 13:19:10] START: Request not accepted - Status: rejected
+[2026-08-03 13:19:13] === START CALL STARTED ===
+[2026-08-03 13:19:13] User ID: 2
+[2026-08-03 13:19:13] Request ID: 53
+[2026-08-03 13:19:13] START: Request found - Status: rejected
+[2026-08-03 13:19:13] START: Request not accepted - Status: rejected
+[2026-08-03 13:19:16] === START CALL STARTED ===
+[2026-08-03 13:19:16] User ID: 2
+[2026-08-03 13:19:16] Request ID: 53
+[2026-08-03 13:19:16] START: Request found - Status: rejected
+[2026-08-03 13:19:16] START: Request not accepted - Status: rejected
+[2026-08-03 13:19:19] === START CALL STARTED ===
+[2026-08-03 13:19:19] User ID: 2
+[2026-08-03 13:19:19] Request ID: 53
+[2026-08-03 13:19:19] START: Request found - Status: rejected
+[2026-08-03 13:19:19] START: Request not accepted - Status: rejected
+[2026-08-03 13:19:22] === START CALL STARTED ===
+[2026-08-03 13:19:22] User ID: 2
+[2026-08-03 13:19:22] Request ID: 53
+[2026-08-03 13:19:22] START: Request found - Status: rejected
+[2026-08-03 13:19:22] START: Request not accepted - Status: rejected
+[2026-08-03 13:19:25] === START CALL STARTED ===
+[2026-08-03 13:19:25] User ID: 2
+[2026-08-03 13:19:25] Request ID: 53
+[2026-08-03 13:19:25] START: Request found - Status: rejected
+[2026-08-03 13:19:25] START: Request not accepted - Status: rejected
+[2026-08-03 13:19:28] === START CALL STARTED ===
+[2026-08-03 13:19:28] User ID: 2
+[2026-08-03 13:19:28] Request ID: 53
+[2026-08-03 13:19:28] START: Request found - Status: rejected
+[2026-08-03 13:19:28] START: Request not accepted - Status: rejected
+[2026-08-03 13:19:31] === START CALL STARTED ===
+[2026-08-03 13:19:31] User ID: 2
+[2026-08-03 13:19:31] Request ID: 53
+[2026-08-03 13:19:31] START: Request found - Status: rejected
+[2026-08-03 13:19:31] START: Request not accepted - Status: rejected
+[2026-08-03 13:19:34] === START CALL STARTED ===
+[2026-08-03 13:19:34] User ID: 2
+[2026-08-03 13:19:34] Request ID: 53
+[2026-08-03 13:19:34] START: Request found - Status: rejected
+[2026-08-03 13:19:34] START: Request not accepted - Status: rejected
+[2026-08-03 13:19:37] === START CALL STARTED ===
+[2026-08-03 13:19:37] User ID: 2
+[2026-08-03 13:19:37] Request ID: 53
+[2026-08-03 13:19:37] START: Request found - Status: rejected
+[2026-08-03 13:19:37] START: Request not accepted - Status: rejected
+[2026-08-03 13:19:40] === START CALL STARTED ===
+[2026-08-03 13:19:40] User ID: 2
+[2026-08-03 13:19:40] Request ID: 53
+[2026-08-03 13:19:40] START: Request found - Status: rejected
+[2026-08-03 13:19:40] START: Request not accepted - Status: rejected
+[2026-08-03 13:19:43] === START CALL STARTED ===
+[2026-08-03 13:19:43] User ID: 2
+[2026-08-03 13:19:43] Request ID: 53
+[2026-08-03 13:19:43] START: Request found - Status: rejected
+[2026-08-03 13:19:43] START: Request not accepted - Status: rejected
+[2026-08-03 13:19:46] === START CALL STARTED ===
+[2026-08-03 13:19:46] User ID: 2
+[2026-08-03 13:19:46] Request ID: 53
+[2026-08-03 13:19:46] START: Request found - Status: rejected
+[2026-08-03 13:19:46] START: Request not accepted - Status: rejected
+[2026-08-03 13:19:49] === START CALL STARTED ===
+[2026-08-03 13:19:49] User ID: 2
+[2026-08-03 13:19:49] Request ID: 53
+[2026-08-03 13:19:49] START: Request found - Status: rejected
+[2026-08-03 13:19:49] START: Request not accepted - Status: rejected
+[2026-08-03 13:19:52] === START CALL STARTED ===
+[2026-08-03 13:19:52] User ID: 2
+[2026-08-03 13:19:52] Request ID: 53
+[2026-08-03 13:19:52] START: Request found - Status: rejected
+[2026-08-03 13:19:52] START: Request not accepted - Status: rejected
+[2026-08-03 13:19:55] === START CALL STARTED ===
+[2026-08-03 13:19:55] User ID: 2
+[2026-08-03 13:19:55] Request ID: 53
+[2026-08-03 13:19:55] START: Request found - Status: rejected
+[2026-08-03 13:19:55] START: Request not accepted - Status: rejected
+[2026-08-03 13:19:58] === START CALL STARTED ===
+[2026-08-03 13:19:58] User ID: 2
+[2026-08-03 13:19:58] Request ID: 53
+[2026-08-03 13:19:58] START: Request found - Status: rejected
+[2026-08-03 13:19:58] START: Request not accepted - Status: rejected
+[2026-08-03 13:20:01] === START CALL STARTED ===
+[2026-08-03 13:20:01] User ID: 2
+[2026-08-03 13:20:01] Request ID: 53
+[2026-08-03 13:20:01] START: Request found - Status: rejected
+[2026-08-03 13:20:01] START: Request not accepted - Status: rejected
+[2026-08-03 13:20:05] === START CALL STARTED ===
+[2026-08-03 13:20:05] User ID: 2
+[2026-08-03 13:20:05] Request ID: 53
+[2026-08-03 13:20:05] START: Request found - Status: rejected
+[2026-08-03 13:20:05] START: Request not accepted - Status: rejected
+[2026-08-03 13:20:07] === START CALL STARTED ===
+[2026-08-03 13:20:07] User ID: 2
+[2026-08-03 13:20:07] Request ID: 53
+[2026-08-03 13:20:07] START: Request found - Status: rejected
+[2026-08-03 13:20:07] START: Request not accepted - Status: rejected
+[2026-08-03 13:20:10] === START CALL STARTED ===
+[2026-08-03 13:20:10] User ID: 2
+[2026-08-03 13:20:10] Request ID: 53
+[2026-08-03 13:20:10] START: Request found - Status: rejected
+[2026-08-03 13:20:10] START: Request not accepted - Status: rejected
+[2026-08-03 13:20:13] === START CALL STARTED ===
+[2026-08-03 13:20:13] User ID: 2
+[2026-08-03 13:20:13] Request ID: 53
+[2026-08-03 13:20:13] START: Request found - Status: rejected
+[2026-08-03 13:20:13] START: Request not accepted - Status: rejected
+[2026-08-03 13:20:16] === START CALL STARTED ===
+[2026-08-03 13:20:16] User ID: 2
+[2026-08-03 13:20:16] Request ID: 53
+[2026-08-03 13:20:16] START: Request found - Status: rejected
+[2026-08-03 13:20:16] START: Request not accepted - Status: rejected
+[2026-08-03 13:22:29] === START CALL STARTED ===
+[2026-08-03 13:22:29] User ID: 2
+[2026-08-03 13:22:29] Request ID: 54
+[2026-08-03 13:22:29] START: Request found - Status: pending
+[2026-08-03 13:22:29] START: Request not accepted - Status: pending
+[2026-08-03 13:22:32] === START CALL STARTED ===
+[2026-08-03 13:22:32] User ID: 2
+[2026-08-03 13:22:32] Request ID: 54
+[2026-08-03 13:22:32] START: Request found - Status: pending
+[2026-08-03 13:22:32] START: Request not accepted - Status: pending
+[2026-08-03 13:22:35] === START CALL STARTED ===
+[2026-08-03 13:22:35] User ID: 2
+[2026-08-03 13:22:35] Request ID: 54
+[2026-08-03 13:22:35] START: Request found - Status: pending
+[2026-08-03 13:22:35] START: Request not accepted - Status: pending
+[2026-08-03 13:22:38] === START CALL STARTED ===
+[2026-08-03 13:22:38] User ID: 2
+[2026-08-03 13:22:38] Request ID: 54
+[2026-08-03 13:22:38] START: Request found - Status: pending
+[2026-08-03 13:22:38] START: Request not accepted - Status: pending
+[2026-08-03 13:22:41] === START CALL STARTED ===
+[2026-08-03 13:22:41] User ID: 2
+[2026-08-03 13:22:41] Request ID: 54
+[2026-08-03 13:22:41] START: Request found - Status: pending
+[2026-08-03 13:22:41] START: Request not accepted - Status: pending
+[2026-08-03 13:22:44] === START CALL STARTED ===
+[2026-08-03 13:22:44] User ID: 2
+[2026-08-03 13:22:44] Request ID: 54
+[2026-08-03 13:22:44] START: Request found - Status: pending
+[2026-08-03 13:22:44] START: Request not accepted - Status: pending
+[2026-08-03 13:22:47] === START CALL STARTED ===
+[2026-08-03 13:22:47] User ID: 2
+[2026-08-03 13:22:47] Request ID: 54
+[2026-08-03 13:22:47] START: Request found - Status: pending
+[2026-08-03 13:22:47] START: Request not accepted - Status: pending
+[2026-08-03 13:22:50] === START CALL STARTED ===
+[2026-08-03 13:22:50] User ID: 2
+[2026-08-03 13:22:50] Request ID: 54
+[2026-08-03 13:22:50] START: Request found - Status: pending
+[2026-08-03 13:22:50] START: Request not accepted - Status: pending
+[2026-08-03 13:22:53] === START CALL STARTED ===
+[2026-08-03 13:22:53] User ID: 2
+[2026-08-03 13:22:53] Request ID: 54
+[2026-08-03 13:22:53] START: Request found - Status: pending
+[2026-08-03 13:22:53] START: Request not accepted - Status: pending
+[2026-08-03 13:22:56] === START CALL STARTED ===
+[2026-08-03 13:22:56] User ID: 2
+[2026-08-03 13:22:56] Request ID: 54
+[2026-08-03 13:22:56] START: Request found - Status: pending
+[2026-08-03 13:22:56] START: Request not accepted - Status: pending
+[2026-08-03 13:22:59] === START CALL STARTED ===
+[2026-08-03 13:22:59] User ID: 2
+[2026-08-03 13:22:59] Request ID: 54
+[2026-08-03 13:22:59] START: Request found - Status: pending
+[2026-08-03 13:22:59] START: Request not accepted - Status: pending
+[2026-08-03 13:23:02] === START CALL STARTED ===
+[2026-08-03 13:23:02] User ID: 2
+[2026-08-03 13:23:02] Request ID: 54
+[2026-08-03 13:23:02] START: Request found - Status: pending
+[2026-08-03 13:23:02] START: Request not accepted - Status: pending
+[2026-08-03 13:23:06] === START CALL STARTED ===
+[2026-08-03 13:23:06] User ID: 2
+[2026-08-03 13:23:06] Request ID: 54
+[2026-08-03 13:23:06] START: Request found - Status: pending
+[2026-08-03 13:23:06] START: Request not accepted - Status: pending
+[2026-08-03 13:23:08] === START CALL STARTED ===
+[2026-08-03 13:23:08] User ID: 2
+[2026-08-03 13:23:08] Request ID: 54
+[2026-08-03 13:23:08] START: Request found - Status: pending
+[2026-08-03 13:23:08] START: Request not accepted - Status: pending
+[2026-08-03 13:23:11] === START CALL STARTED ===
+[2026-08-03 13:23:11] User ID: 2
+[2026-08-03 13:23:11] Request ID: 54
+[2026-08-03 13:23:11] START: Request found - Status: pending
+[2026-08-03 13:23:11] START: Request not accepted - Status: pending
+[2026-08-03 13:23:14] === START CALL STARTED ===
+[2026-08-03 13:23:14] User ID: 2
+[2026-08-03 13:23:14] Request ID: 54
+[2026-08-03 13:23:14] START: Request found - Status: pending
+[2026-08-03 13:23:14] START: Request not accepted - Status: pending
+[2026-08-03 13:23:17] === START CALL STARTED ===
+[2026-08-03 13:23:17] User ID: 2
+[2026-08-03 13:23:17] Request ID: 54
+[2026-08-03 13:23:17] START: Request found - Status: pending
+[2026-08-03 13:23:17] START: Request not accepted - Status: pending
+[2026-08-03 13:23:20] === START CALL STARTED ===
+[2026-08-03 13:23:20] User ID: 2
+[2026-08-03 13:23:20] Request ID: 54
+[2026-08-03 13:23:20] START: Request found - Status: pending
+[2026-08-03 13:23:20] START: Request not accepted - Status: pending
+[2026-08-03 13:23:23] === START CALL STARTED ===
+[2026-08-03 13:23:23] User ID: 2
+[2026-08-03 13:23:23] Request ID: 54
+[2026-08-03 13:23:23] START: Request found - Status: pending
+[2026-08-03 13:23:23] START: Request not accepted - Status: pending
+[2026-08-03 13:23:26] === START CALL STARTED ===
+[2026-08-03 13:23:26] User ID: 2
+[2026-08-03 13:23:26] Request ID: 54
+[2026-08-03 13:23:26] START: Request found - Status: pending
+[2026-08-03 13:23:26] START: Request not accepted - Status: pending
+[2026-08-03 13:23:29] === START CALL STARTED ===
+[2026-08-03 13:23:29] User ID: 2
+[2026-08-03 13:23:29] Request ID: 54
+[2026-08-03 13:23:29] START: Request found - Status: pending
+[2026-08-03 13:23:29] START: Request not accepted - Status: pending
+[2026-08-03 13:23:32] === START CALL STARTED ===
+[2026-08-03 13:23:32] User ID: 2
+[2026-08-03 13:23:32] Request ID: 54
+[2026-08-03 13:23:32] START: Request found - Status: pending
+[2026-08-03 13:23:32] START: Request not accepted - Status: pending
+[2026-08-03 13:23:35] === START CALL STARTED ===
+[2026-08-03 13:23:35] User ID: 2
+[2026-08-03 13:23:35] Request ID: 54
+[2026-08-03 13:23:35] START: Request found - Status: pending
+[2026-08-03 13:23:35] START: Request not accepted - Status: pending
+[2026-08-03 13:23:38] === START CALL STARTED ===
+[2026-08-03 13:23:38] User ID: 2
+[2026-08-03 13:23:38] Request ID: 54
+[2026-08-03 13:23:38] START: Request found - Status: pending
+[2026-08-03 13:23:38] START: Request not accepted - Status: pending
+[2026-08-03 13:23:41] === START CALL STARTED ===
+[2026-08-03 13:23:41] User ID: 2
+[2026-08-03 13:23:41] Request ID: 54
+[2026-08-03 13:23:41] START: Request found - Status: pending
+[2026-08-03 13:23:41] START: Request not accepted - Status: pending
+[2026-08-03 13:23:44] === START CALL STARTED ===
+[2026-08-03 13:23:44] User ID: 2
+[2026-08-03 13:23:44] Request ID: 54
+[2026-08-03 13:23:44] START: Request found - Status: pending
+[2026-08-03 13:23:44] START: Request not accepted - Status: pending
+[2026-08-03 13:23:48] === START CALL STARTED ===
+[2026-08-03 13:23:48] User ID: 2
+[2026-08-03 13:23:48] Request ID: 54
+[2026-08-03 13:23:48] START: Request found - Status: pending
+[2026-08-03 13:23:48] START: Request not accepted - Status: pending
+[2026-08-03 13:23:50] === START CALL STARTED ===
+[2026-08-03 13:23:50] User ID: 2
+[2026-08-03 13:23:50] Request ID: 54
+[2026-08-03 13:23:50] START: Request found - Status: pending
+[2026-08-03 13:23:50] START: Request not accepted - Status: pending
+[2026-08-03 13:23:53] === START CALL STARTED ===
+[2026-08-03 13:23:53] User ID: 2
+[2026-08-03 13:23:53] Request ID: 54
+[2026-08-03 13:23:53] START: Request found - Status: pending
+[2026-08-03 13:23:53] START: Request not accepted - Status: pending
+[2026-08-03 13:23:56] === START CALL STARTED ===
+[2026-08-03 13:23:56] User ID: 2
+[2026-08-03 13:23:56] Request ID: 54
+[2026-08-03 13:23:56] START: Request found - Status: pending
+[2026-08-03 13:23:56] START: Request not accepted - Status: pending
+[2026-08-03 13:23:59] === START CALL STARTED ===
+[2026-08-03 13:23:59] User ID: 2
+[2026-08-03 13:23:59] Request ID: 54
+[2026-08-03 13:23:59] START: Request found - Status: pending
+[2026-08-03 13:23:59] START: Request not accepted - Status: pending
+[2026-08-03 13:24:03] === START CALL STARTED ===
+[2026-08-03 13:24:03] User ID: 2
+[2026-08-03 13:24:03] Request ID: 54
+[2026-08-03 13:24:03] START: Request found - Status: pending
+[2026-08-03 13:24:03] START: Request not accepted - Status: pending
+[2026-08-03 13:24:07] === START CALL STARTED ===
+[2026-08-03 13:24:07] User ID: 2
+[2026-08-03 13:24:07] Request ID: 54
+[2026-08-03 13:24:07] START: Request found - Status: pending
+[2026-08-03 13:24:07] START: Request not accepted - Status: pending
+[2026-08-03 13:24:18] === START CALL STARTED ===
+[2026-08-03 13:24:18] User ID: 2
+[2026-08-03 13:24:18] Request ID: 54
+[2026-08-03 13:24:18] START: Request found - Status: pending
+[2026-08-03 13:24:18] START: Request not accepted - Status: pending
+[2026-08-03 13:24:20] === START CALL STARTED ===
+[2026-08-03 13:24:20] User ID: 2
+[2026-08-03 13:24:20] Request ID: 54
+[2026-08-03 13:24:20] START: Request found - Status: pending
+[2026-08-03 13:24:20] START: Request not accepted - Status: pending
+[2026-08-03 13:24:21] === ACCEPT CALL STARTED ===
+[2026-08-03 13:24:21] User ID: 1
+[2026-08-03 13:24:21] Request ID: 54
+[2026-08-03 13:24:21] ACCEPT: Request found - Status: pending
+[2026-08-03 13:24:21] ACCEPT: Creating VideoSDK room...
+[2026-08-03 13:24:22] ACCEPT: Room created: r2k7-h62j-974n
+[2026-08-03 13:24:22] ACCEPT: Generating token...
+[2026-08-03 13:24:22] ACCEPT: Token generated: yes
+[2026-08-03 13:24:22] ACCEPT: Updated to accepted. Meeting ID: r2k7-h62j-974n
+[2026-08-03 13:24:22] ACCEPT: SUCCESS
+[2026-08-03 13:24:23] === START CALL STARTED ===
+[2026-08-03 13:24:23] User ID: 2
+[2026-08-03 13:24:23] Request ID: 54
+[2026-08-03 13:24:23] START: Request found - Status: accepted
+[2026-08-03 13:24:23] START: Client ID: 2, Influencer ID: 1
+[2026-08-03 13:24:23] START: Client balance: 7204
+[2026-08-03 13:24:23] START: Price per minute (from call_minute_costs): 6
+[2026-08-03 13:24:23] START: Escrow hold applied - Amount: 6
+[2026-08-03 13:24:23] START: Wallet transaction logged
+[2026-08-03 13:24:23] START: meeting_id length: 14, meeting_token length: 281
+[2026-08-03 13:24:23] START: video_calls row created - Call ID: 41
+[2026-08-03 13:24:23] START: SUCCESS - Call ID: 41
+[2026-08-03 13:24:24] === START CALL STARTED ===
+[2026-08-03 13:24:24] User ID: 1
+[2026-08-03 13:24:24] Request ID: 54
+[2026-08-03 13:24:24] START: Request found - Status: accepted
+[2026-08-03 13:24:24] START: Existing call found - Call ID: 41
+[2026-08-03 21:30:45] === START CALL STARTED ===
+[2026-08-03 21:30:45] User ID: 2
+[2026-08-03 21:30:45] Request ID: 55
+[2026-08-03 21:30:45] START: Request found - Status: pending
+[2026-08-03 21:30:45] START: Request not accepted - Status: pending
+[2026-08-03 21:30:48] === START CALL STARTED ===
+[2026-08-03 21:30:48] User ID: 2
+[2026-08-03 21:30:48] Request ID: 55
+[2026-08-03 21:30:48] START: Request found - Status: pending
+[2026-08-03 21:30:48] START: Request not accepted - Status: pending
+[2026-08-03 21:30:51] === START CALL STARTED ===
+[2026-08-03 21:30:51] User ID: 2
+[2026-08-03 21:30:51] Request ID: 55
+[2026-08-03 21:30:51] START: Request found - Status: pending
+[2026-08-03 21:30:51] START: Request not accepted - Status: pending
+[2026-08-03 21:30:54] === START CALL STARTED ===
+[2026-08-03 21:30:54] User ID: 2
+[2026-08-03 21:30:54] Request ID: 55
+[2026-08-03 21:30:54] START: Request found - Status: pending
+[2026-08-03 21:30:54] START: Request not accepted - Status: pending
+[2026-08-03 21:30:57] === START CALL STARTED ===
+[2026-08-03 21:30:57] User ID: 2
+[2026-08-03 21:30:57] Request ID: 55
+[2026-08-03 21:30:57] START: Request found - Status: pending
+[2026-08-03 21:30:57] START: Request not accepted - Status: pending
+[2026-08-03 21:31:01] === START CALL STARTED ===
+[2026-08-03 21:31:01] User ID: 2
+[2026-08-03 21:31:01] Request ID: 55
+[2026-08-03 21:31:01] START: Request found - Status: pending
+[2026-08-03 21:31:01] START: Request not accepted - Status: pending
+[2026-08-03 21:31:04] === START CALL STARTED ===
+[2026-08-03 21:31:04] User ID: 2
+[2026-08-03 21:31:04] Request ID: 55
+[2026-08-03 21:31:04] START: Request found - Status: pending
+[2026-08-03 21:31:04] START: Request not accepted - Status: pending
+[2026-08-03 21:31:08] === START CALL STARTED ===
+[2026-08-03 21:31:08] User ID: 2
+[2026-08-03 21:31:08] Request ID: 55
+[2026-08-03 21:31:08] START: Request found - Status: pending
+[2026-08-03 21:31:08] START: Request not accepted - Status: pending
+[2026-08-03 21:31:09] === START CALL STARTED ===
+[2026-08-03 21:31:09] User ID: 2
+[2026-08-03 21:31:09] Request ID: 55
+[2026-08-03 21:31:09] START: Request found - Status: pending
+[2026-08-03 21:31:09] START: Request not accepted - Status: pending
+[2026-08-03 21:31:13] === START CALL STARTED ===
+[2026-08-03 21:31:13] User ID: 2
+[2026-08-03 21:31:13] Request ID: 55
+[2026-08-03 21:31:13] START: Request found - Status: pending
+[2026-08-03 21:31:13] START: Request not accepted - Status: pending
+[2026-08-03 21:31:15] === START CALL STARTED ===
+[2026-08-03 21:31:15] User ID: 2
+[2026-08-03 21:31:15] Request ID: 55
+[2026-08-03 21:31:15] START: Request found - Status: pending
+[2026-08-03 21:31:15] START: Request not accepted - Status: pending
+[2026-08-03 21:31:18] === START CALL STARTED ===
+[2026-08-03 21:31:18] User ID: 2
+[2026-08-03 21:31:18] Request ID: 55
+[2026-08-03 21:31:18] START: Request found - Status: pending
+[2026-08-03 21:31:18] START: Request not accepted - Status: pending
+[2026-08-03 21:31:21] === START CALL STARTED ===
+[2026-08-03 21:31:21] User ID: 2
+[2026-08-03 21:31:21] Request ID: 55
+[2026-08-03 21:31:21] START: Request found - Status: pending
+[2026-08-03 21:31:21] START: Request not accepted - Status: pending
+[2026-08-03 21:31:24] === START CALL STARTED ===
+[2026-08-03 21:31:24] User ID: 2
+[2026-08-03 21:31:24] Request ID: 55
+[2026-08-03 21:31:24] START: Request found - Status: pending
+[2026-08-03 21:31:24] START: Request not accepted - Status: pending
+[2026-08-03 21:31:27] === START CALL STARTED ===
+[2026-08-03 21:31:27] User ID: 2
+[2026-08-03 21:31:27] Request ID: 55
+[2026-08-03 21:31:27] START: Request found - Status: pending
+[2026-08-03 21:31:27] START: Request not accepted - Status: pending
+[2026-08-03 21:31:30] === START CALL STARTED ===
+[2026-08-03 21:31:30] User ID: 2
+[2026-08-03 21:31:30] Request ID: 55
+[2026-08-03 21:31:30] START: Request found - Status: pending
+[2026-08-03 21:31:30] START: Request not accepted - Status: pending
+[2026-08-03 21:31:33] === START CALL STARTED ===
+[2026-08-03 21:31:33] User ID: 2
+[2026-08-03 21:31:33] Request ID: 55
+[2026-08-03 21:31:33] START: Request found - Status: pending
+[2026-08-03 21:31:33] START: Request not accepted - Status: pending
+[2026-08-03 21:31:36] === START CALL STARTED ===
+[2026-08-03 21:31:36] User ID: 2
+[2026-08-03 21:31:36] Request ID: 55
+[2026-08-03 21:31:36] START: Request found - Status: pending
+[2026-08-03 21:31:36] START: Request not accepted - Status: pending
+[2026-08-03 21:31:39] === START CALL STARTED ===
+[2026-08-03 21:31:39] User ID: 2
+[2026-08-03 21:31:39] Request ID: 55
+[2026-08-03 21:31:39] START: Request found - Status: pending
+[2026-08-03 21:31:39] START: Request not accepted - Status: pending
+[2026-08-03 21:31:39] === ACCEPT CALL STARTED ===
+[2026-08-03 21:31:39] User ID: 1
+[2026-08-03 21:31:39] Request ID: 55
+[2026-08-03 21:31:39] ACCEPT: Request found - Status: pending
+[2026-08-03 21:31:39] ACCEPT: Creating VideoSDK room...
+[2026-08-03 21:31:40] ACCEPT: Room created: ry62-xora-tkh4
+[2026-08-03 21:31:40] ACCEPT: Generating token...
+[2026-08-03 21:31:40] ACCEPT: Token generated: yes
+[2026-08-03 21:31:40] ACCEPT: Updated to accepted. Meeting ID: ry62-xora-tkh4
+[2026-08-03 21:31:40] ACCEPT: SUCCESS
+[2026-08-03 21:31:42] === START CALL STARTED ===
+[2026-08-03 21:31:42] User ID: 2
+[2026-08-03 21:31:42] Request ID: 55
+[2026-08-03 21:31:42] START: Request found - Status: accepted
+[2026-08-03 21:31:42] START: Client ID: 2, Influencer ID: 1
+[2026-08-03 21:31:42] START: Client balance: 7174
+[2026-08-03 21:31:42] START: Price per minute (from call_minute_costs): 6
+[2026-08-03 21:31:42] START: Escrow hold applied - Amount: 6
+[2026-08-03 21:31:42] START: Wallet transaction logged
+[2026-08-03 21:31:42] START: meeting_id length: 14, meeting_token length: 281
+[2026-08-03 21:31:42] START: video_calls row created - Call ID: 42
+[2026-08-03 21:31:42] START: SUCCESS - Call ID: 42
+[2026-08-03 21:32:03] === START CALL STARTED ===
+[2026-08-03 21:32:03] User ID: 1
+[2026-08-03 21:32:03] Request ID: 55
+[2026-08-03 21:32:03] START: Request found - Status: accepted
+[2026-08-03 21:32:03] START: Existing call found - Call ID: 42
+[2026-08-03 21:49:46] === START CALL STARTED ===
+[2026-08-03 21:49:46] User ID: 2
+[2026-08-03 21:49:46] Request ID: 56
+[2026-08-03 21:49:46] START: Request found - Status: pending
+[2026-08-03 21:49:46] START: Request not accepted - Status: pending
+[2026-08-03 21:49:49] === START CALL STARTED ===
+[2026-08-03 21:49:49] User ID: 2
+[2026-08-03 21:49:49] Request ID: 56
+[2026-08-03 21:49:49] START: Request found - Status: pending
+[2026-08-03 21:49:49] START: Request not accepted - Status: pending
+[2026-08-03 21:49:53] === START CALL STARTED ===
+[2026-08-03 21:49:53] User ID: 2
+[2026-08-03 21:49:53] Request ID: 56
+[2026-08-03 21:49:53] START: Request found - Status: pending
+[2026-08-03 21:49:53] START: Request not accepted - Status: pending
+[2026-08-03 21:49:55] === START CALL STARTED ===
+[2026-08-03 21:49:55] User ID: 2
+[2026-08-03 21:49:55] Request ID: 56
+[2026-08-03 21:49:55] START: Request found - Status: pending
+[2026-08-03 21:49:55] START: Request not accepted - Status: pending
+[2026-08-03 21:49:58] === START CALL STARTED ===
+[2026-08-03 21:49:58] User ID: 2
+[2026-08-03 21:49:58] Request ID: 56
+[2026-08-03 21:49:58] START: Request found - Status: pending
+[2026-08-03 21:49:58] START: Request not accepted - Status: pending
+[2026-08-03 21:50:02] === START CALL STARTED ===
+[2026-08-03 21:50:02] User ID: 2
+[2026-08-03 21:50:02] Request ID: 56
+[2026-08-03 21:50:02] START: Request found - Status: pending
+[2026-08-03 21:50:02] START: Request not accepted - Status: pending
+[2026-08-03 21:50:05] === START CALL STARTED ===
+[2026-08-03 21:50:05] User ID: 2
+[2026-08-03 21:50:05] Request ID: 56
+[2026-08-03 21:50:05] START: Request found - Status: pending
+[2026-08-03 21:50:05] START: Request not accepted - Status: pending
+[2026-08-03 21:50:07] === START CALL STARTED ===
+[2026-08-03 21:50:07] User ID: 2
+[2026-08-03 21:50:07] Request ID: 56
+[2026-08-03 21:50:07] START: Request found - Status: pending
+[2026-08-03 21:50:07] START: Request not accepted - Status: pending
+[2026-08-03 21:51:54] === START CALL STARTED ===
+[2026-08-03 21:51:54] User ID: 2
+[2026-08-03 21:51:54] Request ID: 57
+[2026-08-03 21:51:54] START: Request found - Status: pending
+[2026-08-03 21:51:54] START: Request not accepted - Status: pending
+[2026-08-03 21:52:02] === START CALL STARTED ===
+[2026-08-03 21:52:02] User ID: 2
+[2026-08-03 21:52:02] Request ID: 57
+[2026-08-03 21:52:02] START: Request found - Status: pending
+[2026-08-03 21:52:02] START: Request not accepted - Status: pending
+[2026-08-03 21:52:02] === START CALL STARTED ===
+[2026-08-03 21:52:02] User ID: 2
+[2026-08-03 21:52:02] Request ID: 57
+[2026-08-03 21:52:02] START: Request found - Status: pending
+[2026-08-03 21:52:02] START: Request not accepted - Status: pending
+[2026-08-03 21:52:04] === START CALL STARTED ===
+[2026-08-03 21:52:04] User ID: 2
+[2026-08-03 21:52:04] Request ID: 57
+[2026-08-03 21:52:04] START: Request found - Status: pending
+[2026-08-03 21:52:04] START: Request not accepted - Status: pending
+[2026-08-03 21:52:06] === START CALL STARTED ===
+[2026-08-03 21:52:06] User ID: 2
+[2026-08-03 21:52:06] Request ID: 57
+[2026-08-03 21:52:06] START: Request found - Status: pending
+[2026-08-03 21:52:06] START: Request not accepted - Status: pending
+[2026-08-03 21:52:09] === START CALL STARTED ===
+[2026-08-03 21:52:09] User ID: 2
+[2026-08-03 21:52:09] Request ID: 57
+[2026-08-03 21:52:09] START: Request found - Status: pending
+[2026-08-03 21:52:09] START: Request not accepted - Status: pending
+[2026-08-03 21:52:12] === START CALL STARTED ===
+[2026-08-03 21:52:12] User ID: 2
+[2026-08-03 21:52:12] Request ID: 57
+[2026-08-03 21:52:12] START: Request found - Status: pending
+[2026-08-03 21:52:12] START: Request not accepted - Status: pending
+[2026-08-03 21:52:15] === START CALL STARTED ===
+[2026-08-03 21:52:15] User ID: 2
+[2026-08-03 21:52:15] Request ID: 57
+[2026-08-03 21:52:15] START: Request found - Status: pending
+[2026-08-03 21:52:15] START: Request not accepted - Status: pending
+[2026-08-03 21:52:18] === START CALL STARTED ===
+[2026-08-03 21:52:18] User ID: 2
+[2026-08-03 21:52:18] Request ID: 57
+[2026-08-03 21:52:18] START: Request found - Status: pending
+[2026-08-03 21:52:18] START: Request not accepted - Status: pending
+[2026-08-03 21:52:21] === START CALL STARTED ===
+[2026-08-03 21:52:21] User ID: 2
+[2026-08-03 21:52:21] Request ID: 57
+[2026-08-03 21:52:21] START: Request found - Status: pending
+[2026-08-03 21:52:21] START: Request not accepted - Status: pending
+[2026-08-03 21:52:24] === START CALL STARTED ===
+[2026-08-03 21:52:24] User ID: 2
+[2026-08-03 21:52:24] Request ID: 57
+[2026-08-03 21:52:24] START: Request found - Status: pending
+[2026-08-03 21:52:24] START: Request not accepted - Status: pending
+[2026-08-03 21:52:27] === START CALL STARTED ===
+[2026-08-03 21:52:27] User ID: 2
+[2026-08-03 21:52:27] Request ID: 57
+[2026-08-03 21:52:27] START: Request found - Status: pending
+[2026-08-03 21:52:27] START: Request not accepted - Status: pending
+[2026-08-03 21:52:30] === START CALL STARTED ===
+[2026-08-03 21:52:30] User ID: 2
+[2026-08-03 21:52:30] Request ID: 57
+[2026-08-03 21:52:30] START: Request found - Status: pending
+[2026-08-03 21:52:30] START: Request not accepted - Status: pending
+[2026-08-03 21:52:37] === START CALL STARTED ===
+[2026-08-03 21:52:37] User ID: 2
+[2026-08-03 21:52:37] Request ID: 57
+[2026-08-03 21:52:37] START: Request found - Status: pending
+[2026-08-03 21:52:37] START: Request not accepted - Status: pending
+[2026-08-03 21:52:37] === START CALL STARTED ===
+[2026-08-03 21:52:37] User ID: 2
+[2026-08-03 21:52:37] Request ID: 57
+[2026-08-03 21:52:37] START: Request found - Status: pending
+[2026-08-03 21:52:37] START: Request not accepted - Status: pending
+[2026-08-03 21:52:39] === START CALL STARTED ===
+[2026-08-03 21:52:39] User ID: 2
+[2026-08-03 21:52:39] Request ID: 57
+[2026-08-03 21:52:39] START: Request found - Status: pending
+[2026-08-03 21:52:39] START: Request not accepted - Status: pending
+[2026-08-03 21:52:43] === START CALL STARTED ===
+[2026-08-03 21:52:43] User ID: 2
+[2026-08-03 21:52:43] Request ID: 57
+[2026-08-03 21:52:43] START: Request found - Status: pending
+[2026-08-03 21:52:43] START: Request not accepted - Status: pending
+[2026-08-03 21:52:45] === START CALL STARTED ===
+[2026-08-03 21:52:45] User ID: 2
+[2026-08-03 21:52:45] Request ID: 57
+[2026-08-03 21:52:45] START: Request found - Status: pending
+[2026-08-03 21:52:45] START: Request not accepted - Status: pending
+[2026-08-03 21:52:48] === START CALL STARTED ===
+[2026-08-03 21:52:48] User ID: 2
+[2026-08-03 21:52:48] Request ID: 57
+[2026-08-03 21:52:48] START: Request found - Status: pending
+[2026-08-03 21:52:48] START: Request not accepted - Status: pending
+[2026-08-03 21:52:51] === START CALL STARTED ===
+[2026-08-03 21:52:51] User ID: 2
+[2026-08-03 21:52:51] Request ID: 57
+[2026-08-03 21:52:51] START: Request found - Status: pending
+[2026-08-03 21:52:51] START: Request not accepted - Status: pending
+[2026-08-03 21:52:54] === START CALL STARTED ===
+[2026-08-03 21:52:54] User ID: 2
+[2026-08-03 21:52:54] Request ID: 57
+[2026-08-03 21:52:54] START: Request found - Status: pending
+[2026-08-03 21:52:54] START: Request not accepted - Status: pending
+[2026-08-03 21:52:58] === START CALL STARTED ===
+[2026-08-03 21:52:58] User ID: 2
+[2026-08-03 21:52:58] Request ID: 57
+[2026-08-03 21:52:58] START: Request found - Status: pending
+[2026-08-03 21:52:58] START: Request not accepted - Status: pending
+[2026-08-03 21:53:09] === START CALL STARTED ===
+[2026-08-03 21:53:09] User ID: 2
+[2026-08-03 21:53:09] Request ID: 57
+[2026-08-03 21:53:09] START: Request found - Status: pending
+[2026-08-03 21:53:09] START: Request not accepted - Status: pending
+[2026-08-03 21:53:10] === START CALL STARTED ===
+[2026-08-03 21:53:10] User ID: 2
+[2026-08-03 21:53:10] Request ID: 57
+[2026-08-03 21:53:10] START: Request found - Status: pending
+[2026-08-03 21:53:10] START: Request not accepted - Status: pending
+[2026-08-03 21:53:11] === START CALL STARTED ===
+[2026-08-03 21:53:11] User ID: 2
+[2026-08-03 21:53:11] Request ID: 57
+[2026-08-03 21:53:11] START: Request found - Status: pending
+[2026-08-03 21:53:11] START: Request not accepted - Status: pending
+[2026-08-03 21:53:11] === START CALL STARTED ===
+[2026-08-03 21:53:11] User ID: 2
+[2026-08-03 21:53:11] Request ID: 57
+[2026-08-03 21:53:11] START: Request found - Status: pending
+[2026-08-03 21:53:11] START: Request not accepted - Status: pending
+[2026-08-03 21:53:12] === START CALL STARTED ===
+[2026-08-03 21:53:12] User ID: 2
+[2026-08-03 21:53:12] Request ID: 57
+[2026-08-03 21:53:12] START: Request found - Status: pending
+[2026-08-03 21:53:12] START: Request not accepted - Status: pending
+[2026-08-03 21:53:15] === START CALL STARTED ===
+[2026-08-03 21:53:15] User ID: 2
+[2026-08-03 21:53:15] Request ID: 57
+[2026-08-03 21:53:15] START: Request found - Status: pending
+[2026-08-03 21:53:15] START: Request not accepted - Status: pending
+[2026-08-03 21:53:18] === START CALL STARTED ===
+[2026-08-03 21:53:18] User ID: 2
+[2026-08-03 21:53:18] Request ID: 57
+[2026-08-03 21:53:18] START: Request found - Status: pending
+[2026-08-03 21:53:18] START: Request not accepted - Status: pending
+[2026-08-03 21:53:21] === START CALL STARTED ===
+[2026-08-03 21:53:21] User ID: 2
+[2026-08-03 21:53:21] Request ID: 57
+[2026-08-03 21:53:21] START: Request found - Status: pending
+[2026-08-03 21:53:21] START: Request not accepted - Status: pending
+[2026-08-03 21:53:24] === START CALL STARTED ===
+[2026-08-03 21:53:24] User ID: 2
+[2026-08-03 21:53:24] Request ID: 57
+[2026-08-03 21:53:24] START: Request found - Status: pending
+[2026-08-03 21:53:24] START: Request not accepted - Status: pending
+[2026-08-03 21:53:27] === START CALL STARTED ===
+[2026-08-03 21:53:27] User ID: 2
+[2026-08-03 21:53:27] Request ID: 57
+[2026-08-03 21:53:27] START: Request found - Status: pending
+[2026-08-03 21:53:27] START: Request not accepted - Status: pending
+[2026-08-03 21:53:30] === START CALL STARTED ===
+[2026-08-03 21:53:30] User ID: 2
+[2026-08-03 21:53:30] Request ID: 57
+[2026-08-03 21:53:30] START: Request found - Status: pending
+[2026-08-03 21:53:30] START: Request not accepted - Status: pending
+[2026-08-03 21:53:33] === START CALL STARTED ===
+[2026-08-03 21:53:33] User ID: 2
+[2026-08-03 21:53:33] Request ID: 57
+[2026-08-03 21:53:33] START: Request found - Status: pending
+[2026-08-03 21:53:33] START: Request not accepted - Status: pending
+[2026-08-03 21:53:36] === START CALL STARTED ===
+[2026-08-03 21:53:36] User ID: 2
+[2026-08-03 21:53:36] Request ID: 57
+[2026-08-03 21:53:36] START: Request found - Status: pending
+[2026-08-03 21:53:36] START: Request not accepted - Status: pending
+[2026-08-03 21:53:39] === START CALL STARTED ===
+[2026-08-03 21:53:39] User ID: 2
+[2026-08-03 21:53:39] Request ID: 57
+[2026-08-03 21:53:39] START: Request found - Status: pending
+[2026-08-03 21:53:39] START: Request not accepted - Status: pending
+[2026-08-03 21:53:42] === START CALL STARTED ===
+[2026-08-03 21:53:42] User ID: 2
+[2026-08-03 21:53:42] Request ID: 57
+[2026-08-03 21:53:42] START: Request found - Status: pending
+[2026-08-03 21:53:42] START: Request not accepted - Status: pending
+[2026-08-03 21:53:45] === START CALL STARTED ===
+[2026-08-03 21:53:45] User ID: 2
+[2026-08-03 21:53:45] Request ID: 57
+[2026-08-03 21:53:45] START: Request found - Status: pending
+[2026-08-03 21:53:45] START: Request not accepted - Status: pending
+[2026-08-03 21:53:48] === START CALL STARTED ===
+[2026-08-03 21:53:48] User ID: 2
+[2026-08-03 21:53:48] Request ID: 57
+[2026-08-03 21:53:48] START: Request found - Status: pending
+[2026-08-03 21:53:48] START: Request not accepted - Status: pending
+[2026-08-03 21:53:52] === START CALL STARTED ===
+[2026-08-03 21:53:52] User ID: 2
+[2026-08-03 21:53:52] Request ID: 57
+[2026-08-03 21:53:52] START: Request found - Status: pending
+[2026-08-03 21:53:52] START: Request not accepted - Status: pending
+[2026-08-03 21:53:55] === START CALL STARTED ===
+[2026-08-03 21:53:55] User ID: 2
+[2026-08-03 21:53:55] Request ID: 57
+[2026-08-03 21:53:55] START: Request found - Status: pending
+[2026-08-03 21:53:55] START: Request not accepted - Status: pending
+[2026-08-03 21:54:04] === START CALL STARTED ===
+[2026-08-03 21:54:04] User ID: 2
+[2026-08-03 21:54:04] Request ID: 57
+[2026-08-03 21:54:04] START: Request found - Status: pending
+[2026-08-03 21:54:04] START: Request not accepted - Status: pending
+[2026-08-03 21:54:07] === START CALL STARTED ===
+[2026-08-03 21:54:07] User ID: 2
+[2026-08-03 21:54:07] Request ID: 57
+[2026-08-03 21:54:07] START: Request found - Status: pending
+[2026-08-03 21:54:07] START: Request not accepted - Status: pending
+[2026-08-03 21:54:10] === START CALL STARTED ===
+[2026-08-03 21:54:10] User ID: 2
+[2026-08-03 21:54:10] Request ID: 57
+[2026-08-03 21:54:10] START: Request found - Status: pending
+[2026-08-03 21:54:10] START: Request not accepted - Status: pending
+[2026-08-03 21:54:14] === START CALL STARTED ===
+[2026-08-03 21:54:14] User ID: 2
+[2026-08-03 21:54:14] Request ID: 57
+[2026-08-03 21:54:14] START: Request found - Status: pending
+[2026-08-03 21:54:14] START: Request not accepted - Status: pending
+[2026-08-03 21:54:20] === START CALL STARTED ===
+[2026-08-03 21:54:20] User ID: 2
+[2026-08-03 21:54:20] Request ID: 57
+[2026-08-03 21:54:20] START: Request found - Status: pending
+[2026-08-03 21:54:20] START: Request not accepted - Status: pending
+[2026-08-03 21:54:51] === START CALL STARTED ===
+[2026-08-03 21:54:51] User ID: 2
+[2026-08-03 21:54:51] Request ID: 57
+[2026-08-03 21:54:51] START: Request found - Status: pending
+[2026-08-03 21:54:51] START: Request not accepted - Status: pending
+[2026-08-03 21:54:52] === START CALL STARTED ===
+[2026-08-03 21:54:52] User ID: 2
+[2026-08-03 21:54:52] Request ID: 57
+[2026-08-03 21:54:52] START: Request found - Status: pending
+[2026-08-03 21:54:52] START: Request not accepted - Status: pending
+[2026-08-03 21:54:55] === START CALL STARTED ===
+[2026-08-03 21:54:55] User ID: 2
+[2026-08-03 21:54:55] Request ID: 57
+[2026-08-03 21:54:55] START: Request found - Status: pending
+[2026-08-03 21:54:55] START: Request not accepted - Status: pending
+[2026-08-03 21:54:56] === START CALL STARTED ===
+[2026-08-03 21:54:56] User ID: 2
+[2026-08-03 21:54:56] Request ID: 57
+[2026-08-03 21:54:56] START: Request found - Status: pending
+[2026-08-03 21:54:56] START: Request not accepted - Status: pending
+[2026-08-03 21:54:57] === START CALL STARTED ===
+[2026-08-03 21:54:57] User ID: 2
+[2026-08-03 21:54:57] Request ID: 57
+[2026-08-03 21:54:57] START: Request found - Status: pending
+[2026-08-03 21:54:57] START: Request not accepted - Status: pending
+[2026-08-03 21:54:59] === START CALL STARTED ===
+[2026-08-03 21:54:59] User ID: 2
+[2026-08-03 21:54:59] Request ID: 57
+[2026-08-03 21:54:59] START: Request found - Status: pending
+[2026-08-03 21:54:59] START: Request not accepted - Status: pending
+[2026-08-03 21:55:00] === START CALL STARTED ===
+[2026-08-03 21:55:00] User ID: 2
+[2026-08-03 21:55:00] Request ID: 57
+[2026-08-03 21:55:00] START: Request found - Status: pending
+[2026-08-03 21:55:00] START: Request not accepted - Status: pending
+[2026-08-03 21:55:04] === START CALL STARTED ===
+[2026-08-03 21:55:04] User ID: 2
+[2026-08-03 21:55:04] Request ID: 57
+[2026-08-03 21:55:04] START: Request found - Status: pending
+[2026-08-03 21:55:04] START: Request not accepted - Status: pending
+[2026-08-03 21:55:07] === START CALL STARTED ===
+[2026-08-03 21:55:07] User ID: 2
+[2026-08-03 21:55:07] Request ID: 57
+[2026-08-03 21:55:07] START: Request found - Status: pending
+[2026-08-03 21:55:07] START: Request not accepted - Status: pending
+[2026-08-03 21:55:10] === START CALL STARTED ===
+[2026-08-03 21:55:10] User ID: 2
+[2026-08-03 21:55:10] Request ID: 57
+[2026-08-03 21:55:10] START: Request found - Status: pending
+[2026-08-03 21:55:10] START: Request not accepted - Status: pending
+[2026-08-03 21:55:12] === START CALL STARTED ===
+[2026-08-03 21:55:12] User ID: 2
+[2026-08-03 21:55:12] Request ID: 57
+[2026-08-03 21:55:13] START: Request found - Status: pending
+[2026-08-03 21:55:13] START: Request not accepted - Status: pending
+[2026-08-03 21:55:16] === START CALL STARTED ===
+[2026-08-03 21:55:16] User ID: 2
+[2026-08-03 21:55:16] Request ID: 57
+[2026-08-03 21:55:16] START: Request found - Status: pending
+[2026-08-03 21:55:16] START: Request not accepted - Status: pending
+[2026-08-03 21:55:18] === START CALL STARTED ===
+[2026-08-03 21:55:18] User ID: 2
+[2026-08-03 21:55:18] Request ID: 57
+[2026-08-03 21:55:18] START: Request found - Status: pending
+[2026-08-03 21:55:18] START: Request not accepted - Status: pending
+[2026-08-04 16:28:38] === START CALL STARTED ===
+[2026-08-04 16:28:38] User ID: 2
+[2026-08-04 16:28:38] Request ID: 58
+[2026-08-04 16:28:38] START: Request found - Status: pending
+[2026-08-04 16:28:38] START: Request not accepted - Status: pending
+[2026-08-04 16:28:40] === START CALL STARTED ===
+[2026-08-04 16:28:40] User ID: 2
+[2026-08-04 16:28:40] Request ID: 58
+[2026-08-04 16:28:40] START: Request found - Status: pending
+[2026-08-04 16:28:40] START: Request not accepted - Status: pending
+[2026-08-04 16:28:44] === START CALL STARTED ===
+[2026-08-04 16:28:44] User ID: 2
+[2026-08-04 16:28:44] Request ID: 58
+[2026-08-04 16:28:44] START: Request found - Status: pending
+[2026-08-04 16:28:44] START: Request not accepted - Status: pending
+[2026-08-04 16:28:46] === START CALL STARTED ===
+[2026-08-04 16:28:46] User ID: 2
+[2026-08-04 16:28:46] Request ID: 58
+[2026-08-04 16:28:46] START: Request found - Status: pending
+[2026-08-04 16:28:46] START: Request not accepted - Status: pending
+[2026-08-04 16:28:50] === START CALL STARTED ===
+[2026-08-04 16:28:50] User ID: 2
+[2026-08-04 16:28:50] Request ID: 58
+[2026-08-04 16:28:50] START: Request found - Status: pending
+[2026-08-04 16:28:50] START: Request not accepted - Status: pending
+[2026-08-04 16:28:52] === START CALL STARTED ===
+[2026-08-04 16:28:52] User ID: 2
+[2026-08-04 16:28:52] Request ID: 58
+[2026-08-04 16:28:52] START: Request found - Status: pending
+[2026-08-04 16:28:53] START: Request not accepted - Status: pending
+[2026-08-04 16:32:17] === START CALL STARTED ===
+[2026-08-04 16:32:17] User ID: 2
+[2026-08-04 16:32:17] Request ID: 59
+[2026-08-04 16:32:17] START: Request found - Status: pending
+[2026-08-04 16:32:17] START: Request not accepted - Status: pending
+[2026-08-04 16:32:20] === START CALL STARTED ===
+[2026-08-04 16:32:21] User ID: 2
+[2026-08-04 16:32:21] Request ID: 59
+[2026-08-04 16:32:21] START: Request found - Status: pending
+[2026-08-04 16:32:22] START: Request not accepted - Status: pending
+[2026-08-04 16:35:04] === START CALL STARTED ===
+[2026-08-04 16:35:04] User ID: 2
+[2026-08-04 16:35:04] Request ID: 60
+[2026-08-04 16:35:04] START: Request found - Status: pending
+[2026-08-04 16:35:04] START: Request not accepted - Status: pending
+[2026-08-04 16:35:06] === START CALL STARTED ===
+[2026-08-04 16:35:06] User ID: 2
+[2026-08-04 16:35:06] Request ID: 60
+[2026-08-04 16:35:06] START: Request found - Status: pending
+[2026-08-04 16:35:06] START: Request not accepted - Status: pending
+[2026-08-04 16:35:09] === START CALL STARTED ===
+[2026-08-04 16:35:09] User ID: 2
+[2026-08-04 16:35:09] Request ID: 60
+[2026-08-04 16:35:09] START: Request found - Status: pending
+[2026-08-04 16:35:09] START: Request not accepted - Status: pending
+[2026-08-04 17:06:50] === START CALL STARTED ===
+[2026-08-04 17:06:50] User ID: 2
+[2026-08-04 17:06:50] Request ID: 61
+[2026-08-04 17:06:50] START: Request found - Status: pending
+[2026-08-04 17:06:50] START: Request not accepted - Status: pending
+[2026-08-04 17:06:51] === START CALL STARTED ===
+[2026-08-04 17:06:51] User ID: 2
+[2026-08-04 17:06:51] Request ID: 61
+[2026-08-04 17:06:51] START: Request found - Status: pending
+[2026-08-04 17:06:51] START: Request not accepted - Status: pending
+[2026-08-04 17:06:51] === START CALL STARTED ===
+[2026-08-04 17:06:51] User ID: 2
+[2026-08-04 17:06:51] Request ID: 61
+[2026-08-04 17:06:51] START: Request found - Status: pending
+[2026-08-04 17:06:51] START: Request not accepted - Status: pending
+[2026-08-04 17:06:52] === START CALL STARTED ===
+[2026-08-04 17:06:52] User ID: 2
+[2026-08-04 17:06:52] Request ID: 61
+[2026-08-04 17:06:52] START: Request found - Status: pending
+[2026-08-04 17:06:52] START: Request not accepted - Status: pending
+[2026-08-04 17:06:52] === START CALL STARTED ===
+[2026-08-04 17:06:52] User ID: 2
+[2026-08-04 17:06:52] Request ID: 61
+[2026-08-04 17:06:52] === START CALL STARTED ===
+[2026-08-04 17:06:52] User ID: 2
+[2026-08-04 17:06:52] Request ID: 61
+[2026-08-04 17:06:52] START: Request found - Status: pending
+[2026-08-04 17:06:53] START: Request found - Status: pending
+[2026-08-04 17:06:53] START: Request not accepted - Status: pending
+[2026-08-04 17:06:53] START: Request not accepted - Status: pending
+[2026-08-04 17:06:54] === START CALL STARTED ===
+[2026-08-04 17:06:58] User ID: 2
+[2026-08-04 17:06:58] Request ID: 61
+[2026-08-04 17:06:57] === START CALL STARTED ===
+[2026-08-04 17:06:58] User ID: 2
+[2026-08-04 17:06:58] Request ID: 61
+[2026-08-04 17:06:58] START: Request found - Status: pending
+[2026-08-04 17:06:58] START: Request not accepted - Status: pending
+[2026-08-04 17:06:58] START: Request found - Status: pending
+[2026-08-04 17:06:58] START: Request not accepted - Status: pending
+[2026-08-04 17:06:59] === START CALL STARTED ===
+[2026-08-04 17:06:59] User ID: 2
+[2026-08-04 17:06:59] Request ID: 61
+[2026-08-04 17:06:59] START: Request found - Status: pending
+[2026-08-04 17:06:59] START: Request not accepted - Status: pending
+[2026-08-04 17:07:03] === START CALL STARTED ===
+[2026-08-04 17:07:03] User ID: 2
+[2026-08-04 17:07:03] Request ID: 61
+[2026-08-04 17:07:03] START: Request found - Status: pending
+[2026-08-04 17:07:03] START: Request not accepted - Status: pending
+[2026-08-04 17:07:06] === START CALL STARTED ===
+[2026-08-04 17:07:06] User ID: 2
+[2026-08-04 17:07:06] Request ID: 61
+[2026-08-04 17:07:07] START: Request found - Status: pending
+[2026-08-04 17:07:07] START: Request not accepted - Status: pending
+[2026-08-04 17:07:09] === START CALL STARTED ===
+[2026-08-04 17:07:09] User ID: 2
+[2026-08-04 17:07:09] Request ID: 61
+[2026-08-04 17:07:09] START: Request found - Status: pending
+[2026-08-04 17:07:09] START: Request not accepted - Status: pending
+[2026-08-04 17:07:11] === START CALL STARTED ===
+[2026-08-04 17:07:11] User ID: 2
+[2026-08-04 17:07:11] Request ID: 61
+[2026-08-04 17:07:11] START: Request found - Status: pending
+[2026-08-04 17:07:11] START: Request not accepted - Status: pending
+[2026-08-04 17:07:14] === START CALL STARTED ===
+[2026-08-04 17:07:14] User ID: 2
+[2026-08-04 17:07:14] Request ID: 61
+[2026-08-04 17:07:14] START: Request found - Status: pending
+[2026-08-04 17:07:14] START: Request not accepted - Status: pending
+[2026-08-07 11:19:07] === START CALL STARTED ===
+[2026-08-07 11:19:07] User ID: 2
+[2026-08-07 11:19:07] Request ID: 62
+[2026-08-07 11:19:07] START: Request found - Status: pending
+[2026-08-07 11:19:07] START: Request not accepted - Status: pending
+[2026-08-07 11:19:09] === START CALL STARTED ===
+[2026-08-07 11:19:09] User ID: 2
+[2026-08-07 11:19:09] Request ID: 62
+[2026-08-07 11:19:09] START: Request found - Status: pending
+[2026-08-07 11:19:09] START: Request not accepted - Status: pending
+[2026-08-07 11:19:13] === START CALL STARTED ===
+[2026-08-07 11:19:13] User ID: 2
+[2026-08-07 11:19:13] Request ID: 62
+[2026-08-07 11:19:13] START: Request found - Status: pending
+[2026-08-07 11:19:13] START: Request not accepted - Status: pending
+[2026-08-07 11:19:15] === START CALL STARTED ===
+[2026-08-07 11:19:15] User ID: 2
+[2026-08-07 11:19:15] Request ID: 62
+[2026-08-07 11:19:15] START: Request found - Status: pending
+[2026-08-07 11:19:15] START: Request not accepted - Status: pending
+[2026-08-07 11:19:19] === START CALL STARTED ===
+[2026-08-07 11:19:19] User ID: 2
+[2026-08-07 11:19:19] Request ID: 62
+[2026-08-07 11:19:19] START: Request found - Status: pending
+[2026-08-07 11:19:19] START: Request not accepted - Status: pending
+[2026-08-07 11:19:20] === ACCEPT CALL STARTED ===
+[2026-08-07 11:19:20] User ID: 1
+[2026-08-07 11:19:20] Request ID: 62
+[2026-08-07 11:19:20] ACCEPT: Request found - Status: pending
+[2026-08-07 11:19:20] ACCEPT: Creating VideoSDK room...
+[2026-08-07 11:19:21] ACCEPT: Room created: jiu3-mpa3-scas
+[2026-08-07 11:19:21] ACCEPT: Generating token...
+[2026-08-07 11:19:21] ACCEPT: Token generated: yes
+[2026-08-07 11:19:21] ACCEPT: Updated to accepted. Meeting ID: jiu3-mpa3-scas
+[2026-08-07 11:19:21] ACCEPT: SUCCESS
+[2026-08-07 11:19:21] === START CALL STARTED ===
+[2026-08-07 11:19:21] User ID: 2
+[2026-08-07 11:19:21] Request ID: 62
+[2026-08-07 11:19:21] START: Request found - Status: accepted
+[2026-08-07 11:19:21] START: Client ID: 2, Influencer ID: 1
+[2026-08-07 11:19:21] START: Client balance: 7168
+[2026-08-07 11:19:21] START: Price per minute (from call_minute_costs): 6
+[2026-08-07 11:19:21] START: Escrow hold applied - Amount: 6
+[2026-08-07 11:19:21] START: Wallet transaction logged
+[2026-08-07 11:19:21] START: meeting_id length: 14, meeting_token length: 281
+[2026-08-07 11:19:21] START: video_calls row created - Call ID: 43
+[2026-08-07 11:19:21] START: SUCCESS - Call ID: 43
+[2026-08-07 11:19:23] === START CALL STARTED ===
+[2026-08-07 11:19:23] User ID: 1
+[2026-08-07 11:19:23] Request ID: 62
+[2026-08-07 11:19:23] START: Request found - Status: accepted
+[2026-08-07 11:19:23] START: Existing call found - Call ID: 43
+[2026-08-07 12:10:07] === START CALL STARTED ===
+[2026-08-07 12:10:07] User ID: 2
+[2026-08-07 12:10:07] Request ID: 63
+[2026-08-07 12:10:07] START: Request found - Status: pending
+[2026-08-07 12:10:07] START: Request not accepted - Status: pending
+[2026-08-07 12:10:09] === START CALL STARTED ===
+[2026-08-07 12:10:09] User ID: 2
+[2026-08-07 12:10:09] Request ID: 63
+[2026-08-07 12:10:09] START: Request found - Status: pending
+[2026-08-07 12:10:09] START: Request not accepted - Status: pending
+[2026-08-07 12:10:12] === START CALL STARTED ===
+[2026-08-07 12:10:12] User ID: 2
+[2026-08-07 12:10:12] Request ID: 63
+[2026-08-07 12:10:12] START: Request found - Status: pending
+[2026-08-07 12:10:12] START: Request not accepted - Status: pending
+[2026-08-07 12:10:17] === ACCEPT CALL STARTED ===
+[2026-08-07 12:10:17] User ID: 1
+[2026-08-07 12:10:17] Request ID: 63
+[2026-08-07 12:10:17] ACCEPT: Request found - Status: pending
+[2026-08-07 12:10:17] ACCEPT: Creating VideoSDK room...
+[2026-08-07 12:10:18] === START CALL STARTED ===
+[2026-08-07 12:10:18] User ID: 2
+[2026-08-07 12:10:18] Request ID: 63
+[2026-08-07 12:10:18] ACCEPT: Room created: gftz-74qv-z59h
+[2026-08-07 12:10:18] ACCEPT: Generating token...
+[2026-08-07 12:10:18] ACCEPT: Token generated: yes
+[2026-08-07 12:10:18] ACCEPT: Updated to accepted. Meeting ID: gftz-74qv-z59h
+[2026-08-07 12:10:18] START: Request found - Status: accepted
+[2026-08-07 12:10:18] ACCEPT: SUCCESS
+[2026-08-07 12:10:18] START: Client ID: 2, Influencer ID: 1
+[2026-08-07 12:10:18] START: Client balance: 7138
+[2026-08-07 12:10:18] START: Price per minute (from call_minute_costs): 6
+[2026-08-07 12:10:18] START: Escrow hold applied - Amount: 6
+[2026-08-07 12:10:19] START: Wallet transaction logged
+[2026-08-07 12:10:19] START: meeting_id length: 14, meeting_token length: 281
+[2026-08-07 12:10:19] START: video_calls row created - Call ID: 44
+[2026-08-07 12:10:19] START: SUCCESS - Call ID: 44
+[2026-08-07 12:10:20] === START CALL STARTED ===
+[2026-08-07 12:10:20] User ID: 1
+[2026-08-07 12:10:20] Request ID: 63
+[2026-08-07 12:10:20] START: Request found - Status: accepted
+[2026-08-07 12:10:20] START: Existing call found - Call ID: 44
+[2026-08-07 12:10:15] === START CALL STARTED ===
+[2026-08-07 12:10:38] User ID: 2
+[2026-08-07 12:10:38] Request ID: 63
+[2026-08-07 12:10:39] START: Request found - Status: accepted
+[2026-08-07 12:10:39] START: Existing call found - Call ID: 44
+[2026-08-07 12:39:42] === ACCEPT CALL STARTED ===
+[2026-08-07 12:39:42] User ID: 1
+[2026-08-07 12:39:42] Request ID: 64
+[2026-08-07 12:39:42] ACCEPT: Request found - Status: pending
+[2026-08-07 12:39:42] ACCEPT: Creating VideoSDK room...
+[2026-08-07 12:39:43] ACCEPT: Room created: ysbk-ezu3-j1jd
+[2026-08-07 12:39:43] ACCEPT: Generating token...
+[2026-08-07 12:39:43] ACCEPT: Token generated: yes
+[2026-08-07 12:39:43] ACCEPT: Updated to accepted. Meeting ID: ysbk-ezu3-j1jd
+[2026-08-07 12:39:43] ACCEPT: SUCCESS
+[2026-08-07 12:39:44] === START CALL STARTED ===
+[2026-08-07 12:39:44] User ID: 2
+[2026-08-07 12:39:44] Request ID: 64
+[2026-08-07 12:39:44] START: Request found - Status: accepted
+[2026-08-07 12:39:44] START: Client ID: 2, Influencer ID: 1
+[2026-08-07 12:39:44] START: Client balance: 7108
+[2026-08-07 12:39:44] START: Price per minute (from call_minute_costs): 6
+[2026-08-07 12:39:44] START: Escrow hold applied - Amount: 6
+[2026-08-07 12:39:44] START: Wallet transaction logged
+[2026-08-07 12:39:44] START: meeting_id length: 14, meeting_token length: 281
+[2026-08-07 12:39:44] START: video_calls row created - Call ID: 45
+[2026-08-07 12:39:44] START: SUCCESS - Call ID: 45
+[2026-08-07 12:39:45] === START CALL STARTED ===
+[2026-08-07 12:39:45] User ID: 1
+[2026-08-07 12:39:45] Request ID: 64
+[2026-08-07 12:39:45] START: Request found - Status: accepted
+[2026-08-07 12:39:45] START: Existing call found - Call ID: 45
+[2026-08-24 12:46:50] === START CALL STARTED ===
+[2026-08-24 12:46:50] User ID: 2
+[2026-08-24 12:46:50] Request ID: 65
+[2026-08-24 12:46:50] START: Request found - Status: pending
+[2026-08-24 12:46:50] START: Request not accepted - Status: pending
+[2026-08-24 12:46:53] === START CALL STARTED ===
+[2026-08-24 12:46:53] User ID: 2
+[2026-08-24 12:46:53] Request ID: 65
+[2026-08-24 12:46:53] START: Request found - Status: pending
+[2026-08-24 12:46:53] START: Request not accepted - Status: pending
+[2026-08-24 12:46:56] === START CALL STARTED ===
+[2026-08-24 12:46:56] User ID: 2
+[2026-08-24 12:46:56] Request ID: 65
+[2026-08-24 12:46:56] START: Request found - Status: pending
+[2026-08-24 12:46:56] START: Request not accepted - Status: pending
+[2026-08-24 12:46:58] === ACCEPT CALL STARTED ===
+[2026-08-24 12:46:58] User ID: 1
+[2026-08-24 12:46:58] Request ID: 65
+[2026-08-24 12:46:58] ACCEPT: Request found - Status: pending
+[2026-08-24 12:46:58] ACCEPT: Creating VideoSDK room...
+[2026-08-24 12:46:59] === START CALL STARTED ===
+[2026-08-24 12:46:59] User ID: 2
+[2026-08-24 12:46:59] Request ID: 65
+[2026-08-24 12:46:59] ACCEPT: Room created: dx2t-721b-e9my
+[2026-08-24 12:46:59] ACCEPT: Generating token...
+[2026-08-24 12:46:59] ACCEPT: Token generated: yes
+[2026-08-24 12:46:59] ACCEPT: Updated to accepted. Meeting ID: dx2t-721b-e9my
+[2026-08-24 12:46:59] START: Request found - Status: accepted
+[2026-08-24 12:46:59] START: Client ID: 2, Influencer ID: 1, Billing mode: standard
+[2026-08-24 12:46:59] ACCEPT: SUCCESS
+[2026-08-24 12:46:59] START: meeting_id length: 14, meeting_token length: 281
+[2026-08-24 12:46:59] START: video_calls row created - Call ID: 46
+[2026-08-24 12:46:59] START: SUCCESS - Call ID: 46
+[2026-08-24 12:47:09] === START CALL STARTED ===
+[2026-08-24 12:47:09] User ID: 1
+[2026-08-24 12:47:09] Request ID: 65
+[2026-08-24 12:47:09] START: Request found - Status: accepted
+[2026-08-24 12:47:09] START: Existing call found - Call ID: 46
+[2026-08-24 13:02:44] === START CALL STARTED ===
+[2026-08-24 13:02:44] User ID: 2
+[2026-08-24 13:02:44] Request ID: 66
+[2026-08-24 13:02:44] START: Request found - Status: pending
+[2026-08-24 13:02:44] START: Request not accepted - Status: pending
+[2026-08-24 13:02:47] === START CALL STARTED ===
+[2026-08-24 13:02:47] User ID: 2
+[2026-08-24 13:02:47] Request ID: 66
+[2026-08-24 13:02:47] START: Request found - Status: pending
+[2026-08-24 13:02:47] START: Request not accepted - Status: pending
+[2026-08-24 13:02:49] === ACCEPT CALL STARTED ===
+[2026-08-24 13:02:49] User ID: 1
+[2026-08-24 13:02:49] Request ID: 66
+[2026-08-24 13:02:49] ACCEPT: Request found - Status: pending
+[2026-08-24 13:02:49] ACCEPT: Creating VideoSDK room...
+[2026-08-24 13:02:49] ACCEPT: Room created: n6g6-bjg3-lsfc
+[2026-08-24 13:02:49] ACCEPT: Generating token...
+[2026-08-24 13:02:49] ACCEPT: Token generated: yes
+[2026-08-24 13:02:49] ACCEPT: Updated to accepted. Meeting ID: n6g6-bjg3-lsfc
+[2026-08-24 13:02:50] ACCEPT: SUCCESS
+[2026-08-24 13:02:50] === START CALL STARTED ===
+[2026-08-24 13:02:50] User ID: 2
+[2026-08-24 13:02:50] Request ID: 66
+[2026-08-24 13:02:50] START: Request found - Status: accepted
+[2026-08-24 13:02:50] START: Client ID: 2, Influencer ID: 1, Billing mode: payg_minute
+[2026-08-24 13:02:50] START: meeting_id length: 14, meeting_token length: 281
+[2026-08-24 13:02:50] START: video_calls row created - Call ID: 47
+[2026-08-24 13:02:50] START: SUCCESS - Call ID: 47
+[2026-08-24 13:02:53] === START CALL STARTED ===
+[2026-08-24 13:02:53] User ID: 1
+[2026-08-24 13:02:53] Request ID: 66
+[2026-08-24 13:02:53] START: Request found - Status: accepted
+[2026-08-24 13:02:53] START: Existing call found - Call ID: 47
+[2026-08-25 01:05:32] === START CALL STARTED ===
+[2026-08-25 01:05:32] User ID: 2
+[2026-08-25 01:05:32] Request ID: 67
+[2026-08-25 01:05:32] START: Request found - Status: pending
+[2026-08-25 01:05:32] START: Request not accepted - Status: pending
+[2026-08-25 01:05:35] === START CALL STARTED ===
+[2026-08-25 01:05:35] User ID: 2
+[2026-08-25 01:05:35] Request ID: 67
+[2026-08-25 01:05:35] START: Request found - Status: pending
+[2026-08-25 01:05:35] START: Request not accepted - Status: pending
+[2026-08-25 01:05:38] === START CALL STARTED ===
+[2026-08-25 01:05:38] User ID: 2
+[2026-08-25 01:05:38] Request ID: 67
+[2026-08-25 01:05:38] START: Request found - Status: pending
+[2026-08-25 01:05:38] START: Request not accepted - Status: pending
+[2026-08-25 01:05:39] === ACCEPT CALL STARTED ===
+[2026-08-25 01:05:39] User ID: 1
+[2026-08-25 01:05:39] Request ID: 67
+[2026-08-25 01:05:39] ACCEPT: Request found - Status: pending
+[2026-08-25 01:05:39] ACCEPT: Creating VideoSDK room...
+[2026-08-25 01:05:40] ACCEPT: Room created: ke82-apfq-v7lo
+[2026-08-25 01:05:40] ACCEPT: Generating token...
+[2026-08-25 01:05:40] ACCEPT: Token generated: yes
+[2026-08-25 01:05:40] ACCEPT: Updated to accepted. Meeting ID: ke82-apfq-v7lo
+[2026-08-25 01:05:40] ACCEPT: SUCCESS
+[2026-08-25 01:05:41] === START CALL STARTED ===
+[2026-08-25 01:05:41] User ID: 2
+[2026-08-25 01:05:41] Request ID: 67
+[2026-08-25 01:05:41] START: Request found - Status: accepted
+[2026-08-25 01:05:41] START: Client ID: 2, Influencer ID: 1, Billing mode: payg_second
+[2026-08-25 01:05:41] START: meeting_id length: 14, meeting_token length: 281
+[2026-08-25 01:05:41] START: video_calls row created - Call ID: 48
+[2026-08-25 01:05:41] START: SUCCESS - Call ID: 48
+[2026-08-25 01:05:42] === START CALL STARTED ===
+[2026-08-25 01:05:42] User ID: 1
+[2026-08-25 01:05:42] Request ID: 67
+[2026-08-25 01:05:42] START: Request found - Status: accepted
+[2026-08-25 01:05:42] START: Existing call found - Call ID: 48
+[2026-08-25 01:08:25] === START CALL STARTED ===
+[2026-08-25 01:08:25] User ID: 2
+[2026-08-25 01:08:25] Request ID: 68
+[2026-08-25 01:08:25] START: Request found - Status: pending
+[2026-08-25 01:08:25] START: Request not accepted - Status: pending
+[2026-08-25 01:08:27] === ACCEPT CALL STARTED ===
+[2026-08-25 01:08:27] User ID: 1
+[2026-08-25 01:08:27] Request ID: 68
+[2026-08-25 01:08:27] ACCEPT: Request found - Status: pending
+[2026-08-25 01:08:27] ACCEPT: Creating VideoSDK room...
+[2026-08-25 01:08:28] === START CALL STARTED ===
+[2026-08-25 01:08:28] User ID: 2
+[2026-08-25 01:08:28] Request ID: 68
+[2026-08-25 01:08:28] ACCEPT: Room created: pu3j-favc-wdrz
+[2026-08-25 01:08:28] ACCEPT: Generating token...
+[2026-08-25 01:08:28] ACCEPT: Token generated: yes
+[2026-08-25 01:08:28] ACCEPT: Updated to accepted. Meeting ID: pu3j-favc-wdrz
+[2026-08-25 01:08:28] START: Request found - Status: accepted
+[2026-08-25 01:08:28] START: Client ID: 2, Influencer ID: 1, Billing mode: payg_minute
+[2026-08-25 01:08:28] START: meeting_id length: 14, meeting_token length: 281
+[2026-08-25 01:08:28] START: video_calls row created - Call ID: 49
+[2026-08-25 01:08:28] ACCEPT: SUCCESS
+[2026-08-25 01:08:28] START: SUCCESS - Call ID: 49
+[2026-08-25 01:08:29] === START CALL STARTED ===
+[2026-08-25 01:08:29] User ID: 1
+[2026-08-25 01:08:29] Request ID: 68
+[2026-08-25 01:08:29] START: Request found - Status: accepted
+[2026-08-25 01:08:29] START: Existing call found - Call ID: 49
+[2026-08-25 01:15:48] === START CALL STARTED ===
+[2026-08-25 01:15:48] User ID: 2
+[2026-08-25 01:15:48] Request ID: 69
+[2026-08-25 01:15:48] START: Request found - Status: pending
+[2026-08-25 01:15:48] START: Request not accepted - Status: pending
+[2026-08-25 01:15:51] === START CALL STARTED ===
+[2026-08-25 01:15:51] User ID: 2
+[2026-08-25 01:15:51] Request ID: 69
+[2026-08-25 01:15:51] START: Request found - Status: pending
+[2026-08-25 01:15:51] START: Request not accepted - Status: pending
+[2026-08-25 01:15:53] === ACCEPT CALL STARTED ===
+[2026-08-25 01:15:53] User ID: 1
+[2026-08-25 01:15:53] Request ID: 69
+[2026-08-25 01:15:53] ACCEPT: Request found - Status: pending
+[2026-08-25 01:15:53] ACCEPT: Creating VideoSDK room...
+[2026-08-25 01:15:54] ACCEPT: Room created: np0f-57i5-kx11
+[2026-08-25 01:15:54] ACCEPT: Generating token...
+[2026-08-25 01:15:54] ACCEPT: Token generated: yes
+[2026-08-25 01:15:54] ACCEPT: Updated to accepted. Meeting ID: np0f-57i5-kx11
+[2026-08-25 01:15:54] ACCEPT: SUCCESS
+[2026-08-25 01:15:54] === START CALL STARTED ===
+[2026-08-25 01:15:54] User ID: 2
+[2026-08-25 01:15:54] Request ID: 69
+[2026-08-25 01:15:54] START: Request found - Status: accepted
+[2026-08-25 01:15:54] START: Client ID: 2, Influencer ID: 1, Billing mode: payg_second
+[2026-08-25 01:15:54] START: meeting_id length: 14, meeting_token length: 281
+[2026-08-25 01:15:54] START: video_calls row created - Call ID: 50
+[2026-08-25 01:15:54] START: SUCCESS - Call ID: 50
+[2026-08-25 01:15:55] === START CALL STARTED ===
+[2026-08-25 01:15:55] User ID: 1
+[2026-08-25 01:15:55] Request ID: 69
+[2026-08-25 01:15:55] START: Request found - Status: accepted
+[2026-08-25 01:15:55] START: Existing call found - Call ID: 50
+[2026-09-05 09:17:11] === START CALL STARTED ===
+[2026-09-05 09:17:11] User ID: 2
+[2026-09-05 09:17:11] Request ID: 70
+[2026-09-05 09:17:11] START: Request found - Status: pending
+[2026-09-05 09:17:11] START: Request not accepted - Status: pending
+[2026-09-05 09:17:14] === START CALL STARTED ===
+[2026-09-05 09:17:14] User ID: 2
+[2026-09-05 09:17:14] Request ID: 70
+[2026-09-05 09:17:14] START: Request found - Status: pending
+[2026-09-05 09:17:14] START: Request not accepted - Status: pending
+[2026-09-05 09:17:17] === START CALL STARTED ===
+[2026-09-05 09:17:17] User ID: 2
+[2026-09-05 09:17:17] Request ID: 70
+[2026-09-05 09:17:17] START: Request found - Status: pending
+[2026-09-05 09:17:17] START: Request not accepted - Status: pending
+[2026-09-05 09:17:20] === START CALL STARTED ===
+[2026-09-05 09:17:20] User ID: 2
+[2026-09-05 09:17:20] Request ID: 70
+[2026-09-05 09:17:20] START: Request found - Status: pending
+[2026-09-05 09:17:20] START: Request not accepted - Status: pending
+[2026-09-05 09:17:23] === START CALL STARTED ===
+[2026-09-05 09:17:23] User ID: 2
+[2026-09-05 09:17:23] Request ID: 70
+[2026-09-05 09:17:23] START: Request found - Status: pending
+[2026-09-05 09:17:23] START: Request not accepted - Status: pending
+[2026-09-05 09:17:26] === ACCEPT CALL STARTED ===
+[2026-09-05 09:17:26] User ID: 9
+[2026-09-05 09:17:26] Request ID: 70
+[2026-09-05 09:17:26] ACCEPT: Request found - Status: pending
+[2026-09-05 09:17:26] ACCEPT: Creating VideoSDK room...
+[2026-09-05 09:17:26] === START CALL STARTED ===
+[2026-09-05 09:17:26] User ID: 2
+[2026-09-05 09:17:26] Request ID: 70
+[2026-09-05 09:17:27] ACCEPT: Room created: ba7v-gg1t-mhpu
+[2026-09-05 09:17:27] ACCEPT: Generating token...
+[2026-09-05 09:17:27] ACCEPT: Token generated: yes
+[2026-09-05 09:17:27] ACCEPT: Updated to accepted. Meeting ID: ba7v-gg1t-mhpu
+[2026-09-05 09:17:27] START: Request found - Status: accepted
+[2026-09-05 09:17:27] START: Client ID: 2, Influencer ID: 9, Billing mode: payg_second
+[2026-09-05 09:17:27] START: meeting_id length: 14, meeting_token length: 281
+[2026-09-05 09:17:27] START: video_calls row created - Call ID: 51
+[2026-09-05 09:17:27] ACCEPT: SUCCESS
+[2026-09-05 09:17:27] START: SUCCESS - Call ID: 51
+[2026-09-05 09:17:34] === START CALL STARTED ===
+[2026-09-05 09:17:34] User ID: 9
+[2026-09-05 09:17:34] Request ID: 70
+[2026-09-05 09:17:34] START: Request found - Status: accepted
+[2026-09-05 09:17:34] START: Existing call found - Call ID: 51

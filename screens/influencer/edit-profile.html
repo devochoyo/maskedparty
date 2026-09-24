@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Edit Profile — Masked Party</title>
+<script src="/widgets/phosphor_icons.js"></script>
+<script>PhosphorIcons.load();</script>
+<style>
+  :root{--primary-pink:#E91E63;--soft-pink:#FF6B8B;--light-pink:#FFE4EC;--bg:#F8F9FE;--text-dark:#1A1D2E;--text-medium:#6B7280;--text-light:#9CA3AF;--success:#00C853;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text-dark);}
+
+  header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid rgba(255,228,236,.4);}
+  .head-row{max-width:520px;margin:0 auto;display:flex;align-items:center;padding:14px 16px;gap:12px;}
+  .back-btn{width:34px;height:34px;border:none;background:none;font-size:18px;color:var(--text-dark);cursor:pointer;}
+  h1{font-size:20px;font-weight:700;}
+
+  main{max-width:520px;margin:0 auto;padding:24px 20px 60px;}
+
+  .photo-wrap{display:flex;flex-direction:column;align-items:center;}
+  .photo-ring{position:relative;width:110px;height:110px;border-radius:50%;padding:3px;background:linear-gradient(135deg,var(--primary-pink),var(--soft-pink));}
+  .photo{width:100%;height:100%;border-radius:50%;background:#fff;padding:3px;}
+  .photo img,.photo .fb{width:100%;height:100%;border-radius:50%;object-fit:cover;display:flex;align-items:center;justify-content:center;font-size:40px;color:rgba(233,30,99,.4);background:linear-gradient(135deg,rgba(255,228,236,.5),#fff);}
+  .photo-edit-btn{position:absolute;bottom:2px;right:2px;width:32px;height:32px;border-radius:50%;background:var(--primary-pink);border:3px solid #fff;color:#fff;font-size:14px;cursor:pointer;}
+  .photo-hint{margin-top:10px;font-size:12px;color:var(--text-light);}
+
+  .card{margin-top:20px;background:#fff;border-radius:20px;padding:18px;box-shadow:0 2px 10px rgba(0,0,0,.04);}
+  .card-label{display:flex;align-items:center;gap:8px;font-weight:700;font-size:13px;color:var(--text-dark);margin-bottom:12px;}
+  .field{margin-bottom:14px;}
+  .field:last-child{margin-bottom:0;}
+  label{display:block;font-size:12px;font-weight:600;color:var(--text-medium);margin-bottom:6px;}
+  input[type=text],input[type=number],textarea,select{width:100%;padding:12px 14px;background:var(--bg);border:1px solid #e5e5e5;border-radius:12px;font-size:14px;color:var(--text-dark);font-family:inherit;}
+  textarea{resize:vertical;min-height:70px;}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--primary-pink);}
+  .row-2{display:flex;gap:12px;}
+  .row-2 .field{flex:1;}
+
+  .switch-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:4px;}
+  .switch-row span{font-size:13px;color:var(--text-dark);flex:1;}
+  .toggle{width:46px;height:26px;border-radius:14px;border:none;position:relative;cursor:pointer;background:#ccc;flex:none;}
+  .toggle.on{background:var(--primary-pink);}
+  .toggle .knob{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .2s;}
+  .toggle.on .knob{left:23px;}
+
+  .gallery-link{margin-top:20px;display:flex;align-items:center;justify-content:space-between;background:#fff;border-radius:16px;padding:16px 18px;box-shadow:0 2px 10px rgba(0,0,0,.04);cursor:pointer;border:none;width:100%;text-align:left;}
+  .gallery-link .t{font-weight:700;font-size:14px;}
+  .gallery-link .s{margin-top:2px;font-size:11px;color:var(--text-medium);}
+
+  .save-btn{margin-top:24px;width:100%;height:54px;border:none;border-radius:16px;background:linear-gradient(to right,var(--primary-pink),var(--soft-pink));color:#fff;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 5px 15px rgba(233,30,99,.3);}
+  .save-btn:disabled{opacity:.6;cursor:not-allowed;}
+
+  .toast{position:fixed;left:16px;right:16px;bottom:24px;background:#D32F2F;color:#fff;padding:14px 16px;border-radius:12px;font-size:14px;text-align:center;max-width:420px;margin:0 auto;z-index:9800;}
+  .toast.success{background:var(--success);}
+  .spinner-wrap{display:flex;justify-content:center;padding:80px 0;}
+  .spinner{width:32px;height:32px;border:3px solid rgba(233,30,99,.2);border-top-color:var(--primary-pink);border-radius:50%;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .mini-spin{width:22px;height:22px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;}
+</style>
+</head>
+<body>
+  <header><div class="head-row"><button class="back-btn" id="backBtn" aria-label="Back"><i class="ph ph-arrow-left"></i></button><h1>Edit Profile</h1></div></header>
+  <main id="root"><div class="spinner-wrap"><div class="spinner" role="status" aria-label="Loading"></div></div></main>
+
+<script src="/services/api.js"></script>
+<script src="/services/api_endpoints.js"></script>
+<script src="/services/session_manager.js"></script>
+<script src="/services/route_guard.js"></script>
+<script>RouteGuard.require("influencer");</script>
+<script src="/services/profile_service.js"></script>
+<script src="/services/upload_service.js"></script>
+<script>
+  (function () {
+    var root = document.getElementById("root");
+    document.getElementById("backBtn").addEventListener("click", function () { window.history.back(); });
+
+    var photoUrl = null;
+    var maskStatus = "masked";
+    var willingToRemoveMask = false;
+
+    function escapeAttr(s) { return String(s == null ? "" : s).replace(/"/g, "&quot;"); }
+    function showToast(message, kind) {
+      var t = document.createElement("div");
+      t.className = "toast" + (kind ? " " + kind : "");
+      t.textContent = message;
+      document.body.appendChild(t);
+      setTimeout(function () { t.remove(); }, 3200);
+    }
+
+    function render(profile) {
+      photoUrl = profile.profile_photo || null;
+      maskStatus = profile.mask_status || "masked";
+      willingToRemoveMask = profile.willing_to_remove_mask === true || profile.willing_to_remove_mask === 1;
+
+      root.innerHTML =
+        '<div class="photo-wrap"><div class="photo-ring" id="photoRing">' +
+        '<div class="photo">' + (photoUrl ? '<img src="' + photoUrl + '" alt="" id="photoImg">' : '<div class="fb" id="photoImg"><i class="ph ph-user"></i></div>') + "</div>" +
+        '<button class="photo-edit-btn" id="pickPhotoBtn" aria-label="Change photo"><i class="ph ph-pencil-simple"></i></button>' +
+        "</div><div class=\"photo-hint\">Tap to change photo</div></div>" +
+        '<input type="file" accept="image/*" id="photoInput" style="display:none">' +
+
+        '<div class="card"><div class="card-label"><i class="ph ph-note-pencil"></i> Basic Info</div>' +
+        '<div class="field"><label for="nameInput">Mystery Name</label><input type="text" id="nameInput" value="' + escapeAttr(profile.mystery_name) + '"></div>' +
+        '<div class="field"><label for="bioInput">Biography</label><textarea id="bioInput" rows="3">' + escapeAttr(profile.biography) + "</textarea></div>" +
+        '<div class="row-2"><div class="field"><label for="ageInput">Age</label><input type="number" id="ageInput" value="' + escapeAttr(profile.age) + '"></div>' +
+        '<div class="field"><label for="complexionInput">Complexion</label><input type="text" id="complexionInput" value="' + escapeAttr(profile.complexion) + '"></div></div>' +
+        "</div>" +
+
+        '<div class="card"><div class="card-label"><i class="ph ph-sparkle"></i> About You</div>' +
+        '<div class="field"><label for="foodInput">Favourite Food</label><input type="text" id="foodInput" value="' + escapeAttr(profile.favourite_food) + '"></div>' +
+        '<div class="field"><label for="hobbyInput">Hobby</label><input type="text" id="hobbyInput" value="' + escapeAttr(profile.hobby) + '"></div>' +
+        '<div class="field"><label for="aspirationInput">Aspiration</label><input type="text" id="aspirationInput" value="' + escapeAttr(profile.aspiration) + '"></div>' +
+        '<div class="field"><label for="targetInput">Financial Target</label><input type="number" id="targetInput" value="' + escapeAttr(profile.financial_target) + '"></div>' +
+        "</div>" +
+
+        '<div class="card"><div class="card-label"><i class="ph ph-mask-happy"></i> Mask Preference</div>' +
+        '<div class="field"><label for="maskSelect">Mask Status</label><select id="maskSelect"><option value="masked"><i class="ph ph-lock-simple"></i> Masked</option><option value="unmasked"><i class="ph ph-lock-simple-open"></i> Unmasked</option></select></div>' +
+        '<div class="switch-row"><span>Willing to remove mask for the right motivation?</span><button type="button" class="toggle' + (willingToRemoveMask ? " on" : "") + '" id="willingToggle"><span class="knob"></span></button></div>' +
+        "</div>" +
+
+        '<button class="gallery-link" id="galleryLink"><div><div class="t"><i class="ph ph-image"></i> Manage Gallery</div><div class="s">Add or remove photos</div></div><span><i class="ph ph-caret-right"></i></span></button>' +
+
+        '<button class="save-btn" id="saveBtn"><span id="saveLabel">Save Changes</span></button>';
+
+      document.getElementById("maskSelect").value = maskStatus;
+      document.getElementById("pickPhotoBtn").addEventListener("click", function () { document.getElementById("photoInput").click(); });
+      document.getElementById("photoInput").addEventListener("change", onPickPhoto);
+      document.getElementById("maskSelect").addEventListener("change", function (e) { maskStatus = e.target.value; });
+      document.getElementById("willingToggle").addEventListener("click", function () {
+        willingToRemoveMask = !willingToRemoveMask;
+        document.getElementById("willingToggle").classList.toggle("on", willingToRemoveMask);
+      });
+      document.getElementById("galleryLink").addEventListener("click", function () { window.location.href = "/gallery"; });
+      document.getElementById("saveBtn").addEventListener("click", save);
+    }
+
+    async function onPickPhoto(e) {
+      var file = e.target.files[0];
+      if (!file) return;
+      var ring = document.getElementById("photoRing");
+      var overlay = document.createElement("div");
+      overlay.style.cssText = "position:absolute;inset:0;border-radius:50%;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;";
+      overlay.innerHTML = '<div class="mini-spin"></div>';
+      ring.appendChild(overlay);
+
+      var reader = new FileReader();
+      reader.onload = function () { document.getElementById("photoImg").outerHTML = '<img src="' + reader.result + '" alt="" id="photoImg">'; };
+      reader.readAsDataURL(file);
+
+      var token = SessionManager.getToken();
+      var result = await UploadService.uploadProfilePhoto(token, file);
+      overlay.remove();
+      if (result && result.success === true && result.data && result.data.url) {
+        photoUrl = result.data.url;
+      } else {
+        showToast((result && result.message) || "Failed to upload photo");
+      }
+    }
+
+    async function save() {
+      var name = document.getElementById("nameInput").value.trim();
+      if (!name) { showToast("Mystery Name is required"); return; }
+
+      var btn = document.getElementById("saveBtn");
+      var label = document.getElementById("saveLabel");
+      btn.disabled = true; label.textContent = "Saving...";
+
+      var token = SessionManager.getToken();
+      var data = {
+        mystery_name: name,
+        biography: document.getElementById("bioInput").value.trim(),
+        age: parseInt(document.getElementById("ageInput").value, 10) || 0,
+        complexion: document.getElementById("complexionInput").value.trim(),
+        favourite_food: document.getElementById("foodInput").value.trim(),
+        hobby: document.getElementById("hobbyInput").value.trim(),
+        aspiration: document.getElementById("aspirationInput").value.trim(),
+        financial_target: parseFloat(document.getElementById("targetInput").value) || 0,
+        mask_status: maskStatus,
+        willing_to_remove_mask: willingToRemoveMask,
+      };
+      if (photoUrl) data.profile_photo = photoUrl;
+
+      var result = await ProfileService.updateProfile(token, data);
+      btn.disabled = false; label.textContent = "Save Changes";
+
+      if (result && result.success === true) {
+        showToast("Profile updated successfully", "success");
+        setTimeout(function () { window.history.back(); }, 800);
+      } else {
+        showToast((result && result.message) || "Update failed");
+      }
+    }
+
+    async function load() {
+      var token = SessionManager.getToken();
+      var result = await ProfileService.getProfile(token);
+      render(result && result.success === true ? result.data || {} : {});
+    }
+
+    load();
+  })();
+</script>
+</body>
+</html>

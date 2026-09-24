@@ -1,0 +1,15 @@
+[11-Sep-2026 22:20:04 UTC] PHP Notice:  Unknown: [SERVERBUG] BUG: Unknown internal error (0.001 + 0.000 secs). (errflg=2) in Unknown on line 0
+[12-Sep-2026 20:10:19 UTC] PHP Notice:  Unknown: TLS/SSL failure for mail.careerkings.name.ng: SSL negotiation failed (errflg=2) in Unknown on line 0
+[12-Sep-2026 20:15:19 UTC] PHP Notice:  Unknown: TLS/SSL failure for mail.careerkings.name.ng: SSL negotiation failed (errflg=2) in Unknown on line 0
+[12-Sep-2026 20:20:19 UTC] PHP Notice:  Unknown: TLS/SSL failure for mail.careerkings.name.ng: SSL negotiation failed (errflg=2) in Unknown on line 0
+[12-Sep-2026 21:20:07 UTC] PHP Notice:  Unknown: Can not authenticate to IMAP server: [UNAVAILABLE] Temporary authentication failure. [s4.whitelabelclouds.com:2026-09 (errflg=2) in Unknown on line 0
+[12-Sep-2026 21:25:06 UTC] PHP Notice:  Unknown: Can not authenticate to IMAP server: [AUTHENTICATIONFAILED] Authentication failed. (errflg=2) in Unknown on line 0
+[12-Sep-2026 21:30:07 UTC] PHP Notice:  Unknown: Can not authenticate to IMAP server: [AUTHENTICATIONFAILED] Authentication failed. (errflg=2) in Unknown on line 0
+[12-Sep-2026 21:35:07 UTC] PHP Notice:  Unknown: Can not authenticate to IMAP server: [AUTHENTICATIONFAILED] Authentication failed. (errflg=2) in Unknown on line 0
+[12-Sep-2026 21:40:05 UTC] PHP Notice:  Unknown: Can not authenticate to IMAP server: [AUTHENTICATIONFAILED] Authentication failed. (errflg=2) in Unknown on line 0
+[12-Sep-2026 21:45:06 UTC] PHP Notice:  Unknown: Can not authenticate to IMAP server: [AUTHENTICATIONFAILED] Authentication failed. (errflg=2) in Unknown on line 0
+[12-Sep-2026 21:50:07 UTC] PHP Notice:  Unknown: Can not authenticate to IMAP server: [AUTHENTICATIONFAILED] Authentication failed. (errflg=2) in Unknown on line 0
+[12-Sep-2026 21:55:06 UTC] PHP Notice:  Unknown: Can not authenticate to IMAP server: [AUTHENTICATIONFAILED] Authentication failed. (errflg=2) in Unknown on line 0
+[12-Sep-2026 22:00:07 UTC] PHP Notice:  Unknown: Can not authenticate to IMAP server: [AUTHENTICATIONFAILED] Authentication failed. (errflg=2) in Unknown on line 0
+[12-Sep-2026 22:05:06 UTC] PHP Notice:  Unknown: Can not authenticate to IMAP server: [AUTHENTICATIONFAILED] Authentication failed. (errflg=2) in Unknown on line 0
+[12-Sep-2026 22:10:07 UTC] PHP Notice:  Unknown: Can not authenticate to IMAP server: [AUTHENTICATIONFAILED] Authentication failed. (errflg=2) in Unknown on line 0

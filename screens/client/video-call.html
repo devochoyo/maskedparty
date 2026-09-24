@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Call — Masked Party</title>
+<script src="/widgets/phosphor_icons.js"></script>
+<script>PhosphorIcons.load();</script>
+<style>
+  :root{--primary-pink:#E91E63;--soft-pink:#FF6B8B;--danger:#E53935;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;background:#000;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;overflow:hidden;}
+
+  #callRoot{position:fixed;inset:0;}
+
+  /* In-call layout */
+  .call-stage{position:fixed;inset:0;background:#000;}
+  .fullscreen-slot{position:absolute;inset:0;background:#111;}
+  .fullscreen-slot video{width:100%;height:100%;object-fit:cover;}
+  .cam-off{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.4);font-size:44px;background:#1a1a1a;}
+  .scrim{position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,.4), transparent 30%, transparent 65%, rgba(0,0,0,.6));pointer-events:none;}
+
+  .top-bar{position:absolute;top:0;left:0;right:0;padding:calc(env(safe-area-inset-top) + 12px) 16px 0;display:flex;justify-content:space-between;align-items:flex-start;}
+  .peer-chip{display:flex;align-items:center;gap:10px;}
+  .peer-avatar{width:36px;height:36px;border-radius:50%;background:#333;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);font-size:16px;}
+  .peer-name{color:#fff;font-size:14px;font-weight:700;}
+  .peer-timer{color:rgba(255,255,255,.7);font-size:11px;margin-top:2px;}
+  .extend-chip{padding:5px 10px;background:rgba(0,0,0,.4);border-radius:12px;color:#fff;font-size:11px;font-weight:500;border:none;cursor:pointer;}
+
+  .pip-slot{position:absolute;top:78px;right:16px;width:90px;height:130px;border-radius:12px;border:1.5px solid #fff;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.3);cursor:pointer;}
+  .pip-slot video{width:100%;height:100%;object-fit:cover;}
+  .pip-slot .cam-off{font-size:24px;}
+
+  .bottom-controls{position:absolute;left:0;right:0;bottom:0;padding:0 16px calc(env(safe-area-inset-bottom) + 24px);display:flex;justify-content:space-evenly;}
+  .call-btn-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .call-btn{width:56px;height:56px;border-radius:50%;border:none;cursor:pointer;font-size:22px;color:#fff;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.2);}
+  .call-btn.danger{background:var(--danger);}
+  .call-btn-label{color:rgba(255,255,255,.7);font-size:11px;}
+
+  /* Outgoing / connecting / ending states */
+  .oc-screen{position:fixed;inset:0;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:48px 24px 32px;text-align:center;}
+  .oc-spacer{flex:1;}
+  .oc-rings{position:relative;width:220px;height:220px;display:flex;align-items:center;justify-content:center;margin-top:24px;}
+  .oc-ring{position:absolute;border-radius:50%;border:2px solid rgba(233,30,99,.2);}
+  .oc-ring.r1{width:200px;height:200px;}
+  .oc-ring.r2{width:220px;height:220px;border-color:rgba(233,30,99,.08);}
+  .oc-avatar{width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,#E91E63,#FF6B8B);display:flex;align-items:center;justify-content:center;color:#fff;font-size:48px;font-weight:700;}
+  .oc-name{margin-top:40px;font-size:26px;font-weight:600;color:#1A1D2E;}
+  .oc-status{margin-top:10px;display:flex;align-items:center;justify-content:center;gap:10px;}
+  .oc-dot{width:8px;height:8px;border-radius:50%;background:#E91E63;box-shadow:0 0 8px rgba(233,30,99,.35);}
+  .oc-status span{font-size:14px;color:#757575;}
+  .oc-badge{margin-top:60px;padding:6px 16px;border-radius:20px;background:#FFF5F8;border:1px solid rgba(233,30,99,.15);display:inline-flex;align-items:center;gap:8px;font-size:12px;color:#E91E63;font-weight:500;}
+  .oc-cancel-btn{margin-top:auto;width:64px;height:64px;border-radius:50%;border:none;cursor:pointer;background:#f44336;color:#fff;font-size:26px;box-shadow:0 0 0 4px rgba(244,67,54,.15),0 10px 20px rgba(244,67,54,.25);}
+  .oc-cancel-text{margin-top:16px;background:none;border:none;font-size:13px;color:#9e9e9e;font-weight:500;cursor:pointer;}
+
+  .connecting-screen{position:fixed;inset:0;background:#F8F9FE;display:flex;align-items:center;justify-content:center;}
+  .connecting-icon{width:100px;height:100px;border-radius:50%;background:rgba(233,30,99,.1);display:flex;align-items:center;justify-content:center;}
+  .connecting-spin{width:60px;height:60px;border:3px solid rgba(233,30,99,.25);border-top-color:#E91E63;border-radius:50%;animation:spin .9s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .connecting-title{margin-top:32px;font-size:24px;font-weight:700;color:#1A1D2E;text-align:center;}
+  .connecting-sub{margin-top:8px;font-size:14px;color:#6B7280;text-align:center;}
+
+  .ending-screen{position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column;}
+  .ending-spin{width:32px;height:32px;border:3px solid rgba(233,30,99,.3);border-top-color:#E91E63;border-radius:50%;animation:spin .8s linear infinite;}
+  .ending-text{margin-top:20px;color:rgba(255,255,255,.7);font-size:16px;}
+
+  /* Post-call */
+  .postcall-screen{position:fixed;inset:0;background:#F8F9FE;overflow-y:auto;padding-bottom:40px;}
+  .postcall-dim{transition:opacity .4s ease;}
+  .postcall-dim.dimmed{opacity:.3;pointer-events:none;}
+
+  /* Modals */
+  .vc-modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9500;display:flex;align-items:center;justify-content:center;padding:24px;}
+  .vc-modal{background:#fff;border-radius:20px;padding:24px;max-width:340px;width:100%;}
+  .vc-modal h3{font-size:18px;font-weight:700;color:#1A1D2E;}
+  .vc-modal p{margin-top:10px;font-size:14px;color:#6B7280;line-height:1.5;}
+  .vc-modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px;}
+  .vc-modal-actions button{padding:10px 18px;border-radius:12px;font-weight:700;font-size:14px;cursor:pointer;border:none;}
+  .vc-modal-actions .cancel{background:none;color:#6B7280;}
+  .vc-modal-actions .confirm{background:#E91E63;color:#fff;}
+  .vc-option{display:block;width:100%;text-align:left;padding:12px 14px;border-radius:12px;border:1px solid rgba(233,30,99,.15);background:rgba(233,30,99,.04);margin-top:8px;font-size:14px;font-weight:600;color:#1A1D2E;cursor:pointer;}
+  .vc-toast{position:fixed;left:16px;right:16px;bottom:24px;background:#323232;color:#fff;padding:14px 16px;border-radius:12px;font-size:14px;text-align:center;max-width:420px;margin:0 auto;z-index:9800;}
+</style>
+</head>
+<body>
+  <div id="callRoot"></div>
+
+<script src="https://sdk.videosdk.live/js-sdk/1.1.1/videosdk.js"></script>
+<script src="/services/api.js"></script>
+<script src="/services/api_endpoints.js"></script>
+<script src="/services/session_manager.js"></script>
+<script src="/services/route_guard.js"></script>
+<script>RouteGuard.require("client");</script>
+<script src="/services/call_service.js"></script>
+<script src="/widgets/client_call_warning_dialog.js"></script>
+<script src="/widgets/client_release.js"></script>
+<script>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var requestId = params.get("request_id") || "";
+  var influencerId = params.get("influencer_id") || "";
+  var influencerName = params.get("influencer_name") || "Influencer";
+  var initialMinutes = parseInt(params.get("minutes"), 10) || 1;
+  var billingMode = params.get("billing_mode") || "standard";
+  var isPayg = billingMode === "payg_minute" || billingMode === "payg_second";
+
+  if (!requestId) { window.location.href = "/discover"; return; }
+
+  var root = document.getElementById("callRoot");
+
+  // ---- state -----------------------------------------------------------
+  var phase = "waiting"; // waiting | connecting | in-call | ending | post-call
+  var callId = null;
+  var remainingSeconds = 0;
+  var totalDurationSeconds = 0;
+  var elapsedSeconds = 0;
+  var callStartedAt = null;
+  var hasShownTimeUpWarning = false;
+  var callEnded = false;
+  var isEndingCall = false;
+  var hasAppliedInitialExtend = false;
+  var coinsForRelease = 0;
+  var actualDurationSeconds = null;
+
+  var statusPoller = null, countdownPoller = null, localTickTimer = null, noAnswerTimer = null;
+  var isFinishingBeforeConnect = false;
+  var waitStatusMessage = "Calling...";
+
+  var meeting = null;
+  var micEnabled = true, camEnabled = true, isLocalFullScreen = false;
+  var localStream = null; // getUserMedia MediaStream for local <video>
+  var remoteHasVideo = false, remoteHasAudio = false;
+
+  var NO_ANSWER_TIMEOUT_MS = 40000;
+
+  function escapeHtml(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function formatTime(sec) {
+    if (sec == null || sec < 0) sec = 0;
+    var m = Math.floor(sec / 60), s = Math.floor(sec % 60);
+    return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+  }
+  function showToast(message) {
+    var t = document.createElement("div");
+    t.className = "vc-toast";
+    t.textContent = message;
+    document.body.appendChild(t);
+    setTimeout(function () { t.remove(); }, 3200);
+  }
+  function initials(name) { return (name || "?").trim().charAt(0).toUpperCase(); }
+
+  // ---- generic confirm/alert modal helper -------------------------------
+  function showModal(opts) {
+    var backdrop = document.createElement("div");
+    backdrop.className = "vc-modal-backdrop";
+    backdrop.innerHTML =
+      '<div class="vc-modal"><h3>' + escapeHtml(opts.title) + "</h3>" +
+      (opts.body ? "<p>" + escapeHtml(opts.body) + "</p>" : "") +
+      '<div class="vc-modal-actions" id="vcModalActions"></div></div>';
+    document.body.appendChild(backdrop);
+    var actionsEl = backdrop.querySelector("#vcModalActions");
+    opts.actions.forEach(function (a) {
+      var btn = document.createElement("button");
+      btn.className = a.style || "cancel";
+      btn.textContent = a.label;
+      btn.addEventListener("click", function () {
+        backdrop.remove();
+        if (a.onClick) a.onClick();
+      });
+      actionsEl.appendChild(btn);
+    });
+    return backdrop;
+  }
+
+  // ---- OutgoingCallScreen (waiting phase) -------------------------------
+  var ringtoneAudio = null;
+  function renderOutgoing() {
+    ringtoneAudio = ringtoneAudio || new Audio("/assets/outgoing.mp3");
+    ringtoneAudio.loop = true;
+    ringtoneAudio.play().catch(function () {});
+
+    root.innerHTML =
+      '<div class="oc-screen">' +
+      '<div class="oc-spacer"></div>' +
+      '<div class="oc-rings"><div class="oc-ring r2"></div><div class="oc-ring r1"></div>' +
+      '<div class="oc-avatar">' + initials(influencerName) + "</div></div>" +
+      '<div class="oc-name">' + escapeHtml(influencerName) + "</div>" +
+      '<div class="oc-status"><span class="oc-dot"></span><span id="ocStatusText">' + escapeHtml(waitStatusMessage) + "</span></div>" +
+      '<div class="oc-badge"><i class="ph ph-video-camera"></i> Video Call</div>' +
+      '<button class="oc-cancel-btn" id="ocCancelBtn" aria-label="Cancel"><i class="ph ph-phone"></i></button>' +
+      '<button class="oc-cancel-text" id="ocCancelText">Cancel</button>' +
+      "</div>";
+
+    function cancel() {
+      if (isFinishingBeforeConnect) return;
+      stopRingtone();
+      clearInterval(statusPoller);
+      clearTimeout(noAnswerTimer);
+      if (window.history.length > 1) window.history.back();
+      else window.location.href = "/discover";
+    }
+    document.getElementById("ocCancelBtn").addEventListener("click", cancel);
+    document.getElementById("ocCancelText").addEventListener("click", cancel);
+  }
+  function stopRingtone() {
+    if (ringtoneAudio) { try { ringtoneAudio.pause(); ringtoneAudio.currentTime = 0; } catch (e) {} }
+  }
+  function updateOutgoingStatus(text) {
+    waitStatusMessage = text;
+    var el = document.getElementById("ocStatusText");
+    if (el) el.textContent = text;
+  }
+
+  function finishBeforeConnect(label) {
+    if (isFinishingBeforeConnect) return;
+    isFinishingBeforeConnect = true;
+    clearTimeout(noAnswerTimer);
+    clearInterval(statusPoller);
+    updateOutgoingStatus(label);
+    setTimeout(function () {
+      stopRingtone();
+      if (window.history.length > 1) window.history.back();
+      else window.location.href = "/discover";
+    }, 1500);
+  }
+
+  // ---- ConnectingScreen ---------------------------------------------------
+  function renderConnecting() {
+    root.innerHTML =
+      '<div class="connecting-screen"><div style="display:flex;flex-direction:column;align-items:center">' +
+      '<div class="connecting-icon"><div class="connecting-spin" role="status" aria-label="Connecting"></div></div>' +
+      '<div class="connecting-title">Connecting...</div>' +
+      '<div class="connecting-sub">Please wait while we connect your call</div>' +
+      "</div></div>";
+  }
+
+  function renderEnding() {
+    root.innerHTML =
+      '<div class="ending-screen"><div class="ending-spin" role="status" aria-label="Ending call"></div>' +
+      '<div class="ending-text">Ending call...</div></div>';
+  }
+
+  // ---- Call status polling (waiting phase) -------------------------------
+  function pollCallStatus() {
+    var token = SessionManager.getToken();
+    statusPoller = setInterval(async function () {
+      var result = await CallService.startCall(token, requestId);
+      if (result && result.success === true) {
+        clearInterval(statusPoller);
+        clearTimeout(noAnswerTimer);
+        var data = result.data || {};
+        callId = data.call_id != null ? String(data.call_id) : null;
+
+        var modeFromServer = data.billing_mode;
+        if (modeFromServer) { billingMode = modeFromServer; isPayg = billingMode === "payg_minute" || billingMode === "payg_second"; }
+
+        var paidDuration = data.paid_duration_seconds;
+        if (typeof paidDuration === "number" && paidDuration > 0) {
+          remainingSeconds = paidDuration; totalDurationSeconds = paidDuration;
+        } else if (typeof data.remaining_seconds === "number" && data.remaining_seconds > 0) {
+          remainingSeconds = data.remaining_seconds; totalDurationSeconds = data.remaining_seconds;
+        }
+        if (typeof data.coins === "number") coinsForRelease = data.coins;
+
+        showPrivacyDialog(data);
+      } else {
+        var message = (result && result.message) || "";
+        var lower = message.toLowerCase();
+        var looksTerminal = message && (lower.indexOf("reject") !== -1 || lower.indexOf("cancel") !== -1 || lower.indexOf("expired") !== -1);
+        if (looksTerminal) {
+          clearInterval(statusPoller);
+          var label = "Call Ended";
+          if (lower.indexOf("reject") !== -1) label = "Call Rejected";
+          else if (lower.indexOf("cancel") !== -1) label = "Call Cancelled";
+          else if (lower.indexOf("expired") !== -1) label = "Call Expired";
+          finishBeforeConnect(label);
+        } else if (message) {
+          updateOutgoingStatus(message);
+        }
+      }
+    }, 3000);
+  }
+
+  function showPrivacyDialog(startData) {
+    ClientCallWarningDialog.show().then(function (accepted) {
+      if (accepted) {
+        stopRingtone();
+        joinFromStartData(startData);
+      } else {
+        stopRingtone();
+        if (window.history.length > 1) window.history.back();
+        else window.location.href = "/discover";
+      }
+    });
+  }
+
+  // ---- Join flow ----------------------------------------------------------
+  async function requestCallPermissions() {
+    try {
+      var s = await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+      s.getTracks().forEach(function (t) { t.stop(); });
+      return true;
+    } catch (e) {
+      showToast("Camera and microphone permissions are required for calls");
+      return false;
+    }
+  }
+
+  async function joinFromStartData(data) {
+    phase = "connecting";
+    renderConnecting();
+
+    var granted = await requestCallPermissions();
+    if (!granted) {
+      phase = "waiting";
+      renderOutgoing();
+      return;
+    }
+
+    var meetingId = data.meeting_id;
+    var meetingToken = data.meeting_token || data.token;
+    if (!meetingId || !meetingToken) {
+      showToast("Call server did not return meeting credentials");
+      phase = "waiting";
+      renderOutgoing();
+      return;
+    }
+
+    await applyInitialDurationIfNeeded();
+    joinRoom(meetingId, meetingToken);
+    startCountdownPolling();
+  }
+
+  async function applyInitialDurationIfNeeded() {
+    if (hasAppliedInitialExtend || !callId) return;
+    if (billingMode !== "standard" || initialMinutes <= 1) return;
+    hasAppliedInitialExtend = true;
+    var extraMinutes = initialMinutes - 1;
+    var token = SessionManager.getToken();
+    try {
+      var result = await CallService.extendCall(token, callId, extraMinutes);
+      if (result && result.success === true) {
+        var d = result.data || {};
+        if (typeof d.remaining_seconds === "number") remainingSeconds = d.remaining_seconds;
+        if (typeof d.paid_duration_seconds === "number") totalDurationSeconds = d.paid_duration_seconds;
+        if (typeof d.coins === "number") coinsForRelease = d.coins;
+      } else {
+        showToast((result && result.message) || "Could not purchase " + initialMinutes + " minutes — starting with 1 minute");
+      }
+    } catch (e) { /* non-fatal */ }
+  }
+
+  // ---- VideoSDK room ------------------------------------------------------
+  function joinRoom(meetingId, token) {
+    window.VideoSDK.config(token);
+    meeting = window.VideoSDK.initMeeting({
+      meetingId: meetingId,
+      name: "Client",
+      micEnabled: true,
+      webcamEnabled: true,
+    });
+
+    meeting.on("meeting-joined", function () {
+      phase = "in-call";
+      renderInCall();
+      attachLocalVideoListeners(meeting.localParticipant);
+    });
+
+    meeting.on("participant-joined", function (participant) {
+      attachRemoteVideoListeners(participant);
+    });
+
+    meeting.on("participant-left", function () {
+      remoteHasVideo = false; remoteHasAudio = false; isLocalFullScreen = false;
+      updateVideoLayout();
+      handleRemoteEndedCall("Influencer left — call ended");
+    });
+
+    meeting.on("meeting-left", function () {
+      // no-op; UI transitions are driven by our own phase changes
+    });
+
+    try { meeting.join(); } catch (e) { showToast("Could not join the call."); }
+  }
+
+  function attachLocalVideoListeners(localParticipant) {
+    localParticipant.on("stream-enabled", function (stream) {
+      if (stream.kind === "video") {
+        var ms = new MediaStream(); ms.addTrack(stream.track);
+        localStream = ms;
+        var el = document.getElementById("localVideoEl");
+        if (el) { el.srcObject = ms; el.play().catch(function () {}); }
+        setCamOffVisible("localCamOff", false);
+      }
+    });
+    localParticipant.on("stream-disabled", function (stream) {
+      if (stream.kind === "video") { setCamOffVisible("localCamOff", true); }
+    });
+  }
+
+  function attachRemoteVideoListeners(participant) {
+    participant.on("stream-enabled", function (stream) {
+      if (stream.kind === "video") {
+        remoteHasVideo = true;
+        var ms = new MediaStream(); ms.addTrack(stream.track);
+        var el = document.getElementById("remoteVideoEl");
+        if (el) { el.srcObject = ms; el.play().catch(function () {}); }
+        updateVideoLayout();
+      } else if (stream.kind === "audio") {
+        remoteHasAudio = true;
+        var ms2 = new MediaStream(); ms2.addTrack(stream.track);
+        var audioEl = document.getElementById("remoteAudioEl");
+        if (audioEl) { audioEl.srcObject = ms2; audioEl.play().catch(function () {}); }
+      }
+    });
+    participant.on("stream-disabled", function (stream) {
+      if (stream.kind === "video") { remoteHasVideo = false; updateVideoLayout(); }
+      if (stream.kind === "audio") { remoteHasAudio = false; }
+    });
+  }
+
+  function setCamOffVisible(id, visible) {
+    var el = document.getElementById(id);
+    if (el) el.style.display = visible ? "flex" : "none";
+  }
+
+  // ---- Countdown / extend / time-up ---------------------------------------
+  function startCountdownPolling() {
+    clearInterval(countdownPoller); clearInterval(localTickTimer);
+    if (!callId) return;
+    callStartedAt = callStartedAt || Date.now();
+
+    if (isPayg) {
+      localTickTimer = setInterval(function () {
+        if (callEnded) return;
+        var e = Math.floor((Date.now() - callStartedAt) / 1000);
+        if (e !== elapsedSeconds) { elapsedSeconds = e < 0 ? 0 : e; updateTimerDisplay(); }
+      }, 1000);
+    }
+
+    pollCountdownOnce();
+    countdownPoller = setInterval(pollCountdownOnce, isPayg ? 3000 : 5000);
+  }
+
+  async function pollCountdownOnce() {
+    if (!callId || callEnded) return;
+    var token = SessionManager.getToken();
+    try {
+      var result = await CallService.getCountdown(token, callId);
+      if (!result || result.success !== true) return;
+      var data = result.data || {};
+      var remaining = data.remaining_seconds;
+      var paidDuration = data.paid_duration_seconds;
+      var status = data.status;
+      var insufficient = data.insufficient_balance === true;
+
+      if (typeof data.actual_duration_seconds === "number") actualDurationSeconds = data.actual_duration_seconds;
+      if (typeof paidDuration === "number" && paidDuration > 0) totalDurationSeconds = paidDuration;
+      if (typeof data.coins === "number") coinsForRelease = data.coins;
+
+      if (status === "completed" || insufficient) {
+        clearInterval(countdownPoller); clearInterval(localTickTimer);
+        if (phase === "in-call" && !callEnded) {
+          if (insufficient) handleInsufficientBalance(); else handleCallTimeUp();
+        }
+        return;
+      }
+
+      if (isPayg) {
+        var elapsedFromServer = data.elapsed_seconds;
+        if (typeof elapsedFromServer === "number" && elapsedFromServer >= 0 && Math.abs(elapsedFromServer - elapsedSeconds) > 2) {
+          elapsedSeconds = elapsedFromServer;
+          callStartedAt = Date.now() - elapsedSeconds * 1000;
+          updateTimerDisplay();
+        }
+        return;
+      }
+
+      if (typeof remaining === "number" && remaining >= 0) {
+        remainingSeconds = remaining;
+        updateTimerDisplay();
+        var warningThreshold = totalDurationSeconds <= 60 ? 15 : totalDurationSeconds <= 180 ? 30 : 60;
+        if (remainingSeconds <= warningThreshold && remainingSeconds > 0 && !hasShownTimeUpWarning) {
+          hasShownTimeUpWarning = true;
+          showTimeWarning();
+        }
+        if (remainingSeconds <= 0 && phase === "in-call" && !callEnded) {
+          clearInterval(countdownPoller);
+          handleCallTimeUp();
+        }
+      }
+    } catch (e) { /* ignore, retry next tick */ }
+  }
+
+  function updateTimerDisplay() {
+    var el = document.getElementById("peerTimer");
+    if (el) el.textContent = formatTime(isPayg ? elapsedSeconds : remainingSeconds);
+  }
+
+  function showTimeWarning() {
+    if (callEnded || isPayg) return;
+    showModal({
+      title: "Call Ending Soon",
+      body: "Your call will end in about " + formatTime(remainingSeconds) + ". Would you like to extend?",
+      actions: [
+        { label: "End Call", style: "cancel", onClick: endCall },
+        { label: "Extend", style: "confirm", onClick: extendCall },
+      ],
+    });
+  }
+
+  function handleInsufficientBalance() {
+    if (callEnded) return;
+    showModal({
+      title: "Out of Coins",
+      body: "Your call has ended because there are not enough coins left to continue Pay As You Go billing.",
+      actions: [{ label: "OK", style: "confirm", onClick: endCall }],
+    });
+  }
+
+  function handleCallTimeUp() {
+    if (callEnded) return;
+    if (isPayg) { endCall(); return; }
+    showModal({
+      title: "Time's Up!",
+      body: "Your paid call time has ended. You can extend the call or end it.",
+      actions: [
+        { label: "End Call", style: "cancel", onClick: endCall },
+        { label: "Extend Call", style: "confirm", onClick: extendCall },
+      ],
+    });
+  }
+
+  function extendCall() {
+    if (!callId || isPayg) return;
+    var backdrop = document.createElement("div");
+    backdrop.className = "vc-modal-backdrop";
+    backdrop.innerHTML =
+      '<div class="vc-modal"><h3>Extend Call</h3>' +
+      [5, 10, 15].map(function (m) { return '<button class="vc-option" data-m="' + m + '">+' + m + " minutes</button>"; }).join("") +
+      "</div>";
+    document.body.appendChild(backdrop);
+    backdrop.addEventListener("click", function (e) { if (e.target === backdrop) backdrop.remove(); });
+    backdrop.querySelectorAll(".vc-option").forEach(function (btn) {
+      btn.addEventListener("click", async function () {
+        var minutes = parseInt(btn.getAttribute("data-m"), 10);
+        backdrop.remove();
+        var token = SessionManager.getToken();
+        var result = await CallService.extendCall(token, callId, minutes);
+        if (result && result.success === true) {
+          hasShownTimeUpWarning = false;
+          var d = result.data || {};
+          if (typeof d.remaining_seconds === "number") { remainingSeconds = d.remaining_seconds; updateTimerDisplay(); }
+          if (typeof d.paid_duration_seconds === "number") totalDurationSeconds = d.paid_duration_seconds;
+          if (typeof d.coins === "number") coinsForRelease = d.coins;
+          showToast("Call extended by " + minutes + " minutes");
+        } else {
+          showToast((result && result.message) || "Failed to extend call — check your coin balance");
+        }
+      });
+    });
+  }
+
+  // ---- In-call controls -----------------------------------------------------
+  function toggleMic() {
+    if (!meeting) return;
+    try {
+      if (micEnabled) meeting.muteMic(); else meeting.unmuteMic();
+      micEnabled = !micEnabled;
+      renderControlsOnly();
+    } catch (e) {}
+  }
+  function toggleCamera() {
+    if (!meeting) return;
+    try {
+      if (camEnabled) meeting.disableWebcam(); else meeting.enableWebcam();
+      camEnabled = !camEnabled;
+      setCamOffVisible("localCamOff", !camEnabled);
+      renderControlsOnly();
+    } catch (e) {}
+  }
+  function swapVideos() {
+    if (localStream && remoteHasVideo) { isLocalFullScreen = !isLocalFullScreen; updateVideoLayout(); }
+  }
+
+  function handleRemoteEndedCall(message) {
+    if (callEnded) return;
+    callEnded = true;
+    clearInterval(countdownPoller);
+    showToast(message);
+    showPostCallFlow();
+  }
+
+  async function endCall() {
+    if (callEnded || isEndingCall) return;
+    isEndingCall = true;
+    phase = "ending";
+    renderEnding();
+    clearInterval(countdownPoller); clearInterval(localTickTimer);
+    var token = SessionManager.getToken();
+    try { meeting && meeting.leave(); } catch (e) {}
+    meeting = null;
+
+    if (token && callId) {
+      var endResult = await CallService.endCall(token, callId);
+      isEndingCall = false;
+      if (endResult && endResult.success === true) {
+        callEnded = true;
+        var d = endResult.data || {};
+        if (typeof d.actual_duration_seconds === "number") actualDurationSeconds = d.actual_duration_seconds;
+        if (typeof d.coins === "number") coinsForRelease = d.coins;
+        showPostCallFlow();
+      } else {
+        var message = (endResult && endResult.message) || "Failed to end call. Please try again.";
+        showModal({
+          title: "Error",
+          body: message,
+          actions: [
+            { label: "Cancel", style: "cancel", onClick: function () { phase = "in-call"; renderInCall(); } },
+            { label: "Retry", style: "confirm", onClick: function () { isEndingCall = false; endCall(); } },
+          ],
+        });
+      }
+    }
+  }
+
+  // ---- Post-call: escrow release, then rating -----------------------------
+  function showPostCallFlow() {
+    phase = "post-call";
+    root.innerHTML =
+      '<div class="postcall-screen"><div class="postcall-dim dimmed" id="postcallDim">' +
+      '<div style="display:flex;flex-direction:column;align-items:center;padding:80px 24px;text-align:center;color:#1A1D2E">' +
+      '<div style="font-size:44px"><i class="ph ph-check"></i></div><div style="margin-top:16px;font-weight:700;font-size:18px">Call ended</div>' +
+      "</div></div>" +
+      '<div id="releaseWidgetContainer" style="position:relative;top:-40px"></div>' +
+      "</div>";
+
+    var container = document.getElementById("releaseWidgetContainer");
+    ClientReleaseWidget.mount(container, {
+      callId: callId || "",
+      influencerName: influencerName,
+      onClose: function () {
+        window.location.replace(
+          "/rate-influencer?call_id=" + encodeURIComponent(callId || "") +
+          "&influencer_id=" + encodeURIComponent(influencerId) +
+          "&influencer_name=" + encodeURIComponent(influencerName)
+        );
+      },
+    });
+  }
+
+  // ---- In-call render -------------------------------------------------------
+  function renderInCall() {
+    root.innerHTML =
+      '<div class="call-stage">' +
+      '<div class="fullscreen-slot" id="fullscreenSlot"></div>' +
+      '<div class="scrim"></div>' +
+      '<div class="top-bar">' +
+      '<div class="peer-chip"><div class="peer-avatar"><i class="ph ph-user"></i></div><div><div class="peer-name">' + escapeHtml(influencerName) + '</div><div class="peer-timer" id="peerTimer">' + formatTime(isPayg ? elapsedSeconds : remainingSeconds) + "</div></div></div>" +
+      (isPayg
+        ? '<div class="extend-chip" style="cursor:default">' + (billingMode === "payg_second" ? "Pay/sec" : "Pay/min") + "</div>"
+        : '<button class="extend-chip" id="extendChipBtn">Extend Call</button>') +
+      "</div>" +
+      '<div class="pip-slot" id="pipSlot" style="display:none"></div>' +
+      '<div class="bottom-controls">' +
+      '<div class="call-btn-wrap"><button class="call-btn" id="micBtn" aria-label="Toggle microphone"><i class="ph ph-microphone"></i></button><span class="call-btn-label" id="micLabel">Mute</span></div>' +
+      '<div class="call-btn-wrap"><button class="call-btn" id="camBtn" aria-label="Toggle camera"><i class="ph ph-video-camera"></i></button><span class="call-btn-label">Camera</span></div>' +
+      '<div class="call-btn-wrap"><button class="call-btn danger" id="endBtn" aria-label="End call"><i class="ph ph-phone"></i></button><span class="call-btn-label">End Call</span></div>' +
+      "</div>" +
+      // Persistent video/audio elements — reparented between slots, never recreated.
+      '<video id="localVideoEl" autoplay playsinline muted style="display:none;width:100%;height:100%;object-fit:cover"></video>' +
+      '<div id="localCamOff" class="cam-off" style="display:none"><i class="ph ph-video-camera"></i></div>' +
+      '<video id="remoteVideoEl" autoplay playsinline style="display:none;width:100%;height:100%;object-fit:cover"></video>' +
+      '<div id="remoteCamOff" class="cam-off" style="display:none"><i class="ph ph-video-camera"></i></div>' +
+      '<audio id="remoteAudioEl" autoplay></audio>' +
+      "</div>";
+
+    document.getElementById("fullscreenSlot").addEventListener("click", swapVideos);
+    document.getElementById("pipSlot").addEventListener("click", swapVideos);
+    var extendBtn = document.getElementById("extendChipBtn");
+    if (extendBtn) extendBtn.addEventListener("click", extendCall);
+    document.getElementById("micBtn").addEventListener("click", toggleMic);
+    document.getElementById("camBtn").addEventListener("click", toggleCamera);
+    document.getElementById("endBtn").addEventListener("click", endCall);
+
+    updateVideoLayout();
+    renderControlsOnly();
+  }
+
+  // Moves the two persistent video elements + their cam-off placeholders
+  // between the fullscreen and PiP slots without ever recreating them
+  // (recreating would drop the live srcObject).
+  function updateVideoLayout() {
+    var fullscreenSlot = document.getElementById("fullscreenSlot");
+    var pipSlot = document.getElementById("pipSlot");
+    if (!fullscreenSlot || !pipSlot) return;
+
+    var localEl = document.getElementById("localVideoEl");
+    var localOff = document.getElementById("localCamOff");
+    var remoteEl = document.getElementById("remoteVideoEl");
+    var remoteOff = document.getElementById("remoteCamOff");
+
+    var fsIsLocal = isLocalFullScreen;
+    var fsEl = fsIsLocal ? localEl : remoteEl;
+    var fsOff = fsIsLocal ? localOff : remoteOff;
+    var pipEl = fsIsLocal ? remoteEl : localEl;
+    var pipOff = fsIsLocal ? remoteOff : localOff;
+
+    fullscreenSlot.innerHTML = ""; pipSlot.innerHTML = "";
+    fsEl.style.display = "block"; fsOff.style.display = "none";
+    pipEl.style.display = "block"; pipOff.style.display = "none";
+    fullscreenSlot.appendChild(fsEl); fullscreenSlot.appendChild(fsOff);
+    pipSlot.appendChild(pipEl); pipSlot.appendChild(pipOff);
+
+    var showPip = !!(localStream && remoteHasVideo);
+    pipSlot.style.display = showPip ? "block" : "none";
+
+    var fsCameraOn = fsIsLocal ? camEnabled : remoteHasVideo;
+    var pipCameraOn = fsIsLocal ? remoteHasVideo : camEnabled;
+    fsOff.style.display = fsCameraOn ? "none" : "flex";
+    pipOff.style.display = pipCameraOn ? "none" : "flex";
+  }
+
+  function renderControlsOnly() {
+    var micBtn = document.getElementById("micBtn");
+    var micLabel = document.getElementById("micLabel");
+    var camBtn = document.getElementById("camBtn");
+    if (!micBtn) return;
+    micBtn.innerHTML = micEnabled ? '<i class="ph ph-microphone"></i>' : '<i class="ph ph-microphone-slash"></i>';
+    micBtn.style.background = micEnabled ? "rgba(255,255,255,.2)" : "#E53935";
+    micLabel.textContent = micEnabled ? "Mute" : "Unmute";
+    camBtn.innerHTML = camEnabled ? '<i class="ph ph-video-camera"></i>' : '<i class="ph ph-video-camera-slash"></i>';
+    camBtn.style.background = camEnabled ? "rgba(255,255,255,.2)" : "#E53935";
+  }
+
+  // ---- cleanup --------------------------------------------------------------
+  window.addEventListener("beforeunload", function () {
+    clearInterval(statusPoller); clearInterval(countdownPoller); clearInterval(localTickTimer);
+    clearTimeout(noAnswerTimer);
+    try { meeting && meeting.leave(); } catch (e) {}
+  });
+
+  // ---- boot -------------------------------------------------------------------
+  renderOutgoing();
+  pollCallStatus();
+  noAnswerTimer = setTimeout(function () {
+    if (phase !== "waiting" || isFinishingBeforeConnect) return;
+    clearInterval(statusPoller);
+    finishBeforeConnect("Not Answered");
+  }, NO_ANSWER_TIMEOUT_MS);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rate Your Call — Masked Party</title>
+<script src="/widgets/phosphor_icons.js"></script>
+<script>PhosphorIcons.load();</script>
+<style>
+  :root{--primary-pink:#E91E63;--soft-pink:#FF6B8B;--light-pink:#FFE4EC;--dark-pink:#C2185B;--bg:#F8F9FE;--text-dark:#1A1D2E;--text-medium:#6B7280;--text-light:#9CA3AF;--gold:#FFB300;--success:#00C853;--danger:#E53935;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text-dark);}
+  main{max-width:460px;margin:0 auto;padding:20px 24px 40px;}
+
+  .back-btn{width:38px;height:38px;border-radius:12px;background:#fff;border:1px solid rgba(255,228,236,.4);font-size:18px;color:var(--text-dark);cursor:pointer;}
+
+  .center{display:flex;flex-direction:column;align-items:center;text-align:center;}
+  .avatar{margin-top:20px;width:78px;height:78px;border-radius:50%;padding:3px;background:linear-gradient(135deg,var(--primary-pink),var(--soft-pink));box-shadow:0 8px 20px rgba(233,30,99,.3);}
+  .avatar-inner{width:100%;height:100%;border-radius:50%;background:#fff;padding:3px;}
+  .avatar-inner div{width:100%;height:100%;border-radius:50%;background:var(--light-pink);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:var(--primary-pink);}
+  .name{margin-top:20px;font-size:22px;font-weight:700;letter-spacing:-.3px;}
+  .subtitle{margin-top:6px;font-size:14px;color:var(--text-medium);}
+
+  .stars{margin-top:32px;display:flex;justify-content:center;gap:4px;}
+  .star-btn{background:none;border:none;font-size:38px;cursor:pointer;color:#d0d0d0;transition:transform .15s ease;}
+  .star-btn.filled{color:var(--gold);transform:scale(1.08);}
+  .star-label{margin-top:14px;padding:6px 16px;border-radius:20px;font-weight:700;font-size:13px;}
+  .star-label.low{background:rgba(229,57,53,.1);color:var(--danger);}
+  .star-label.high{background:rgba(0,200,83,.1);color:var(--success);}
+
+  .review-box{margin-top:28px;width:100%;background:#fff;border-radius:16px;border:1px solid rgba(255,228,236,.5);}
+  .review-box textarea{width:100%;border:none;outline:none;padding:14px;font-size:14px;color:var(--text-dark);font-family:inherit;resize:none;border-radius:16px;}
+  .char-count{text-align:right;font-size:11px;color:var(--text-light);padding:0 14px 8px;}
+
+  .submit-btn{margin-top:24px;width:100%;height:56px;border:none;border-radius:16px;background:linear-gradient(to right,var(--primary-pink),var(--dark-pink));color:#fff;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 5px 15px rgba(233,30,99,.3);display:flex;align-items:center;justify-content:center;gap:8px;}
+  .submit-btn:disabled{opacity:.6;cursor:not-allowed;}
+  .spin{width:22px;height:22px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .skip-btn{margin-top:14px;background:none;border:none;color:var(--text-medium);font-weight:600;font-size:14px;cursor:pointer;}
+
+  /* Success view */
+  .success-icon{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--primary-pink),var(--soft-pink));display:flex;align-items:center;justify-content:center;font-size:48px;color:#fff;box-shadow:0 10px 25px rgba(233,30,99,.3);}
+  .success-title{margin-top:32px;font-size:24px;font-weight:700;letter-spacing:-.4px;}
+  .success-sub{margin-top:12px;font-size:14px;color:var(--text-medium);line-height:1.5;}
+  .btn-outline{margin-top:32px;width:100%;height:56px;border-radius:16px;border:2px solid var(--primary-pink);background:#fff;color:var(--primary-pink);font-weight:600;font-size:16px;cursor:pointer;}
+  .btn-gradient{margin-top:16px;width:100%;height:56px;border-radius:16px;border:none;background:linear-gradient(to right,var(--primary-pink),var(--soft-pink));color:#fff;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 5px 15px rgba(233,30,99,.3);}
+
+  .toast{position:fixed;left:16px;right:16px;bottom:24px;background:#D32F2F;color:#fff;padding:14px 16px;border-radius:12px;font-size:14px;text-align:center;max-width:420px;margin:0 auto;z-index:9800;}
+</style>
+</head>
+<body>
+  <main id="root">
+    <div class="center"><button class="back-btn" id="backBtn" aria-label="Back" style="align-self:flex-start"><i class="ph ph-arrow-left"></i></button></div>
+  </main>
+
+<script src="/services/api.js"></script>
+<script src="/services/api_endpoints.js"></script>
+<script src="/services/session_manager.js"></script>
+<script src="/services/route_guard.js"></script>
+<script>RouteGuard.require();</script>
+<script src="/services/call_service.js"></script>
+<script>
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var callId = params.get("call_id") || "";
+    var influencerId = params.get("influencer_id") || "";
+    var influencerName = params.get("influencer_name") || "Influencer";
+
+    var root = document.getElementById("root");
+    var rating = 5;
+    var isSubmitting = false;
+
+    document.getElementById("backBtn").addEventListener("click", function () { window.history.back(); });
+
+    function escapeHtml(s) {
+      return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    }
+    function showToast(message) {
+      var t = document.createElement("div");
+      t.className = "toast";
+      t.textContent = message;
+      document.body.appendChild(t);
+      setTimeout(function () { t.remove(); }, 3500);
+    }
+    var LABELS = { 1: "Terrible", 2: "Bad", 3: "Okay", 4: "Good", 5: "Excellent!" };
+
+    function goHome() { window.location.href = "/client-home"; }
+
+    function renderForm() {
+      root.innerHTML =
+        '<div class="center">' +
+        '<button class="back-btn" id="backBtn" aria-label="Back" style="align-self:flex-start"><i class="ph ph-arrow-left"></i></button>' +
+        '<div class="avatar"><div class="avatar-inner"><div>' + (influencerName.charAt(0).toUpperCase() || "?") + "</div></div></div>" +
+        '<div class="name">' + escapeHtml(influencerName) + "</div>" +
+        '<div class="subtitle">How was your experience?</div>' +
+        '<div class="stars" id="stars">' +
+        [1, 2, 3, 4, 5].map(function (n) {
+          return '<button type="button" class="star-btn' + (n <= rating ? " filled" : "") + '" data-star="' + n + '">' + (n <= rating ? "<i class='ph-fill ph-star'></i>" : "<i class='ph ph-star'></i>") + "</button>";
+        }).join("") +
+        "</div>" +
+        '<div class="star-label ' + (rating <= 2 ? "low" : "high") + '">' + LABELS[rating] + "</div>" +
+        '<div class="review-box"><textarea id="reviewInput" rows="4" maxlength="300" placeholder="Share your experience *"></textarea><div class="char-count" id="charCount">0/300</div></div>' +
+        '<button class="submit-btn" id="submitBtn" style="width:100%"><span id="submitLabel">Submit Review</span></button>' +
+        '<button class="skip-btn" id="skipBtn">Skip</button>' +
+        "</div>";
+
+      document.getElementById("backBtn").addEventListener("click", function () { window.history.back(); });
+      document.querySelectorAll(".star-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          rating = parseInt(btn.getAttribute("data-star"), 10);
+          renderForm();
+        });
+      });
+      var reviewInput = document.getElementById("reviewInput");
+      reviewInput.addEventListener("input", function () {
+        document.getElementById("charCount").textContent = reviewInput.value.length + "/300";
+      });
+      document.getElementById("submitBtn").addEventListener("click", submit);
+      document.getElementById("skipBtn").addEventListener("click", goHome);
+    }
+
+    function renderSuccess() {
+      root.innerHTML =
+        '<div class="center">' +
+        '<div class="success-icon"><i class="ph ph-check"></i></div>' +
+        '<div class="success-title">Thanks for your review!</div>' +
+        '<div class="success-sub">Your feedback helps improve the community.</div>' +
+        '<button class="btn-outline" id="supportBtn"><i class="ph ph-headset"></i> Contact Support</button>' +
+        '<button class="btn-gradient" id="homeBtn">Back to Home</button>' +
+        "</div>";
+      document.getElementById("supportBtn").addEventListener("click", function () { window.location.href = "/chat-support"; });
+      document.getElementById("homeBtn").addEventListener("click", goHome);
+    }
+
+    function setSubmitting(loading) {
+      isSubmitting = loading;
+      var btn = document.getElementById("submitBtn");
+      var label = document.getElementById("submitLabel");
+      if (!btn) return;
+      btn.disabled = loading;
+      label.innerHTML = loading ? "" : "Submit Review";
+      if (loading) {
+        var s = document.createElement("span");
+        s.className = "spin";
+        label.appendChild(s);
+      }
+    }
+
+    async function submit() {
+      var review = document.getElementById("reviewInput").value.trim();
+      if (!review) { showToast("Please share your experience"); return; }
+      if (!callId) { showToast("Missing call reference — cannot submit review"); return; }
+      if (isSubmitting) return;
+
+      setSubmitting(true);
+      var token = SessionManager.getToken();
+      try {
+        var result = await CallService.submitRating({ token: token, callId: callId, rating: rating, experienceText: review });
+        if (result && result.success === true) {
+          try { await CallService.releaseEscrow(token, callId); } catch (e) { /* non-critical */ }
+          renderSuccess();
+        } else {
+          setSubmitting(false);
+          showToast((result && result.message) || "Failed to submit review");
+        }
+      } catch (e) {
+        setSubmitting(false);
+        showToast("Something went wrong. Please try again.");
+      }
+    }
+
+    renderForm();
+  })();
+</script>
+</body>
+</html>

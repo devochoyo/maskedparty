@@ -1,0 +1,18 @@
+
+[2026-09-12 20:10:19] POLLER: IMAP connect failed: TLS/SSL failure for mail.careerkings.name.ng: SSL negotiation failed
+[2026-09-12 20:15:19] POLLER: IMAP connect failed: TLS/SSL failure for mail.careerkings.name.ng: SSL negotiation failed
+[2026-09-12 20:20:19] POLLER: IMAP connect failed: TLS/SSL failure for mail.careerkings.name.ng: SSL negotiation failed
+[2026-09-12 21:20:07] POLLER: IMAP connect failed: Can not authenticate to IMAP server: [UNAVAILABLE] Temporary authentication failure. [s4.whitelabelclouds.com:2026-09
+[2026-09-12 21:25:06] POLLER: IMAP connect failed: Can not authenticate to IMAP server: [AUTHENTICATIONFAILED] Authentication failed.
+[2026-09-12 21:30:07] POLLER: IMAP connect failed: Can not authenticate to IMAP server: [AUTHENTICATIONFAILED] Authentication failed.
+[2026-09-12 21:35:07] POLLER: IMAP connect failed: Can not authenticate to IMAP server: [AUTHENTICATIONFAILED] Authentication failed.
+[2026-09-12 21:40:05] POLLER: IMAP connect failed: Can not authenticate to IMAP server: [AUTHENTICATIONFAILED] Authentication failed.
+[2026-09-12 21:45:06] POLLER: IMAP connect failed: Can not authenticate to IMAP server: [AUTHENTICATIONFAILED] Authentication failed.
+[2026-09-12 21:50:07] POLLER: IMAP connect failed: Can not authenticate to IMAP server: [AUTHENTICATIONFAILED] Authentication failed.
+[2026-09-12 21:55:06] POLLER: IMAP connect failed: Can not authenticate to IMAP server: [AUTHENTICATIONFAILED] Authentication failed.
+[2026-09-12 22:00:07] POLLER: IMAP connect failed: Can not authenticate to IMAP server: [AUTHENTICATIONFAILED] Authentication failed.
+[2026-09-12 22:05:06] POLLER: IMAP connect failed: Can not authenticate to IMAP server: [AUTHENTICATIONFAILED] Authentication failed.
+[2026-09-12 22:10:07] POLLER: IMAP connect failed: Can not authenticate to IMAP server: [AUTHENTICATIONFAILED] Authentication failed.
+[2026-09-24 08:40:10] POLLER notify failed uid=11: SMTP Error: Could not connect to SMTP host. Failed to connect to server SMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo for mail.maskedparty.name.ng failed: Name or service not known
+[2026-09-24 08:45:08] POLLER notify failed uid=11: SMTP Error: Could not connect to SMTP host. Failed to connect to server SMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo for mail.maskedparty.name.ng failed: Name or service not known
+[2026-09-24 08:50:06] POLLER notify failed uid=11: SMTP Error: Could not connect to SMTP host. Failed to connect to server SMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo for mail.maskedparty.name.ng failed: Name or service not known

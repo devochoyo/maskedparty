@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Verification — Masked Party</title>
+<script src="/widgets/phosphor_icons.js"></script>
+<script>PhosphorIcons.load();</script>
+<style>
+  :root{--primary-pink:#E91E63;--soft-pink:#FF6B8B;--light-pink:#FFE4EC;--bg:#F8F9FE;--text-dark:#1A1D2E;--text-medium:#6B7280;--text-light:#9CA3AF;--success:#00C853;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text-dark);}
+  header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid rgba(255,228,236,.4);}
+  .head-row{max-width:520px;margin:0 auto;display:flex;align-items:center;padding:14px 16px;gap:12px;}
+  .back-btn{width:34px;height:34px;border:none;background:none;font-size:18px;color:var(--text-dark);cursor:pointer;}
+  h1{font-size:20px;font-weight:700;}
+  main{max-width:520px;margin:0 auto;padding:20px 16px 60px;}
+
+  .info-card{display:flex;gap:12px;background:#fff;border-radius:16px;padding:16px;border:1px solid rgba(255,228,236,.5);}
+  .info-ic{width:36px;height:36px;border-radius:10px;background:rgba(233,30,99,.1);color:var(--primary-pink);display:flex;align-items:center;justify-content:center;font-size:18px;flex:none;}
+  .info-card p{font-size:13px;color:var(--text-medium);line-height:1.5;}
+
+  .doc-tile{margin-top:14px;display:flex;align-items:center;gap:14px;background:#fff;border-radius:18px;padding:16px;border:1.5px solid rgba(255,228,236,.5);cursor:pointer;}
+  .doc-tile.complete{border-color:rgba(0,200,83,.4);background:rgba(0,200,83,.03);}
+  .doc-preview{width:56px;height:56px;border-radius:14px;object-fit:cover;background:var(--light-pink);flex:none;}
+  .doc-icon{width:56px;height:56px;border-radius:14px;background:rgba(233,30,99,.1);color:var(--primary-pink);display:flex;align-items:center;justify-content:center;font-size:22px;flex:none;}
+  .doc-title{font-weight:700;font-size:14px;}
+  .doc-sub{margin-top:2px;font-size:12px;color:var(--text-medium);}
+  .doc-status{margin-left:auto;width:28px;height:28px;border-radius:50%;background:rgba(233,30,99,.1);color:var(--primary-pink);display:flex;align-items:center;justify-content:center;font-size:14px;flex:none;}
+  .doc-status.done{background:rgba(0,200,83,.15);color:var(--success);}
+
+  .progress-wrap{margin-top:20px;background:#fff;border-radius:16px;padding:16px;border:1px solid rgba(255,228,236,.5);display:none;}
+  .progress-status{font-size:13px;font-weight:600;margin-bottom:8px;}
+  .progress-bar-bg{height:8px;background:var(--light-pink);border-radius:4px;overflow:hidden;}
+  .progress-bar-fill{height:100%;background:linear-gradient(to right,var(--primary-pink),var(--soft-pink));border-radius:4px;transition:width .3s ease;width:0%;}
+
+  .submit-btn{margin-top:24px;width:100%;height:54px;border:none;border-radius:16px;background:linear-gradient(to right,var(--primary-pink),var(--soft-pink));color:#fff;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 5px 15px rgba(233,30,99,.3);}
+  .submit-btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none;}
+
+  .cam-overlay{position:fixed;inset:0;background:#000;z-index:9600;display:flex;flex-direction:column;}
+  .cam-video{flex:1;width:100%;object-fit:cover;transform:scaleX(-1);}
+  .cam-topbar{position:absolute;top:0;left:0;right:0;padding:calc(env(safe-area-inset-top) + 14px) 16px 0;display:flex;justify-content:space-between;}
+  .cam-close{width:38px;height:38px;border-radius:50%;background:rgba(0,0,0,.5);border:none;color:#fff;font-size:16px;cursor:pointer;}
+  .cam-bottom{position:absolute;left:0;right:0;bottom:0;padding:0 0 calc(env(safe-area-inset-bottom) + 32px);display:flex;flex-direction:column;align-items:center;gap:16px;}
+  .cam-hint{color:#fff;font-size:13px;background:rgba(0,0,0,.5);padding:8px 16px;border-radius:20px;}
+  .cam-shutter{width:74px;height:74px;border-radius:50%;background:#fff;border:4px solid rgba(255,255,255,.4);cursor:pointer;}
+  .cam-shutter.recording{background:#E53935;}
+  .cam-countdown{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100px;height:100px;border-radius:50%;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;color:#fff;font-size:32px;font-weight:700;}
+
+  .toast{position:fixed;left:16px;right:16px;bottom:24px;background:#D32F2F;color:#fff;padding:14px 16px;border-radius:12px;font-size:14px;text-align:center;max-width:420px;margin:0 auto;z-index:9800;}
+  .toast.success{background:var(--success);}
+</style>
+</head>
+<body>
+  <header><div class="head-row"><button class="back-btn" id="backBtn" aria-label="Back"><i class="ph ph-arrow-left"></i></button><h1>Verification</h1></div></header>
+  <main>
+    <div class="info-card"><div class="info-ic"><i class="ph ph-shield-check"></i></div><p>To keep MaskedParty safe, we verify every influencer with a government ID, a quick selfie, and a short video. This is reviewed by our team and never shown to clients.</p></div>
+
+    <div class="doc-tile" id="govTile"><div class="doc-icon"><i class="ph ph-identification-card"></i></div><div><div class="doc-title">Government ID</div><div class="doc-sub">Upload a clear photo</div></div><div class="doc-status" id="govStatus"><i class="ph-bold ph-plus"></i></div></div>
+    <div class="doc-tile" id="selfieTile"><div class="doc-icon"><i class="ph ph-camera"></i></div><div><div class="doc-title">Selfie</div><div class="doc-sub">Take a live selfie</div></div><div class="doc-status" id="selfieStatus"><i class="ph-bold ph-plus"></i></div></div>
+    <div class="doc-tile" id="videoTile"><div class="doc-icon"><i class="ph ph-film-slate"></i></div><div><div class="doc-title">Verification Video</div><div class="doc-sub">Record a 2.5s clip</div></div><div class="doc-status" id="videoStatus"><i class="ph-bold ph-plus"></i></div></div>
+
+    <input type="file" accept="image/*" id="govInput" style="display:none">
+
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-status" id="progressStatus">Preparing...</div>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
+    </div>
+
+    <button class="submit-btn" id="submitBtn" disabled>Submit for Review</button>
+  </main>
+
+<script src="/services/api.js"></script>
+<script src="/services/api_endpoints.js"></script>
+<script src="/services/session_manager.js"></script>
+<script src="/services/route_guard.js"></script>
+<script>RouteGuard.require("influencer");</script>
+<script src="/services/influencer_service.js"></script>
+<script>
+  (function () {
+    document.getElementById("backBtn").addEventListener("click", function () { window.history.back(); });
+
+    var governmentIdFile = null, selfieFile = null, verificationVideoFile = null;
+
+    function showToast(message, kind) {
+      var t = document.createElement("div");
+      t.className = "toast" + (kind ? " " + kind : "");
+      t.textContent = message;
+      document.body.appendChild(t);
+      setTimeout(function () { t.remove(); }, 3500);
+    }
+
+    function markDone(tileId, statusId, previewUrl) {
+      var tile = document.getElementById(tileId);
+      var status = document.getElementById(statusId);
+      tile.classList.add("complete");
+      status.classList.add("done");
+      status.innerHTML = '<i class="ph ph-check"></i>';
+      if (previewUrl) {
+        var icon = tile.querySelector(".doc-icon");
+        icon.outerHTML = '<img class="doc-preview" src="' + previewUrl + '" alt="">';
+      }
+      updateSubmitState();
+    }
+
+    function updateSubmitState() {
+      document.getElementById("submitBtn").disabled = !(governmentIdFile && selfieFile && verificationVideoFile);
+    }
+
+    document.getElementById("govTile").addEventListener("click", function () { document.getElementById("govInput").click(); });
+    document.getElementById("govInput").addEventListener("change", function (e) {
+      var file = e.target.files[0];
+      if (!file) return;
+      governmentIdFile = file;
+      markDone("govTile", "govStatus", URL.createObjectURL(file));
+    });
+
+    function openCamera(opts) {
+      var overlay = document.createElement("div");
+      overlay.className = "cam-overlay";
+      overlay.innerHTML =
+        '<video class="cam-video" id="camVideo" autoplay playsinline muted></video>' +
+        '<div class="cam-topbar"><button class="cam-close" id="camClose" aria-label="Close"><i class="ph ph-x"></i></button><div></div></div>' +
+        '<div class="cam-bottom"><div class="cam-hint" id="camHint">' + opts.hint + '</div>' +
+        '<button class="cam-shutter" id="camShutter" aria-label="' + opts.shutterLabel + '"></button></div>';
+      document.body.appendChild(overlay);
+
+      var videoEl = document.getElementById("camVideo");
+      var stream = null;
+
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: opts.needsAudio === true })
+        .then(function (s) {
+          stream = s;
+          videoEl.srcObject = stream;
+        })
+        .catch(function () {
+          showToast("Could not open the camera. Please try again.");
+          close();
+        });
+
+      function close() {
+        if (stream) stream.getTracks().forEach(function (t) { t.stop(); });
+        overlay.remove();
+      }
+      document.getElementById("camClose").addEventListener("click", close);
+
+      return { overlay: overlay, videoEl: videoEl, getStream: function () { return stream; }, close: close };
+    }
+
+    document.getElementById("selfieTile").addEventListener("click", function () {
+      var cam = openCamera({ hint: "Center your face and tap to capture", shutterLabel: "Take selfie" });
+      document.getElementById("camShutter").addEventListener("click", function () {
+        var video = cam.videoEl;
+        var canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth || 720;
+        canvas.height = video.videoHeight || 1280;
+        var ctx = canvas.getContext("2d");
+        ctx.translate(canvas.width, 0);
+        ctx.scale(-1, 1);
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob(function (blob) {
+          selfieFile = new File([blob], "selfie.jpg", { type: "image/jpeg" });
+          markDone("selfieTile", "selfieStatus", URL.createObjectURL(blob));
+          cam.close();
+        }, "image/jpeg", 0.9);
+      });
+    });
+
+    var VERIFICATION_VIDEO_MS = 2500;
+    document.getElementById("videoTile").addEventListener("click", function () {
+      var cam = openCamera({ hint: "Recording starts automatically…", shutterLabel: "Recording", needsAudio: true });
+      var shutterBtn = document.getElementById("camShutter");
+      shutterBtn.disabled = true;
+
+      var checkStream = setInterval(function () {
+        var stream = cam.getStream();
+        if (!stream) return;
+        clearInterval(checkStream);
+        startRecording(stream, cam);
+      }, 150);
+
+      function startRecording(stream, cam) {
+        shutterBtn.classList.add("recording");
+        var countdownEl = document.createElement("div");
+        countdownEl.className = "cam-countdown";
+        countdownEl.textContent = "3";
+        cam.overlay.appendChild(countdownEl);
+
+        var chunks = [];
+        var mimeType = MediaRecorder.isTypeSupported("video/webm;codecs=vp8,opus") ? "video/webm;codecs=vp8,opus" : "video/webm";
+        var recorder = new MediaRecorder(stream, { mimeType: mimeType });
+        recorder.ondataavailable = function (e) { if (e.data.size > 0) chunks.push(e.data); };
+        recorder.onstop = function () {
+          var blob = new Blob(chunks, { type: mimeType });
+          verificationVideoFile = new File([blob], "verification_video.webm", { type: mimeType });
+          markDone("videoTile", "videoStatus", null);
+          cam.close();
+        };
+
+        recorder.start();
+        var remaining = VERIFICATION_VIDEO_MS;
+        var tickMs = 100;
+        var timer = setInterval(function () {
+          remaining -= tickMs;
+          countdownEl.textContent = Math.max(0, Math.ceil(remaining / 1000));
+          if (remaining <= 0) {
+            clearInterval(timer);
+            if (recorder.state !== "inactive") recorder.stop();
+          }
+        }, tickMs);
+      }
+    });
+
+    var PREPARING = 0.05, MAX_BEFORE_CONFIRMED = 0.90;
+    function setProgress(fraction, status) {
+      document.getElementById("progressWrap").style.display = "block";
+      document.getElementById("progressFill").style.width = Math.round(fraction * 100) + "%";
+      document.getElementById("progressStatus").textContent = status;
+    }
+
+    document.getElementById("submitBtn").addEventListener("click", async function () {
+      if (!governmentIdFile || !selfieFile || !verificationVideoFile) return;
+      var btn = this;
+      btn.disabled = true;
+      setProgress(PREPARING, "Preparing...");
+
+      var token = SessionManager.getToken();
+      var progressTimer = setInterval(function () {
+        var current = parseInt(document.getElementById("progressFill").style.width, 10) / 100;
+        if (current < MAX_BEFORE_CONFIRMED - 0.03) {
+          var next = current + 0.08;
+          var status = next < 0.33 ? "Uploading government ID..." : next < 0.66 ? "Uploading selfie photo..." : "Uploading verification video...";
+          setProgress(Math.min(next, MAX_BEFORE_CONFIRMED), status);
+        }
+      }, 500);
+
+      try {
+        var result = await InfluencerService.submitVerification(token, {
+          governmentIdFile: governmentIdFile,
+          selfieFile: selfieFile,
+          verificationVideoFile: verificationVideoFile,
+        });
+        clearInterval(progressTimer);
+
+        if (result && result.success === true) {
+          setProgress(1, "Verification submitted!");
+          showToast(result.message || "Documents submitted for review!", "success");
+          setTimeout(function () { window.history.back(); }, 800);
+        } else {
+          setProgress(0, "");
+          document.getElementById("progressWrap").style.display = "none";
+          btn.disabled = false;
+          showToast((result && result.message) || "Failed to submit");
+        }
+      } catch (e) {
+        clearInterval(progressTimer);
+        document.getElementById("progressWrap").style.display = "none";
+        btn.disabled = false;
+        showToast("Something went wrong. Please try again.");
+      }
+    });
+  })();
+</script>
+</body>
+</html>

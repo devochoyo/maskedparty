@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Masked Party</title>
+<script src="/widgets/phosphor_icons.js"></script>
+<script>PhosphorIcons.load();</script>
+<style>
+  :root{--primary-pink:#E91E63;--soft-pink:#FF6B8B;--light-pink:#FFE4EC;--dark-pink:#C2185B;--text-dark:#1A1D2E;--text-medium:#6B7280;--text-light:#9CA3AF;--bg:#F8F9FE;--gold:#FFC107;--gold-light:#FFF3D6;--gold-dark:#B8860B;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text-dark);padding-bottom:76px;}
+
+  header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid rgba(255,228,236,.5);}
+  .head-row{display:flex;align-items:center;padding:14px 16px;gap:12px;max-width:600px;margin:0 auto;}
+  .coin-pill{display:flex;align-items:center;gap:4px;padding:8px 12px;background:linear-gradient(135deg,var(--gold-light),rgba(255,243,214,.7));border:1px solid rgba(184,134,11,.3);border-radius:20px;font-weight:700;font-size:14px;color:var(--gold-dark);cursor:pointer;border:none;}
+  .brand{flex:1;text-align:center;font-weight:800;font-size:20px;color:var(--primary-pink);letter-spacing:-.3px;}
+  .bell-btn{width:40px;height:40px;border:none;background:none;font-size:20px;cursor:pointer;color:var(--text-dark);}
+
+  main{max-width:600px;margin:0 auto;padding:16px;}
+
+  .post-card{background:#fff;border-radius:20px;border:1px solid rgba(255,228,236,.5);box-shadow:0 4px 15px rgba(0,0,0,.05);overflow:hidden;margin-bottom:20px;}
+  .post-head{display:flex;align-items:center;gap:12px;padding:14px 14px 10px;cursor:pointer;}
+  .post-avatar-ring{width:44px;height:44px;border-radius:22px;padding:2px;background:linear-gradient(135deg,var(--primary-pink),var(--soft-pink));flex:none;}
+  .post-avatar-ring img,.post-avatar-ring .fb{width:100%;height:100%;border-radius:20px;object-fit:cover;background:#fff;display:flex;align-items:center;justify-content:center;color:#bbb;font-size:18px;}
+  .post-influencer-name{font-weight:700;font-size:15px;letter-spacing:-.2px;}
+  .post-influencer-loc{margin-top:2px;font-size:12px;color:#9e9e9e;font-weight:500;}
+  .post-image{width:100%;aspect-ratio:1;object-fit:cover;background:#f1f1f1;cursor:pointer;display:block;}
+  .post-actions{display:flex;align-items:center;padding:8px 12px 0;gap:4px;}
+  .icon-btn{background:none;border:none;cursor:pointer;padding:6px;font-size:24px;display:flex;align-items:center;color:#616161;}
+  .icon-btn.liked{color:var(--primary-pink);}
+  .count{font-weight:700;font-size:14px;color:#4B5563;}
+  .count.liked{color:var(--primary-pink);}
+  .post-body{padding:0 14px 16px;cursor:pointer;}
+  .post-caption{font-weight:700;font-size:14px;letter-spacing:-.1px;}
+  .post-preview{margin-top:6px;font-size:13px;color:#6B7280;line-height:1.4;}
+  .see-more{margin-top:6px;font-size:12px;font-weight:600;color:rgba(233,30,99,.7);}
+
+  .state{display:flex;flex-direction:column;align-items:center;text-align:center;padding:80px 24px;}
+  .state-icon{font-size:44px;color:#bbb;}
+  .state-title{margin-top:16px;font-weight:700;font-size:16px;color:var(--text-dark);}
+  .state-sub{margin-top:6px;font-size:13px;color:var(--text-medium);}
+  .retry-btn{margin-top:20px;padding:10px 20px;border-radius:12px;border:1.5px solid var(--primary-pink);background:#fff;color:var(--primary-pink);font-weight:700;font-size:14px;cursor:pointer;}
+
+  .spinner-wrap{display:flex;justify-content:center;padding:40px 0;}
+  .spinner{width:32px;height:32px;border:3px solid rgba(233,30,99,.2);border-top-color:var(--primary-pink);border-radius:50%;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+
+  /* Login prompt sheet */
+  .sheet-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9200;display:flex;align-items:flex-end;justify-content:center;}
+  .sheet{width:100%;max-width:480px;background:#fff;border-radius:24px 24px 0 0;padding:16px 24px 32px;text-align:center;transform:translateY(100%);transition:transform .3s cubic-bezier(.32,.72,0,1);}
+  .sheet.mp-open{transform:translateY(0);}
+  .sheet-handle{width:40px;height:4px;background:#e0e0e0;border-radius:2px;margin:0 auto 24px;}
+  .sheet-icon{width:64px;height:64px;margin:0 auto;border-radius:50%;background:linear-gradient(135deg,rgba(233,30,99,.1),rgba(255,107,139,.05));display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--primary-pink);}
+  .sheet h3{margin-top:16px;font-size:20px;font-weight:700;}
+  .sheet p{margin-top:8px;font-size:14px;color:var(--text-medium);line-height:1.4;}
+  .sheet .btn-primary{margin-top:28px;width:100%;height:50px;border:none;border-radius:14px;background:linear-gradient(to right,var(--primary-pink),var(--soft-pink));color:#fff;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 4px 12px rgba(233,30,99,.3);}
+  .sheet .btn-outline{margin-top:12px;width:100%;height:50px;border-radius:14px;border:2px solid var(--primary-pink);background:#fff;color:var(--primary-pink);font-weight:700;font-size:16px;cursor:pointer;}
+</style>
+</head>
+<body>
+  <header>
+    <div class="head-row">
+      <button class="coin-pill" id="coinPill"><i class="ph ph-coins"></i> <span id="coinBalance">—</span></button>
+      <div class="brand">MaskedParty</div>
+      <button class="bell-btn" id="bellBtn" aria-label="Notifications"><i class="ph ph-bell"></i></button>
+    </div>
+  </header>
+
+  <main id="feedRoot">
+    <div class="spinner-wrap"><div class="spinner" role="status" aria-label="Loading"></div></div>
+  </main>
+
+  <script src="/widgets/phosphor_icons.js"></script>
+  <script src="/widgets/client_bottom_nav.js"></script>
+  <script>ClientBottomNav.mount("home");</script>
+
+<script src="/services/api.js"></script>
+<script src="/services/api_endpoints.js"></script>
+<script src="/services/session_manager.js"></script>
+<script src="/services/auth_service.js"></script>
+<script src="/services/client_service.js"></script>
+<script src="/services/follow_service.js"></script>
+<script src="/services/wallet_service.js"></script>
+<script src="/services/post_service.js"></script>
+<script src="/widgets/influencer_preview_sheet.js"></script>
+<script>
+  (function () {
+    var isLoggedIn = SessionManager.isLoggedIn();
+    var page = 1, hasMore = true, loading = false, posts = [], error = null;
+    var feedRoot = document.getElementById("feedRoot");
+
+    function escapeHtml(s) {
+      return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    }
+
+    function openLoginPrompt() {
+      var backdrop = document.createElement("div");
+      backdrop.className = "sheet-backdrop";
+      backdrop.innerHTML =
+        '<div class="sheet" id="loginSheet">' +
+        '<div class="sheet-handle"></div>' +
+        '<div class="sheet-icon"><i class="ph-fill ph-heart"></i></div>' +
+        "<h3>Join MaskedParty</h3>" +
+        "<p>Login or register to like, comment, follow and call influencers.</p>" +
+        '<button class="btn-primary" id="promptRegister">Register</button>' +
+        '<button class="btn-outline" id="promptLogin">Login</button>' +
+        "</div>";
+      document.body.appendChild(backdrop);
+      var sheet = backdrop.querySelector("#loginSheet");
+      requestAnimationFrame(function () { sheet.classList.add("mp-open"); });
+      backdrop.addEventListener("click", function (e) { if (e.target === backdrop) backdrop.remove(); });
+      backdrop.querySelector("#promptRegister").addEventListener("click", function () { window.location.href = "/role"; });
+      backdrop.querySelector("#promptLogin").addEventListener("click", function () { window.location.href = "/login"; });
+    }
+
+    document.getElementById("coinPill").addEventListener("click", function () {
+      if (!isLoggedIn) { openLoginPrompt(); return; }
+      window.location.href = "/buy-coins";
+    });
+    document.getElementById("bellBtn").addEventListener("click", function () {
+      if (!isLoggedIn) { openLoginPrompt(); return; }
+      window.location.href = "/notifications";
+    });
+
+    async function loadBalance() {
+      if (!isLoggedIn) return;
+      var token = SessionManager.getToken();
+      var result = await WalletService.getBalance(token);
+      if (result && result.success === true && result.data) {
+        var bal = result.data.current_balance;
+        document.getElementById("coinBalance").textContent = bal != null ? Math.floor(bal) : "0";
+      }
+    }
+
+    function postCardHtml(post) {
+      var images = Array.isArray(post.images) ? post.images : [];
+      var firstImage = images.length ? images[0].url : null;
+      var liked = post.liked_by_me === true;
+      var likeCount = post.like_count || 0;
+      var commentCount = post.comment_count || 0;
+      var caption = post.caption || "";
+      var bodyPreview = post.body_preview;
+      var influencerId = post.influencer_id;
+
+      return (
+        '<div class="post-card" data-post-id="' + post.id + '" data-influencer-id="' + influencerId + '">' +
+        '<div class="post-head" data-action="profile">' +
+        '<div class="post-avatar-ring">' +
+        (post.influencer_photo ? '<img src="' + post.influencer_photo + '" alt="">' : '<div class="fb"><i class="ph ph-user"></i></div>') +
+        "</div>" +
+        "<div><div class=\"post-influencer-name\">" + escapeHtml(post.influencer_name || "Influencer") + "</div>" +
+        (post.influencer_country ? '<div class="post-influencer-loc"><i class="ph ph-map-pin"></i> ' + escapeHtml(post.influencer_country) + "</div>" : "") +
+        "</div></div>" +
+        (firstImage ? '<img class="post-image" src="' + firstImage + '" alt="" data-action="open-post">' : "") +
+        '<div class="post-actions">' +
+        '<button class="icon-btn' + (liked ? " liked" : "") + '" data-action="like" aria-label="Like">' + (liked ? "<i class='ph-fill ph-heart'></i>" : "<i class='ph ph-heart'></i>") + "</button>" +
+        '<span class="count' + (liked ? " liked" : "") + '">' + likeCount + "</span>" +
+        '<button class="icon-btn" data-action="comment" aria-label="Comment" style="margin-left:12px"><i class="ph ph-chat-circle"></i></button>' +
+        '<span class="count">' + commentCount + "</span>" +
+        "</div>" +
+        '<div class="post-body" data-action="open-post">' +
+        '<div class="post-caption">' + escapeHtml(caption) + "</div>" +
+        (bodyPreview ? '<div class="post-preview">' + escapeHtml(bodyPreview) + '</div><div class="see-more">See more</div>' : "") +
+        "</div>" +
+        "</div>"
+      );
+    }
+
+    function renderPosts() {
+      var oldSpinner = document.getElementById("loadMoreSpinner");
+      if (oldSpinner) oldSpinner.remove();
+      var html = posts.map(postCardHtml).join("");
+      feedRoot.innerHTML = html || "";
+      wireCards();
+      if (hasMore) {
+        var sentinel = document.createElement("div");
+        sentinel.className = "spinner-wrap";
+        sentinel.id = "loadMoreSpinner";
+        sentinel.innerHTML = '<div class="spinner" role="status" aria-label="Loading more"></div>';
+        feedRoot.appendChild(sentinel);
+      }
+    }
+
+    function wireCards() {
+      feedRoot.querySelectorAll(".post-card").forEach(function (card) {
+        var postId = card.getAttribute("data-post-id");
+        var influencerId = card.getAttribute("data-influencer-id");
+        card.querySelectorAll('[data-action="profile"]').forEach(function (el) {
+          el.addEventListener("click", function () { openPreview(influencerId); });
+        });
+        card.querySelectorAll('[data-action="open-post"]').forEach(function (el) {
+          el.addEventListener("click", function () { window.location.href = "/post/" + postId; });
+        });
+        card.querySelectorAll('[data-action="comment"]').forEach(function (el) {
+          el.addEventListener("click", function () { window.location.href = "/post/" + postId + "#comments"; });
+        });
+        var likeBtn = card.querySelector('[data-action="like"]');
+        likeBtn.addEventListener("click", function () { toggleLike(postId, card); });
+      });
+    }
+
+    function openPreview(influencerId) {
+      InfluencerPreviewSheet.show({
+        influencerId: influencerId,
+        isLoggedIn: isLoggedIn,
+        onRequireAuth: openLoginPrompt,
+      });
+    }
+
+    async function toggleLike(postId, card) {
+      if (!isLoggedIn) { openLoginPrompt(); return; }
+      var post = posts.find(function (p) { return String(p.id) === String(postId); });
+      if (!post) return;
+      var wasLiked = post.liked_by_me === true;
+      // optimistic update
+      post.liked_by_me = !wasLiked;
+      post.like_count = (post.like_count || 0) + (wasLiked ? -1 : 1);
+      updateCardLikeUI(card, post);
+
+      var result = wasLiked ? await PostService.unlikePost(postId) : await PostService.likePost(postId);
+      if (!result || result.success !== true) {
+        // revert on failure
+        post.liked_by_me = wasLiked;
+        post.like_count = (post.like_count || 0) + (wasLiked ? 1 : -1);
+        updateCardLikeUI(card, post);
+      }
+    }
+
+    function updateCardLikeUI(card, post) {
+      var btn = card.querySelector('[data-action="like"]');
+      var count = card.querySelector(".count");
+      btn.classList.toggle("liked", post.liked_by_me === true);
+      btn.innerHTML = post.liked_by_me ? '<i class="ph-fill ph-heart"></i>' : '<i class="ph ph-heart"></i>';
+      count.classList.toggle("liked", post.liked_by_me === true);
+      count.textContent = post.like_count || 0;
+    }
+
+    function renderError() {
+      feedRoot.innerHTML =
+        '<div class="state"><div class="state-icon"><i class="ph ph-cloud-slash"></i></div>' +
+        '<div class="state-title">Couldn\'t load the feed</div>' +
+        '<div class="state-sub">' + escapeHtml(error || "Please check your connection.") + "</div>" +
+        '<button class="retry-btn" id="retryBtn"><i class="ph ph-arrow-clockwise"></i> Retry</button></div>';
+      document.getElementById("retryBtn").addEventListener("click", function () { load(true); });
+    }
+
+    function renderEmpty() {
+      feedRoot.innerHTML =
+        '<div class="state"><div class="state-icon"><i class="ph ph-image"></i></div>' +
+        '<div class="state-title">No posts yet</div>' +
+        '<div class="state-sub">Check back soon for new posts from influencers.</div></div>';
+    }
+
+    async function load(refresh) {
+      if (loading) return;
+      loading = true;
+      if (refresh) { page = 1; hasMore = true; error = null; }
+      try {
+        var result = await PostService.listPosts(page);
+        if (result && result.success === true) {
+          var data = result.data;
+          var newPosts = (data && data.posts) || (Array.isArray(data) ? data : []);
+          posts = refresh ? newPosts : posts.concat(newPosts);
+          hasMore = newPosts.length > 0 && (data && data.has_more !== false);
+          if (hasMore) page++;
+          if (posts.length === 0) { renderEmpty(); }
+          else { renderPosts(); }
+        } else {
+          error = (result && result.message) || null;
+          if (posts.length === 0) renderError();
+        }
+      } catch (e) {
+        error = "Something went wrong.";
+        if (posts.length === 0) renderError();
+      } finally {
+        loading = false;
+      }
+    }
+
+    // Infinite scroll
+    let ticking = false;
+    window.addEventListener("scroll", function () {
+      if (ticking || !hasMore || loading) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 400) {
+          load(false);
+        }
+        ticking = false;
+      });
+    });
+
+    load(true);
+    loadBalance();
+  })();
+</script>
+</body>
+</html>

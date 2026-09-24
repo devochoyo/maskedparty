@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Verifying Payment — Masked Party</title>
+<script src="/widgets/phosphor_icons.js"></script>
+<script>PhosphorIcons.load();</script>
+<!--
+  IMPORTANT (backend configuration note, not something this page can fix
+  itself): Flutterwave redirects the browser back to whatever redirect_url
+  api/payment/create-payment.php told it to use when the transaction was
+  created. That URL needs to point at THIS page
+  (https://<your-domain>/payment/callback) for the web app — if it's
+  currently set to a mobile deep link (e.g. maskedparty://payment-callback)
+  left over from the Flutter app, update it on the backend, or make it
+  accept an optional `platform=web` / `return_to` param from
+  create-payment.php's request body if you want mobile and web to share
+  one endpoint.
+-->
+<style>
+  :root{--primary-pink:#E91E63;--soft-pink:#FF6B8B;--light-pink:#FFE4EC;--success:#00C853;--text-dark:#1A1D2E;--text-medium:#6B7280;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;min-height:100dvh;display:flex;align-items:center;justify-content:center;background:linear-gradient(to bottom,var(--primary-pink),var(--soft-pink),var(--light-pink));padding:24px;}
+  .card{background:#fff;border-radius:24px;padding:36px 28px;max-width:360px;width:100%;text-align:center;box-shadow:0 15px 30px rgba(194,24,91,.25);}
+  .spinner{width:44px;height:44px;margin:0 auto;border:4px solid rgba(233,30,99,.2);border-top-color:var(--primary-pink);border-radius:50%;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .icon{width:64px;height:64px;margin:0 auto;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;}
+  .icon.success{background:rgba(0,200,83,.12);color:var(--success);}
+  .icon.error{background:rgba(211,47,47,.1);color:#D32F2F;}
+  h1{margin-top:16px;font-size:19px;color:var(--text-dark);}
+  p{margin-top:8px;font-size:14px;color:var(--text-medium);line-height:1.4;}
+  .btn{margin-top:24px;width:100%;height:48px;border:none;border-radius:14px;background:linear-gradient(to right,var(--primary-pink),var(--soft-pink));color:#fff;font-weight:700;font-size:15px;cursor:pointer;}
+</style>
+</head>
+<body>
+  <div class="card" id="card">
+    <div class="spinner" role="status" aria-label="Verifying payment"></div>
+    <h1>Verifying your payment…</h1>
+    <p>Please wait, this only takes a moment.</p>
+  </div>
+
+<script src="/services/api.js"></script>
+<script src="/services/api_endpoints.js"></script>
+<script src="/services/session_manager.js"></script>
+<script>
+  (function () {
+    var card = document.getElementById("card");
+    var params = new URLSearchParams(window.location.search);
+    // Flutterwave commonly appends tx_ref / transaction_id / status; fall
+    // back to the reference we stashed before redirecting away.
+    var reference = params.get("tx_ref") || params.get("reference") || sessionStorage.getItem("mp_pending_payment_ref");
+    var status = params.get("status");
+
+    function showResult(success, message) {
+      card.innerHTML =
+        '<div class="icon ' + (success ? "success" : "error") + '">' + (success ? "<i class='ph ph-check'></i>" : "<i class='ph ph-x'></i>") + "</div>" +
+        "<h1>" + (success ? "Payment successful!" : "Payment verification failed") + "</h1>" +
+        "<p>" + message + "</p>" +
+        '<button class="btn" id="continueBtn">' + (success ? "Go to Wallet" : "Back to Buy Coins") + "</button>";
+      document.getElementById("continueBtn").addEventListener("click", function () {
+        window.location.href = success ? "/wallet" : "/buy-coins";
+      });
+    }
+
+    async function verify() {
+      var token = SessionManager.getToken();
+      if (!token) { window.location.replace("/login"); return; }
+      if (!reference) { showResult(false, "We couldn't find a payment reference to verify. If coins were charged, check your wallet balance."); return; }
+      if (status === "cancelled") { showResult(false, "Payment was cancelled."); return; }
+
+      try {
+        var result = await ApiConfig.post(ApiEndpoints.paymentVerify, token, { reference: reference });
+        sessionStorage.removeItem("mp_pending_payment_ref");
+        if (result && result.success === true) {
+          var balance = result.data && result.data.wallet_balance;
+          showResult(true, balance != null ? "Your new balance is " + balance + " coins." : "Your coins have been added.");
+        } else {
+          showResult(false, (result && result.message) || "We couldn't confirm this payment. If you were charged, it will be credited automatically shortly — check your wallet balance.");
+        }
+      } catch (e) {
+        showResult(false, "Network error during verification. Please check your wallet balance.");
+      }
+    }
+
+    verify();
+  })();
+</script>
+</body>
+</html>

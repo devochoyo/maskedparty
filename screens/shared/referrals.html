@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Referrals — Masked Party</title>
+<script src="/widgets/phosphor_icons.js"></script>
+<script>PhosphorIcons.load();</script>
+<style>
+  :root{--primary-pink:#E91E63;--dark-pink:#C2185B;--bg:#F8F9FE;--text-dark:#1A1D2E;--text-medium:#6B7280;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text-dark);}
+  header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid rgba(255,228,236,.4);}
+  .head-row{max-width:560px;margin:0 auto;display:flex;align-items:center;padding:14px 16px;gap:12px;}
+  .back-btn{width:34px;height:34px;border:none;background:none;font-size:18px;color:var(--text-dark);cursor:pointer;}
+  h1{font-size:20px;font-weight:700;}
+  main{max-width:560px;margin:0 auto;padding:20px 16px 40px;}
+
+  .code-card{background:linear-gradient(135deg,var(--dark-pink),var(--primary-pink));border-radius:20px;padding:24px;text-align:center;color:#fff;box-shadow:0 8px 20px rgba(194,24,91,.4);}
+  .code-card .gift{font-size:44px;}
+  .code-card .label{margin-top:12px;font-size:13px;font-weight:600;opacity:.9;}
+  .code-box{margin-top:12px;background:rgba(255,255,255,.25);border:2px solid rgba(255,255,255,.4);border-radius:16px;padding:14px 20px;display:flex;align-items:center;justify-content:center;gap:12px;}
+  .code-box .code{font-size:26px;font-weight:700;letter-spacing:3px;}
+  .copy-btn{background:rgba(255,255,255,.3);border:none;border-radius:12px;width:38px;height:38px;color:#fff;font-size:16px;cursor:pointer;flex:none;}
+  .code-card .desc{margin-top:14px;font-size:13px;line-height:1.5;opacity:.95;}
+
+  .stats-grid{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .stat-card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 2px 10px rgba(0,0,0,.04);}
+  .stat-ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+  .stat-val{margin-top:10px;font-size:22px;font-weight:700;}
+  .stat-title{margin-top:2px;font-size:12px;color:var(--text-medium);}
+
+  .info-card{margin-top:20px;background:#fff;border-radius:16px;padding:18px;box-shadow:0 2px 10px rgba(0,0,0,.04);}
+  .info-head{display:flex;align-items:center;gap:10px;}
+  .info-head .ic{width:32px;height:32px;border-radius:8px;background:rgba(233,30,99,.15);color:var(--primary-pink);display:flex;align-items:center;justify-content:center;font-size:16px;}
+  .info-head span{font-weight:700;font-size:15px;}
+  .info-row{display:flex;align-items:flex-start;gap:10px;margin-top:12px;}
+  .info-num{width:24px;height:24px;border-radius:50%;background:var(--primary-pink);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none;}
+  .info-text{font-size:13px;color:var(--text-dark);line-height:1.4;}
+
+  .toast{position:fixed;left:16px;right:16px;bottom:24px;background:#00C853;color:#fff;padding:14px 16px;border-radius:12px;font-size:14px;text-align:center;max-width:420px;margin:0 auto;z-index:9800;}
+  .spinner-wrap{display:flex;justify-content:center;padding:80px 0;}
+  .spinner{width:32px;height:32px;border:3px solid rgba(233,30,99,.2);border-top-color:var(--primary-pink);border-radius:50%;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+  <header><div class="head-row"><button class="back-btn" id="backBtn" aria-label="Back"><i class="ph ph-arrow-left"></i></button><h1>Referrals</h1></div></header>
+  <main id="root"><div class="spinner-wrap"><div class="spinner" role="status" aria-label="Loading"></div></div></main>
+
+<script src="/services/api.js"></script>
+<script src="/services/api_endpoints.js"></script>
+<script src="/services/session_manager.js"></script>
+<script src="/services/route_guard.js"></script>
+<script>RouteGuard.require();</script>
+<script src="/services/referral_service.js"></script>
+<script>
+  (function () {
+    var root = document.getElementById("root");
+    document.getElementById("backBtn").addEventListener("click", function () { window.history.back(); });
+
+    function showToast(message) {
+      var t = document.createElement("div");
+      t.className = "toast";
+      t.textContent = message;
+      document.body.appendChild(t);
+      setTimeout(function () { t.remove(); }, 3200);
+    }
+
+    function render(data) {
+      var code = data.referral_code || "------";
+      var commissionRate = typeof data.commission_rate === "number" ? data.commission_rate : 0.05;
+      var stats = [
+        { icon: "<i class='ph ph-users'></i>", color: "#2196F3", title: "Total Referred", value: data.total_referred || 0 },
+        { icon: "<i class='ph-fill ph-check-circle'></i>", color: "#00C853", title: "Converted", value: data.total_converted || 0 },
+        { icon: "<i class='ph ph-hourglass'></i>", color: "#FF9800", title: "Pending", value: data.pending_referrals || 0 },
+        { icon: "<i class='ph ph-coins'></i>", color: "#E91E63", title: "Coins Earned", value: data.total_earned_coins != null ? data.total_earned_coins : 0 },
+      ];
+
+      root.innerHTML =
+        '<div class="code-card">' +
+        '<div class="gift"><i class="ph ph-gift"></i></div>' +
+        '<div class="label">Your Referral Code</div>' +
+        '<div class="code-box"><span class="code">' + code + '</span><button class="copy-btn" id="copyBtn" aria-label="Copy code"><i class="ph ph-copy"></i></button></div>' +
+        '<div class="desc">Share this code with friends and earn ' + Math.round(commissionRate * 100) + '% commission on their first deposit!</div>' +
+        "</div>" +
+        '<div class="stats-grid">' +
+        stats.map(function (s) {
+          return (
+            '<div class="stat-card"><div class="stat-ic" style="background:' + s.color + '26;color:' + s.color + '">' + s.icon + "</div>" +
+            '<div class="stat-val">' + s.value + '</div><div class="stat-title">' + s.title + "</div></div>"
+          );
+        }).join("") +
+        "</div>" +
+        '<div class="info-card">' +
+        '<div class="info-head"><span class="ic"><i class="ph ph-info"></i>️</span><span>How it Works</span></div>' +
+        '<div class="info-row"><div class="info-num">1</div><div class="info-text">Share your referral code with friends</div></div>' +
+        '<div class="info-row"><div class="info-num">2</div><div class="info-text">They sign up using your code</div></div>' +
+        '<div class="info-row"><div class="info-num">3</div><div class="info-text">You earn ' + Math.round(commissionRate * 100) + '% commission on their first deposit</div></div>' +
+        "</div>";
+
+      document.getElementById("copyBtn").addEventListener("click", function () {
+        navigator.clipboard.writeText(code).then(function () {
+          showToast('Referral code "' + code + '" copied to clipboard!');
+        }).catch(function () {
+          showToast("Could not copy code");
+        });
+      });
+    }
+
+    function renderError(message) {
+      root.innerHTML =
+        '<div style="text-align:center;padding:80px 24px">' +
+        '<div style="font-size:40px"><i class="ph ph-warning"></i></div>' +
+        '<div style="margin-top:16px;font-weight:700">Could not load referral data</div>' +
+        '<div style="margin-top:6px;font-size:13px;color:var(--text-medium)">' + message + "</div>" +
+        '<button id="retryBtn" style="margin-top:20px;padding:10px 20px;border-radius:12px;border:1.5px solid var(--primary-pink);background:#fff;color:var(--primary-pink);font-weight:700;font-size:14px;cursor:pointer">Retry</button></div>';
+      document.getElementById("retryBtn").addEventListener("click", load);
+    }
+
+    async function load() {
+      var token = SessionManager.getToken();
+      try {
+        var result = await ReferralService.getMyReferralCode(token);
+        if (result && result.success === true) {
+          render(result.data || {});
+        } else {
+          renderError((result && result.message) || "Failed to fetch referral code");
+        }
+      } catch (e) {
+        renderError("Something went wrong. Please try again.");
+      }
+    }
+
+    load();
+  })();
+</script>
+</body>
+</html>

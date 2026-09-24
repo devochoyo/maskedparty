@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rate Support — Masked Party</title>
+<script src="/widgets/phosphor_icons.js"></script>
+<script>PhosphorIcons.load();</script>
+<style>
+  :root{--primary-pink:#E91E63;--soft-pink:#FF6B8B;--bg:#F8F9FE;--text-dark:#1A1D2E;--text-medium:#6B7280;--success:#00C853;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text-dark);}
+  header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid rgba(255,228,236,.4);}
+  .head-row{max-width:520px;margin:0 auto;display:flex;align-items:center;padding:14px 16px;gap:12px;}
+  .back-btn{width:34px;height:34px;border:none;background:none;font-size:18px;color:var(--text-dark);cursor:pointer;}
+  h1{font-size:18px;font-weight:700;}
+  main{max-width:520px;margin:0 auto;padding:24px;}
+
+  .title{font-size:22px;font-weight:700;}
+  .subtitle{margin-top:8px;font-size:14px;color:var(--text-medium);}
+
+  .question{margin-top:24px;}
+  .question-text{font-size:15px;font-weight:600;margin-bottom:10px;}
+  .yn-row{display:flex;gap:10px;}
+  .yn-btn{flex:1;height:48px;border-radius:14px;font-weight:700;font-size:14px;cursor:pointer;border:1.5px solid rgba(255,228,236,.7);background:#fff;color:var(--text-medium);}
+  .yn-btn.yes.selected{background:var(--success);border-color:var(--success);color:#fff;}
+  .yn-btn.no.selected{background:#E53935;border-color:#E53935;color:#fff;}
+
+  .feedback-box{margin-top:24px;width:100%;background:#fff;border-radius:16px;border:1px solid rgba(255,228,236,.5);}
+  .feedback-box textarea{width:100%;border:none;outline:none;padding:14px;font-size:14px;color:var(--text-dark);font-family:inherit;resize:none;border-radius:16px;}
+
+  .submit-btn{margin-top:28px;width:100%;height:54px;border:none;border-radius:16px;background:linear-gradient(to right,var(--primary-pink),var(--soft-pink));color:#fff;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 5px 15px rgba(233,30,99,.3);}
+  .submit-btn:disabled{opacity:.6;cursor:not-allowed;}
+
+  .success-icon{width:90px;height:90px;margin:0 auto;border-radius:50%;background:rgba(0,200,83,.1);display:flex;align-items:center;justify-content:center;font-size:40px;color:var(--success);}
+  .success-title{margin-top:24px;font-size:20px;font-weight:700;text-align:center;}
+  .success-sub{margin-top:8px;font-size:14px;color:var(--text-medium);text-align:center;}
+  .btn-gradient{margin-top:28px;width:100%;height:54px;border-radius:16px;border:none;background:linear-gradient(to right,var(--primary-pink),var(--soft-pink));color:#fff;font-weight:700;font-size:16px;cursor:pointer;}
+
+  .toast{position:fixed;left:16px;right:16px;bottom:24px;background:#F57C00;color:#fff;padding:14px 16px;border-radius:12px;font-size:14px;text-align:center;max-width:420px;margin:0 auto;z-index:9800;}
+</style>
+</head>
+<body>
+  <header><div class="head-row"><button class="back-btn" id="backBtn" aria-label="Back"><i class="ph ph-arrow-left"></i></button><h1>Rate Support</h1></div></header>
+  <main id="root"></main>
+
+<script src="/services/api.js"></script>
+<script src="/services/api_endpoints.js"></script>
+<script src="/services/session_manager.js"></script>
+<script src="/services/route_guard.js"></script>
+<script>RouteGuard.require();</script>
+<script src="/services/support_service.js"></script>
+<script>
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var conversationId = parseInt(params.get("conversation_id"), 10) || 0;
+    var root = document.getElementById("root");
+    document.getElementById("backBtn").addEventListener("click", function () { window.history.back(); });
+
+    var satisfied = null, issueResolved = null, professional = null;
+    var isSubmitting = false;
+
+    function showToast(message) {
+      var t = document.createElement("div");
+      t.className = "toast";
+      t.textContent = message;
+      document.body.appendChild(t);
+      setTimeout(function () { t.remove(); }, 3200);
+    }
+
+    function ynRow(field, value) {
+      return (
+        '<div class="yn-row">' +
+        '<button type="button" class="yn-btn yes' + (value === true ? " selected" : "") + '" data-field="' + field + '" data-value="true">Yes</button>' +
+        '<button type="button" class="yn-btn no' + (value === false ? " selected" : "") + '" data-field="' + field + '" data-value="false">No</button>' +
+        "</div>"
+      );
+    }
+
+    function renderForm() {
+      root.innerHTML =
+        '<div class="title">How was your experience?</div>' +
+        '<div class="subtitle">Your feedback helps us improve our service</div>' +
+        '<div class="question"><div class="question-text">Are you satisfied with our customer care representative?</div>' + ynRow("satisfied", satisfied) + "</div>" +
+        '<div class="question"><div class="question-text">Was your issue resolved?</div>' + ynRow("issueResolved", issueResolved) + "</div>" +
+        '<div class="question"><div class="question-text">Was the customer care representative professional?</div>' + ynRow("professional", professional) + "</div>" +
+        '<div class="feedback-box"><textarea id="feedbackInput" rows="4" placeholder="Additional feedback (optional)..."></textarea></div>' +
+        '<button class="submit-btn" id="submitBtn"><span id="submitLabel">Submit Feedback</span></button>';
+
+      root.querySelectorAll(".yn-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var field = btn.getAttribute("data-field");
+          var value = btn.getAttribute("data-value") === "true";
+          if (field === "satisfied") satisfied = value;
+          if (field === "issueResolved") issueResolved = value;
+          if (field === "professional") professional = value;
+          renderForm();
+        });
+      });
+      document.getElementById("submitBtn").addEventListener("click", submit);
+    }
+
+    function renderSuccess() {
+      root.innerHTML =
+        '<div style="padding-top:40px">' +
+        '<div class="success-icon"><i class="ph ph-check"></i></div>' +
+        '<div class="success-title">Thank you for your feedback!</div>' +
+        '<div class="success-sub">Your feedback helps us improve our support service.</div>' +
+        '<button class="btn-gradient" id="doneBtn">Done</button>' +
+        "</div>";
+      document.getElementById("doneBtn").addEventListener("click", function () { window.location.href = "/client-home"; });
+    }
+
+    async function submit() {
+      if (satisfied === null || issueResolved === null || professional === null) {
+        showToast("Please answer all questions");
+        return;
+      }
+      if (isSubmitting) return;
+      isSubmitting = true;
+      var btn = document.getElementById("submitBtn");
+      var label = document.getElementById("submitLabel");
+      btn.disabled = true; label.textContent = "Submitting...";
+
+      var token = SessionManager.getToken();
+      var feedbackText = document.getElementById("feedbackInput").value.trim();
+      var result = await SupportService.submitFeedback({
+        token: token, conversationId: conversationId,
+        satisfied: satisfied, issueResolved: issueResolved, professional: professional,
+        feedbackText: feedbackText || null,
+      });
+      isSubmitting = false;
+
+      if (result && result.success === true) {
+        renderSuccess();
+      } else {
+        btn.disabled = false; label.textContent = "Submit Feedback";
+        showToast((result && result.message) || "Failed to submit feedback");
+      }
+    }
+
+    renderForm();
+  })();
+</script>
+</body>
+</html>

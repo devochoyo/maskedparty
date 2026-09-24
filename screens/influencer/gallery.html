@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gallery — Masked Party</title>
+<script src="/widgets/phosphor_icons.js"></script>
+<script>PhosphorIcons.load();</script>
+<style>
+  :root{--primary-pink:#E91E63;--soft-pink:#FF6B8B;--light-pink:#FFE4EC;--bg:#F8F9FE;--text-dark:#1A1D2E;--text-medium:#6B7280;--success:#00C853;--warning:#FF9800;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text-dark);}
+  header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid rgba(255,228,236,.4);}
+  .head-row{max-width:560px;margin:0 auto;display:flex;align-items:center;padding:14px 16px;gap:12px;}
+  .back-btn{width:34px;height:34px;border:none;background:none;font-size:18px;color:var(--text-dark);cursor:pointer;}
+  h1{flex:1;font-size:20px;font-weight:700;}
+  .count-pill{font-size:12px;font-weight:700;color:var(--primary-pink);background:rgba(233,30,99,.1);padding:4px 10px;border-radius:12px;}
+  main{max-width:560px;margin:0 auto;padding:20px 16px 40px;}
+  .hint{font-size:13px;color:var(--text-medium);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .g-tile{position:relative;aspect-ratio:1;border-radius:16px;overflow:hidden;background:var(--light-pink);}
+  .g-tile img{width:100%;height:100%;object-fit:cover;}
+  .g-del{position:absolute;top:6px;right:6px;width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.55);border:none;color:#fff;font-size:13px;cursor:pointer;}
+  .g-add{border:2px dashed rgba(233,30,99,.3);background:rgba(233,30,99,.04);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--primary-pink);cursor:pointer;}
+  .g-add .plus{font-size:26px;}
+  .g-add .lab{font-size:10px;font-weight:700;}
+
+  .empty{margin-top:40px;text-align:center;padding:40px 20px;color:var(--text-medium);}
+  .empty .ic{font-size:44px;}
+  .spinner-wrap{display:flex;justify-content:center;padding:80px 0;}
+  .spinner{width:32px;height:32px;border:3px solid rgba(233,30,99,.2);border-top-color:var(--primary-pink);border-radius:50%;animation:spin .8s linear infinite;}
+  .mini-spin{width:22px;height:22px;border:2.5px solid rgba(233,30,99,.3);border-top-color:var(--primary-pink);border-radius:50%;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9500;display:flex;align-items:center;justify-content:center;padding:24px;}
+  .confirm-card{background:#fff;border-radius:24px;padding:24px;max-width:340px;width:100%;}
+  .confirm-title{display:flex;align-items:center;gap:12px;font-size:18px;font-weight:700;}
+  .confirm-body{margin-top:12px;font-size:14px;color:var(--text-medium);}
+  .confirm-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px;}
+  .confirm-actions button{padding:10px 18px;border-radius:12px;font-weight:600;font-size:14px;cursor:pointer;border:none;}
+  .confirm-actions .cancel{background:none;color:var(--text-medium);}
+  .confirm-actions .confirm{background:var(--primary-pink);color:#fff;}
+
+  .toast{position:fixed;left:16px;right:16px;bottom:24px;background:#D32F2F;color:#fff;padding:14px 16px;border-radius:12px;font-size:14px;text-align:center;max-width:420px;margin:0 auto;z-index:9800;}
+  .toast.success{background:var(--success);}
+  .toast.warn{background:var(--warning);}
+</style>
+</head>
+<body>
+  <header><div class="head-row"><button class="back-btn" id="backBtn" aria-label="Back"><i class="ph ph-arrow-left"></i></button><h1>Gallery</h1><span class="count-pill" id="countPill">0/10</span></div></header>
+  <main>
+    <div class="hint">👆 Tap the + tile to add a photo, or the <i class="ph ph-x"></i> to remove one</div>
+    <div id="root"><div class="spinner-wrap"><div class="spinner" role="status" aria-label="Loading"></div></div></div>
+  </main>
+
+<script src="/services/api.js"></script>
+<script src="/services/api_endpoints.js"></script>
+<script src="/services/session_manager.js"></script>
+<script src="/services/route_guard.js"></script>
+<script>RouteGuard.require("influencer");</script>
+<script src="/services/influencer_service.js"></script>
+<script>
+  (function () {
+    var root = document.getElementById("root");
+    var countPill = document.getElementById("countPill");
+    document.getElementById("backBtn").addEventListener("click", function () { window.history.back(); });
+
+    var images = [];
+    var MAX_IMAGES = 10;
+    var isUploading = false;
+
+    function showToast(message, kind) {
+      var t = document.createElement("div");
+      t.className = "toast" + (kind ? " " + kind : "");
+      t.textContent = message;
+      document.body.appendChild(t);
+      setTimeout(function () { t.remove(); }, 3200);
+    }
+
+    function render() {
+      countPill.textContent = images.length + "/" + MAX_IMAGES;
+      var tiles = images.map(function (img) {
+        var url = typeof img === "string" ? img : img.url;
+        var id = typeof img === "object" ? img.id : url;
+        return (
+          '<div class="g-tile"><img src="' + url + '" alt="">' +
+          '<button class="g-del" data-id="' + id + '" aria-label="Delete photo"><i class="ph ph-x"></i></button></div>'
+        );
+      }).join("");
+
+      var addTile = images.length < MAX_IMAGES
+        ? '<div class="g-tile g-add" id="addTile">' + (isUploading ? '<div class="mini-spin"></div>' : '<div class="plus"><i class="ph-bold ph-plus"></i></div><div class="lab">ADD PHOTO</div>') + "</div>"
+        : "";
+
+      root.innerHTML = images.length === 0 && !isUploading
+        ? '<div class="empty"><div class="ic"><i class="ph ph-image"></i></div><div style="margin-top:12px;font-weight:600">No photos yet</div></div><div class="grid" style="margin-top:16px">' + addTile + "</div>"
+        : '<div class="grid">' + tiles + addTile + "</div>";
+
+      var add = document.getElementById("addTile");
+      if (add) add.addEventListener("click", uploadImage);
+      root.querySelectorAll(".g-del").forEach(function (btn) {
+        btn.addEventListener("click", function () { confirmDelete(btn.getAttribute("data-id")); });
+      });
+    }
+
+    function uploadImage() {
+      if (images.length >= MAX_IMAGES) {
+        showToast("You have reached the maximum of 10 gallery images", "warn");
+        return;
+      }
+      var input = document.createElement("input");
+      input.type = "file";
+      input.accept = "image/*";
+      input.addEventListener("change", async function () {
+        var file = input.files[0];
+        if (!file) return;
+        isUploading = true;
+        render();
+        var token = SessionManager.getToken();
+        var result = await InfluencerService.uploadGallery(token, [file]);
+        isUploading = false;
+        if (result && result.success === true) {
+          showToast("Image uploaded successfully", "success");
+        } else {
+          var data = result && result.data;
+          var errors = data && data.upload_errors;
+          var errorText = Array.isArray(errors) && errors.length ? errors[0] : (result && result.message);
+          showToast(errorText || "Upload failed");
+        }
+        load();
+      });
+      input.click();
+    }
+
+    function confirmDelete(imageId) {
+      var backdrop = document.createElement("div");
+      backdrop.className = "modal-backdrop";
+      backdrop.innerHTML =
+        '<div class="confirm-card">' +
+        '<div class="confirm-title"><i class="ph ph-trash"></i> Delete Photo</div>' +
+        '<div class="confirm-body">Are you sure you want to delete this photo? This cannot be undone.</div>' +
+        '<div class="confirm-actions"><button class="cancel" id="cancelBtn">Cancel</button><button class="confirm" id="confirmBtn">Delete</button></div>' +
+        "</div>";
+      document.body.appendChild(backdrop);
+      backdrop.addEventListener("click", function (e) { if (e.target === backdrop) backdrop.remove(); });
+      backdrop.querySelector("#cancelBtn").addEventListener("click", function () { backdrop.remove(); });
+      backdrop.querySelector("#confirmBtn").addEventListener("click", async function () {
+        backdrop.remove();
+        var token = SessionManager.getToken();
+        var result = await InfluencerService.deleteGalleryImage(token, imageId);
+        if (result && result.success === true) {
+          showToast("Photo deleted", "success");
+        } else {
+          showToast((result && result.message) || "Failed to delete photo");
+        }
+        load();
+      });
+    }
+
+    async function load() {
+      var token = SessionManager.getToken();
+      var result = await InfluencerService.getGallery(token);
+      if (result && result.success === true) {
+        var data = result.data;
+        images = Array.isArray(data) ? data : (data && (data.images || data.gallery)) || [];
+      }
+      render();
+    }
+
+    load();
+  })();
+</script>
+</body>
+</html>

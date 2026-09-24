@@ -1,0 +1,130 @@
+# ============================================================================
+# Masked Party — Apache config: clean URLs + security hardening
+# ============================================================================
+
+# ---- Force HTTPS -----------------------------------------------------------
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ---- Block access to dotfiles, source control, and this file itself -------
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+<Files ".htaccess">
+  Require all denied
+</Files>
+
+# ---- Never let a real .html URL resolve directly; force clean form --------
+RewriteCond %{THE_REQUEST} \s/+.*\.html[\s?] [NC]
+RewriteRule ^ - [F]
+
+# ---- Clean URL map: public path -> real file (no extension exposed) -------
+# Auth flow
+RewriteRule ^$ screens/auth/splash.html [L]
+RewriteRule ^welcome/?$ screens/auth/welcome.html [L]
+RewriteRule ^role/?$ screens/auth/role-selection.html [L]
+RewriteRule ^login/?$ screens/auth/login.html [L]
+RewriteRule ^register/client/?$ screens/auth/client-register.html [L]
+RewriteRule ^register/influencer/?$ screens/auth/influencer-register.html [L]
+RewriteRule ^verify-otp/?$ screens/auth/otp-verification.html [L]
+RewriteRule ^forgot-password/?$ screens/auth/forgot-password.html [L]
+RewriteRule ^reset-password/?$ screens/auth/reset-password.html [L]
+RewriteRule ^privacy/?$ screens/shared/privacy.html [L]
+RewriteRule ^notifications/?$ screens/client/notifications.html [L]
+RewriteRule ^client-profile/?$ screens/client/profile.html [L]
+RewriteRule ^edit-profile/?$ screens/client/edit-profile.html [L]
+RewriteRule ^client-chat/?$ screens/client/chat.html [L]
+RewriteRule ^chat/([0-9]+)/?$ screens/shared/chat-detail.html [L]
+RewriteRule ^wallet/?$ screens/client/wallet.html [L]
+RewriteRule ^buy-coins/?$ screens/client/buy-coins.html [L]
+RewriteRule ^payment/callback/?$ screens/shared/payment-callback.html [L]
+RewriteRule ^call/?$ screens/client/video-call.html [L]
+RewriteRule ^rate-influencer/?$ screens/client/rate-influencer.html [L]
+RewriteRule ^saved/?$ screens/client/save.html [L]
+RewriteRule ^transaction-history/?$ screens/client/transaction-history.html [L]
+RewriteRule ^post/([0-9]+)/?$ screens/client/post-detail.html [L]
+RewriteRule ^referrals/?$ screens/shared/referrals.html [L]
+RewriteRule ^chat-support/?$ screens/shared/chat-support.html [L]
+RewriteRule ^rate-support/?$ screens/shared/rate-support.html [L]
+
+# App shells (added as later phases are built)
+RewriteRule ^client-home/?$ screens/client/home.html [L]
+RewriteRule ^discover/?$ screens/client/discover.html [L]
+RewriteRule ^influencer/([0-9]+)/?$ screens/client/influencer-details.html [L]
+RewriteRule ^influencer-home/?$ screens/influencer/home.html [L]
+RewriteRule ^influencer-profile/?$ screens/influencer/profile.html [L]
+RewriteRule ^influencer-edit-profile/?$ screens/influencer/edit-profile.html [L]
+RewriteRule ^influencer-chat/?$ screens/influencer/chat.html [L]
+RewriteRule ^influencer-notifications/?$ screens/influencer/notifications.html [L]
+RewriteRule ^earnings/?$ screens/influencer/earnings.html [L]
+RewriteRule ^withdrawal/?$ screens/influencer/withdrawal.html [L]
+RewriteRule ^gallery/?$ screens/influencer/gallery.html [L]
+RewriteRule ^create-post/?$ screens/influencer/create-post.html [L]
+RewriteRule ^followers/?$ screens/influencer/followers.html [L]
+RewriteRule ^rate-client/?$ screens/influencer/rate-client.html [L]
+RewriteRule ^complete-profile/?$ screens/influencer/complete-profile.html [L]
+RewriteRule ^verification/?$ screens/influencer/verification.html [L]
+RewriteRule ^influencer-call/?$ screens/influencer/video-call.html [L]
+
+# ---- 404: anything else falls through to a real 404 page ------------------
+ErrorDocument 404 /404.html
+
+# ---- Never allow directory listing -----------------------------------------
+Options -Indexes -MultiViews
+
+# ============================================================================
+# Security headers
+# ============================================================================
+<IfModule mod_headers.c>
+  # HSTS: force HTTPS on every future visit (1 year, include subdomains)
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+  # Prevent MIME-sniffing
+  Header always set X-Content-Type-Options "nosniff"
+
+  # Disallow this site being framed anywhere (clickjacking protection)
+  Header always set X-Frame-Options "DENY"
+
+  # Limit what's sent in the Referer header to other origins
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # Lock down powerful browser features this app doesn't use
+  Header always set Permissions-Policy "geolocation=(), microphone=(self), camera=(self), payment=(self), usb=(), magnetometer=(), gyroscope=()"
+
+  # Content-Security-Policy: no external JS/CSS anywhere except VideoSDK's
+  # CDN (required for real video calls), jsDelivr for the Phosphor Icons
+  # font (style-src/font-src only — no script execution granted to that
+  # host), and the app's own API origin.
+  # 'unsafe-inline' is needed because each page is deliberately
+  # self-contained (inline <style>/<script>, no separate .css/.js per
+  # page) — but no remote script host is allowed except VideoSDK's.
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://sdk.videosdk.live; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: blob: https://maskedparty.name.ng; media-src 'self' blob: https://maskedparty.name.ng; connect-src 'self' https://maskedparty.name.ng wss://*.videosdk.live https://*.videosdk.live; font-src 'self' https://cdn.jsdelivr.net; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"
+
+  # Cross-origin isolation — reduces exposure to Spectre-class and
+  # cross-window data leaks.
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set Cross-Origin-Resource-Policy "same-origin"
+</IfModule>
+
+# ---- Never cache HTML (so a logged-out shared/public computer never -------
+# ---- shows a cached authenticated page from the back button) --------------
+<FilesMatch "\.html$">
+  Header set Cache-Control "no-store, no-cache, must-revalidate, private"
+</FilesMatch>
+
+# ---- Long-cache static assets and shared JS (safe: filenames don't change
+# ---- without a deploy; browsers revalidate via Last-Modified/ETag anyway) -
+<FilesMatch "\.(png|jpg|jpeg|webp|svg|mp3|mp4|woff2?)$">
+  Header set Cache-Control "public, max-age=604800, immutable"
+</FilesMatch>
+<FilesMatch "\.js$">
+  Header set Cache-Control "public, max-age=3600"
+</FilesMatch>
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php81” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php81 .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit

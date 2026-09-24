@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Post — Masked Party</title>
+<script src="/widgets/phosphor_icons.js"></script>
+<script>PhosphorIcons.load();</script>
+<style>
+  :root{--primary-pink:#E91E63;--soft-pink:#FF6B8B;--light-pink:#FFE4EC;--bg:#F8F9FE;--text-dark:#1A1D2E;--text-medium:#6B7280;--text-light:#9CA3AF;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text-dark);padding-bottom:70px;}
+  header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid rgba(255,228,236,.4);}
+  .head-row{max-width:600px;margin:0 auto;display:flex;align-items:center;padding:14px 16px;gap:12px;}
+  .back-btn{width:34px;height:34px;border:none;background:none;font-size:18px;color:var(--text-dark);cursor:pointer;}
+  h1{font-size:17px;font-weight:700;}
+
+  main{max-width:600px;margin:0 auto;}
+  .post-head{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fff;border-bottom:1px solid rgba(255,228,236,.3);cursor:pointer;}
+  .p-avatar-ring{width:48px;height:48px;border-radius:24px;padding:3px;background:linear-gradient(135deg,var(--primary-pink),var(--soft-pink));flex:none;}
+  .p-avatar-ring img,.p-avatar-ring .fb{width:100%;height:100%;border-radius:20px;object-fit:cover;background:#fff;display:flex;align-items:center;justify-content:center;color:rgba(233,30,99,.4);font-size:18px;}
+  .p-name{font-weight:700;font-size:15px;}
+  .p-loc{margin-top:2px;font-size:12px;color:var(--text-medium);}
+  .post-image{width:100%;display:block;background:#f1f1f1;margin-bottom:12px;}
+  .post-actions{display:flex;align-items:center;padding:8px 16px 0;gap:4px;background:#fff;}
+  .icon-btn{background:none;border:none;cursor:pointer;padding:6px;font-size:24px;display:flex;align-items:center;color:#616161;}
+  .icon-btn.liked{color:var(--primary-pink);}
+  .count{font-weight:700;font-size:14px;color:#4B5563;}
+  .post-body{padding:8px 16px 16px;background:#fff;}
+  .post-caption{font-weight:700;font-size:15px;}
+  .post-text{margin-top:8px;font-size:14px;color:var(--text-medium);line-height:1.5;}
+
+  .comments-title{display:flex;align-items:center;gap:8px;padding:16px 16px 8px;font-weight:700;font-size:15px;}
+  .comments-title .ic{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,rgba(233,30,99,.12),rgba(255,107,139,.06));display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--primary-pink);}
+  .comment{display:flex;gap:10px;align-items:flex-start;margin:4px 16px;padding:12px;background:#fff;border-radius:14px;border:1px solid rgba(255,228,236,.3);}
+  .c-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--primary-pink),var(--soft-pink));display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;flex:none;object-fit:cover;}
+  .c-name{font-weight:700;font-size:13px;}
+  .c-text{margin-top:3px;font-size:13px;color:var(--text-dark);line-height:1.4;}
+  .c-time{margin-top:3px;font-size:11px;color:var(--text-light);}
+  .no-comments{text-align:center;padding:24px;color:var(--text-light);font-size:13px;}
+
+  .comment-bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid rgba(255,228,236,.4);padding:8px 12px calc(8px + env(safe-area-inset-bottom));display:flex;gap:8px;max-width:600px;margin:0 auto;}
+  .comment-input{flex:1;background:var(--bg);border:1px solid rgba(255,228,236,.4);border-radius:22px;padding:10px 16px;font-size:14px;outline:none;font-family:inherit;}
+  .send-btn{width:42px;height:42px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--primary-pink),var(--soft-pink));color:#fff;font-size:16px;cursor:pointer;flex:none;}
+  .send-btn:disabled{background:#e0e0e0;}
+
+  .spinner-wrap{display:flex;justify-content:center;padding:100px 0;}
+  .spinner{width:32px;height:32px;border:3px solid rgba(233,30,99,.2);border-top-color:var(--primary-pink);border-radius:50%;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .not-found{text-align:center;padding:100px 24px;color:var(--text-medium);}
+</style>
+</head>
+<body>
+  <header><div class="head-row"><button class="back-btn" id="backBtn" aria-label="Back"><i class="ph ph-arrow-left"></i></button><h1>Post</h1></div></header>
+  <main id="root"><div class="spinner-wrap"><div class="spinner" role="status" aria-label="Loading"></div></div></main>
+  <div class="comment-bar" id="commentBar" style="display:none">
+    <input type="text" class="comment-input" id="commentInput" placeholder="Add a comment…">
+    <button class="send-btn" id="sendBtn" disabled aria-label="Send"><i class="ph ph-paper-plane-right"></i></button>
+  </div>
+
+<script src="/services/api.js"></script>
+<script src="/services/api_endpoints.js"></script>
+<script src="/services/session_manager.js"></script>
+<script src="/services/post_service.js"></script>
+<script src="/services/follow_service.js"></script>
+<script src="/services/client_service.js"></script>
+<script src="/widgets/influencer_preview_sheet.js"></script>
+<script>
+  (function () {
+    var postId = window.location.pathname.replace(/^\/post\//, "").split("?")[0].split("/")[0];
+    var isLoggedIn = SessionManager.isLoggedIn();
+    var root = document.getElementById("root");
+    var post = null;
+    var comments = [];
+
+    document.getElementById("backBtn").addEventListener("click", function () { window.history.back(); });
+
+    function escapeHtml(s) {
+      return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    }
+    function openLoginPrompt() { window.location.href = "/login"; }
+    function timeAgo(dateStr) {
+      if (!dateStr) return "";
+      try {
+        var dt = new Date(dateStr);
+        var diffMs = Date.now() - dt.getTime();
+        var mins = Math.floor(diffMs / 60000), hours = Math.floor(mins / 60), days = Math.floor(hours / 24);
+        if (days > 7) return dt.getDate() + "/" + (dt.getMonth() + 1) + "/" + dt.getFullYear();
+        if (days > 0) return days + "d ago";
+        if (hours > 0) return hours + "h ago";
+        if (mins > 0) return mins + "m ago";
+        return "Just now";
+      } catch (e) { return ""; }
+    }
+
+    function render() {
+      if (!post) {
+        root.innerHTML = '<div class="not-found">Post not found</div>';
+        return;
+      }
+      var images = Array.isArray(post.images) ? post.images : [];
+      var liked = post.liked_by_me === true;
+      var likeCount = post.like_count || 0;
+      var commentCount = post.comment_count || 0;
+
+      root.innerHTML =
+        '<div class="post-head" id="postHead">' +
+        '<div class="p-avatar-ring">' + (post.influencer_photo ? '<img src="' + post.influencer_photo + '" alt="">' : '<div class="fb"><i class="ph ph-user"></i></div>') + "</div>" +
+        '<div><div class="p-name">' + escapeHtml(post.influencer_name || "") + "</div>" +
+        (post.influencer_country ? '<div class="p-loc"><i class="ph ph-map-pin"></i> ' + escapeHtml(post.influencer_country) + "</div>" : "") + "</div>" +
+        "</div>" +
+        images.map(function (img) { var url = typeof img === "string" ? img : img && img.url; return url ? '<img class="post-image" src="' + url + '" alt="">' : ""; }).join("") +
+        '<div class="post-actions">' +
+        '<button class="icon-btn' + (liked ? " liked" : "") + '" id="likeBtn" aria-label="Like">' + (liked ? "<i class='ph-fill ph-heart'></i>" : "<i class='ph ph-heart'></i>") + "</button>" +
+        '<span class="count" id="likeCount">' + likeCount + "</span>" +
+        '<span style="margin-left:16px" class="icon-btn"><i class="ph ph-chat-circle"></i></span><span class="count">' + commentCount + "</span>" +
+        "</div>" +
+        '<div class="post-body">' +
+        '<div class="post-caption">' + escapeHtml(post.caption || "") + "</div>" +
+        (post.body ? '<div class="post-text">' + escapeHtml(post.body) + "</div>" : "") +
+        "</div>" +
+        '<div class="comments-title"><span class="ic"><i class="ph ph-chat-circle"></i></span>Comments</div>' +
+        '<div id="commentsList">' + (comments.length ? comments.map(commentHtml).join("") : '<div class="no-comments">No comments yet — be the first!</div>') + "</div>";
+
+      document.getElementById("postHead").addEventListener("click", function () {
+        InfluencerPreviewSheet.show({
+          influencerId: post.influencer_id,
+          name: post.influencer_name,
+          photo: post.influencer_photo,
+          country: post.influencer_country,
+          isLoggedIn: isLoggedIn,
+          onRequireAuth: openLoginPrompt,
+        });
+      });
+      document.getElementById("likeBtn").addEventListener("click", toggleLike);
+
+      document.getElementById("commentBar").style.display = "flex";
+    }
+
+    function commentHtml(c) {
+      var name = c.user_name || "User";
+      var photo = c.user_photo;
+      return (
+        '<div class="comment">' +
+        (photo ? '<img class="c-avatar" src="' + photo + '" alt="">' : '<div class="c-avatar">' + name.charAt(0).toUpperCase() + "</div>") +
+        '<div><div class="c-name">' + escapeHtml(name) + '</div><div class="c-text">' + escapeHtml(c.comment || c.text || "") + '</div><div class="c-time">' + timeAgo(c.created_at) + "</div></div>" +
+        "</div>"
+      );
+    }
+
+    async function toggleLike() {
+      if (!isLoggedIn) { openLoginPrompt(); return; }
+      if (!post) return;
+      var wasLiked = post.liked_by_me === true;
+      post.liked_by_me = !wasLiked;
+      post.like_count = (post.like_count || 0) + (wasLiked ? -1 : 1);
+      document.getElementById("likeBtn").innerHTML = post.liked_by_me ? '<i class="ph-fill ph-heart"></i>' : '<i class="ph ph-heart"></i>';
+      document.getElementById("likeBtn").classList.toggle("liked", post.liked_by_me);
+      document.getElementById("likeCount").textContent = post.like_count;
+
+      var result = wasLiked ? await PostService.unlikePost(postId) : await PostService.likePost(postId);
+      if (!result || result.success !== true) {
+        post.liked_by_me = wasLiked;
+        post.like_count = (post.like_count || 0) + (wasLiked ? 1 : -1);
+        document.getElementById("likeBtn").innerHTML = post.liked_by_me ? '<i class="ph-fill ph-heart"></i>' : '<i class="ph ph-heart"></i>';
+        document.getElementById("likeBtn").classList.toggle("liked", post.liked_by_me);
+        document.getElementById("likeCount").textContent = post.like_count;
+      }
+    }
+
+    var commentInput = document.getElementById("commentInput");
+    var sendBtn = document.getElementById("sendBtn");
+    commentInput.addEventListener("input", function () { sendBtn.disabled = !commentInput.value.trim(); });
+    commentInput.addEventListener("keydown", function (e) { if (e.key === "Enter") sendComment(); });
+    sendBtn.addEventListener("click", sendComment);
+
+    async function sendComment() {
+      if (!isLoggedIn) { openLoginPrompt(); return; }
+      var text = commentInput.value.trim();
+      if (!text || sendBtn.disabled) return;
+      sendBtn.disabled = true;
+      var result = await PostService.addComment({ postId: postId, comment: text });
+      sendBtn.disabled = false;
+      if (result && result.success === true) {
+        commentInput.value = "";
+        var c = result.data && result.data.comment;
+        if (c) {
+          comments.push(c);
+          post.comment_count = (post.comment_count || 0) + 1;
+          render();
+        } else {
+          load();
+        }
+      }
+    }
+
+    async function load() {
+      var postResult = await PostService.getPost(postId);
+      var commentsResult = await PostService.listComments({ postId: postId });
+      if (postResult && postResult.success === true && postResult.data) {
+        post = postResult.data.post || postResult.data;
+      }
+      if (commentsResult && commentsResult.success === true && commentsResult.data) {
+        comments = commentsResult.data.comments || [];
+      }
+      render();
+    }
+
+    load();
+  })();
+</script>
+</body>
+</html>

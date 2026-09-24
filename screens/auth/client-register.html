@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Create Account — Masked Party</title>
+<script src="/widgets/phosphor_icons.js"></script>
+<script>PhosphorIcons.load();</script>
+<style>
+  :root{
+    --primary-pink:#E91E63; --soft-pink:#FF6B8B; --light-pink:#FFE4EC; --dark-pink:#C2185B;
+    --text-dark:#1A1D2E; --text-medium:#6B7280; --text-light:#9CA3AF; --success:#00C853;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    min-height:100dvh;
+    background:linear-gradient(to bottom, var(--primary-pink) 0%, var(--soft-pink) 30%, rgba(255,228,236,.8) 60%, rgba(255,228,236,.3) 100%);
+    position:relative;overflow-x:hidden;
+  }
+  .deco{position:absolute;border-radius:50%;background:rgba(255,255,255,.08);pointer-events:none;}
+  .deco.d1{width:150px;height:150px;top:60px;right:-40px;background:rgba(255,255,255,.1);}
+  .deco.d2{width:100px;height:100px;top:150px;left:-30px;}
+  .deco.d3{width:80px;height:80px;bottom:100px;right:-20px;background:rgba(255,255,255,.06);}
+
+  .page{position:relative;min-height:100dvh;display:flex;justify-content:center;padding:20px 24px 60px;}
+  .col{width:100%;max-width:460px;}
+
+  .back-btn{width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:12px;color:#fff;font-size:18px;text-decoration:none;}
+  .head{text-align:center;margin-top:20px;}
+  .logo{width:80px;height:80px;margin:0 auto;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:42px;box-shadow:0 8px 20px rgba(194,24,91,.4);}
+  h1{margin-top:20px;font-size:28px;font-weight:700;color:#fff;}
+  .subtitle{margin-top:6px;font-size:15px;color:#fff;font-weight:500;}
+
+  .form-card{margin-top:40px;background:#fff;border-radius:28px;padding:24px;box-shadow:0 15px 30px rgba(194,24,91,.2);border:1.5px solid rgba(255,255,255,.8);}
+  label,.q-label{display:block;font-size:13px;font-weight:600;color:var(--text-dark);margin-bottom:8px;}
+  .field{margin-bottom:18px;position:relative;}
+  input[type=text], input[type=email], input[type=password]{
+    width:100%;padding:14px 16px;background:rgba(255,228,236,.2);border:1px solid rgba(255,228,236,.4);border-radius:14px;font-size:15px;color:var(--text-dark);
+    font-family:inherit;
+  }
+  input:focus{outline:none;border-color:var(--primary-pink);background:#fff;}
+  .field .icon-btn{position:absolute;right:10px;top:37px;background:none;border:none;cursor:pointer;color:var(--text-light);font-size:18px;padding:6px;}
+  .hint{font-size:12px;color:var(--text-light);margin-top:6px;}
+  .error-msg{color:#D32F2F;font-size:12px;margin-top:6px;display:none;}
+  .field.invalid input{border-color:#D32F2F;background:#FFF5F5;}
+  .field.invalid .error-msg{display:block;}
+  .field.detecting input{color:var(--text-light);font-style:italic;}
+
+  /* Age (18+) question */
+  .age-row{display:flex;gap:12px;margin-bottom:18px;}
+  .age-opt{flex:1;height:52px;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;border:1px solid rgba(255,228,236,.4);background:rgba(255,228,236,.2);color:var(--text-dark);font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;}
+  .age-opt i{font-size:20px;color:var(--primary-pink);}
+  .age-opt:focus-visible{outline:2px solid var(--primary-pink);outline-offset:2px;}
+  .age-opt.selected{background:linear-gradient(135deg,var(--primary-pink),var(--soft-pink));border-color:transparent;color:#fff;}
+  .age-opt.selected i{color:#fff;}
+
+  .privacy-row{display:flex;align-items:flex-start;gap:10px;margin:8px 0 20px;}
+  .privacy-row input{width:20px;height:20px;accent-color:var(--primary-pink);flex:none;margin-top:1px;}
+  .privacy-row label{font-size:13px;color:var(--text-medium);font-weight:500;margin:0;}
+  .privacy-row a{color:var(--primary-pink);font-weight:700;text-decoration:none;}
+  .privacy-row a:hover{text-decoration:underline;}
+
+  button.submit{width:100%;height:54px;border:none;border-radius:14px;cursor:pointer;background:linear-gradient(to right,var(--primary-pink),var(--dark-pink));color:#fff;font-size:16px;font-weight:700;box-shadow:0 5px 15px rgba(233,30,99,.4);display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;}
+  button.submit:disabled{opacity:.5;cursor:not-allowed;box-shadow:none;background:#9CA3AF;}
+  .spinner{width:20px;height:20px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .login-box{margin-top:24px;padding:14px 16px;background:#fff;border-radius:16px;border:1.5px solid rgba(255,255,255,.8);box-shadow:0 4px 10px rgba(194,24,91,.15);display:flex;align-items:center;justify-content:center;gap:4px;font-size:14px;color:var(--text-dark);}
+  .login-box a{color:var(--primary-pink);font-weight:700;text-decoration:none;}
+
+  .toast{position:fixed;left:16px;right:16px;bottom:24px;background:#D32F2F;color:#fff;padding:14px 16px;border-radius:12px;box-shadow:0 6px 16px rgba(0,0,0,.2);font-size:14px;text-align:center;transform:translateY(120%);transition:transform .25s ease;max-width:420px;margin:0 auto;z-index:20;}
+  .toast.show{transform:translateY(0);}
+  .toast.warn{background:#F57C00;}
+  .toast.success{background:var(--success);}
+
+  /* Not-eligible dialog */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(26,29,46,.55);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;}
+  .modal-backdrop.show{display:flex;animation:backdropIn .2s ease;}
+  .modal{width:100%;max-width:340px;background:#fff;border-radius:24px;padding:28px 24px 24px;text-align:center;box-shadow:0 20px 40px rgba(0,0,0,.25);animation:popIn .3s cubic-bezier(.34,1.56,.64,1);}
+  .modal-icon{width:72px;height:72px;margin:0 auto;border-radius:50%;background:var(--light-pink);color:var(--primary-pink);display:flex;align-items:center;justify-content:center;font-size:36px;}
+  .modal h2{margin-top:16px;font-size:20px;font-weight:700;color:var(--text-dark);}
+  .modal p{margin-top:8px;font-size:15px;color:var(--text-medium);line-height:1.45;}
+  .modal button{margin-top:22px;width:100%;height:48px;border:none;border-radius:14px;background:var(--primary-pink);color:#fff;font-family:inherit;font-weight:700;font-size:16px;cursor:pointer;}
+  .modal button:focus-visible{outline:2px solid var(--dark-pink);outline-offset:2px;}
+  @keyframes backdropIn{from{opacity:0}to{opacity:1}}
+  @keyframes popIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+
+  @media (max-width:360px){ h1{font-size:24px} .form-card{padding:18px} }
+  @media (prefers-reduced-motion:reduce){ .modal-backdrop.show,.modal{animation:none} }
+</style>
+</head>
+<body>
+  <div class="deco d1"></div><div class="deco d2"></div><div class="deco d3"></div>
+
+  <div class="page">
+    <div class="col">
+      <a href="/role" class="back-btn" aria-label="Back"><i class="ph ph-arrow-left"></i></a>
+      <div class="head">
+        <div class="logo" aria-hidden="true"><i class="ph ph-mask-happy"></i></div>
+        <h1>Create Account</h1>
+        <p class="subtitle">Join MaskedParty as a Client</p>
+      </div>
+
+      <form class="form-card" id="registerForm" novalidate>
+        <div class="field" id="nameField">
+          <label for="mysteryName">Mystery Name</label>
+          <input type="text" id="mysteryName" autocomplete="nickname" required>
+          <div class="error-msg">Mystery name is required</div>
+        </div>
+
+        <div class="field" id="emailField">
+          <label for="email">Email</label>
+          <input type="email" id="email" autocomplete="email" required>
+          <div class="error-msg">Enter a valid email address</div>
+        </div>
+
+        <div class="field" id="passwordField">
+          <label for="password">Password</label>
+          <input type="password" id="password" autocomplete="new-password" required>
+          <button type="button" class="icon-btn" data-toggle="password" aria-label="Show password"><i class="ph ph-eye"></i></button>
+          <div class="hint">At least 8 characters</div>
+          <div class="error-msg">Password must be at least 8 characters</div>
+        </div>
+
+        <div class="field" id="confirmField">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" autocomplete="new-password" required>
+          <button type="button" class="icon-btn" data-toggle="confirmPassword" aria-label="Show password"><i class="ph ph-eye"></i></button>
+          <div class="error-msg">Passwords do not match</div>
+        </div>
+
+        <div class="field detecting" id="countryField">
+          <label for="country">Country</label>
+          <input type="text" id="country" value="Loading country..." required>
+          <div class="error-msg">Country is required</div>
+        </div>
+
+        <div class="q-label" id="ageLabel">Are you 18 years and above?</div>
+        <div class="age-row" role="group" aria-labelledby="ageLabel">
+          <button type="button" class="age-opt" id="ageYes" aria-pressed="false"><i class="ph ph-check-circle"></i> Yes</button>
+          <button type="button" class="age-opt" id="ageNo" aria-pressed="false"><i class="ph ph-x-circle"></i> No</button>
+        </div>
+
+        <div class="privacy-row">
+          <input type="checkbox" id="acceptPrivacy">
+          <label for="acceptPrivacy">I agree to the <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a></label>
+        </div>
+
+        <button type="submit" class="submit" id="submitBtn"><span id="submitLabel">Create Account</span></button>
+      </form>
+
+      <div class="login-box"><span>Already have an account?</span> <a href="/login">Sign In</a></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="alert" aria-live="assertive"></div>
+
+  <!-- Not eligible dialog (frontend only) -->
+  <div class="modal-backdrop" id="ineligibleModal" aria-hidden="true">
+    <div class="modal" role="alertdialog" aria-modal="true" aria-labelledby="ineligibleTitle" aria-describedby="ineligibleText">
+      <div class="modal-icon" aria-hidden="true"><i class="ph ph-prohibit"></i></div>
+      <h2 id="ineligibleTitle">Not Eligible</h2>
+      <p id="ineligibleText">Sorry, you are not eligible to use this application.</p>
+      <button type="button" id="ineligibleOk">OK</button>
+    </div>
+  </div>
+
+<script src="/services/api.js"></script>
+<script src="/services/api_endpoints.js"></script>
+<script src="/services/session_manager.js"></script>
+<script src="/services/auth_service.js"></script>
+<script src="/services/countries.js"></script>
+<script>
+  (function () {
+    var countryInput = document.getElementById("country");
+    var countryField = document.getElementById("countryField");
+    CountryService.detectCountry().then(function (country) {
+      countryField.classList.remove("detecting");
+      countryInput.value = country || "";
+    });
+
+    document.querySelectorAll("[data-toggle]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var input = document.getElementById(btn.getAttribute("data-toggle"));
+        var showing = input.type === "text";
+        input.type = showing ? "password" : "text";
+        btn.innerHTML = showing ? '<i class="ph ph-eye"></i>' : '<i class="ph ph-eye-slash"></i>';
+      });
+    });
+
+    var form = document.getElementById("registerForm");
+    var submitBtn = document.getElementById("submitBtn");
+    var submitLabel = document.getElementById("submitLabel");
+    var toast = document.getElementById("toast");
+    var toastTimer = null;
+
+    function showToast(message, kind) {
+      toast.textContent = message;
+      toast.className = "toast show" + (kind ? " " + kind : "");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { toast.className = "toast"; }, 4000);
+    }
+
+    function setError(fieldId, hasError) {
+      document.getElementById(fieldId).classList.toggle("invalid", hasError);
+    }
+
+    // ---- Age (18+) ----
+    var isAdult = null;
+    var ageYes = document.getElementById("ageYes");
+    var ageNo = document.getElementById("ageNo");
+    function selectAge(value) {
+      isAdult = value;
+      ageYes.classList.toggle("selected", value === true);
+      ageNo.classList.toggle("selected", value === false);
+      ageYes.setAttribute("aria-pressed", value === true ? "true" : "false");
+      ageNo.setAttribute("aria-pressed", value === false ? "true" : "false");
+    }
+    ageYes.addEventListener("click", function () { selectAge(true); });
+    ageNo.addEventListener("click", function () { selectAge(false); });
+
+    // ---- Not eligible dialog ----
+    var modal = document.getElementById("ineligibleModal");
+    var modalOk = document.getElementById("ineligibleOk");
+    var lastFocused = null;
+    function openIneligible() {
+      lastFocused = document.activeElement;
+      modal.classList.add("show");
+      modal.setAttribute("aria-hidden", "false");
+      modalOk.focus();
+    }
+    function closeIneligible() {
+      modal.classList.remove("show");
+      modal.setAttribute("aria-hidden", "true");
+      if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
+    }
+    modalOk.addEventListener("click", closeIneligible);
+    document.addEventListener("keydown", function (e) {
+      if (!modal.classList.contains("show")) return;
+      if (e.key === "Escape") { e.preventDefault(); closeIneligible(); }
+      if (e.key === "Tab") { e.preventDefault(); modalOk.focus(); }
+    });
+
+    // Frontend-only age check. Returns true only when the user confirmed 18+.
+    function checkAge() {
+      if (isAdult === null) {
+        showToast("Please confirm whether you are 18 years or above.", "warn");
+        return false;
+      }
+      if (isAdult === false) {
+        openIneligible();
+        return false;
+      }
+      return true;
+    }
+
+    function validate() {
+      var name = document.getElementById("mysteryName").value.trim();
+      var email = document.getElementById("email").value.trim();
+      var password = document.getElementById("password").value;
+      var confirm = document.getElementById("confirmPassword").value;
+      var country = countryInput.value.trim();
+
+      var nameOk = name.length > 0;
+      var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      var passwordOk = password.length >= 8;
+      var confirmOk = confirm === password && confirm.length > 0;
+      var countryOk = country.length > 0;
+
+      setError("nameField", !nameOk);
+      setError("emailField", !emailOk);
+      setError("passwordField", !passwordOk);
+      setError("confirmField", !confirmOk);
+      setError("countryField", !countryOk);
+
+      return nameOk && emailOk && passwordOk && confirmOk && countryOk;
+    }
+
+    function setLoading(loading) {
+      submitBtn.disabled = loading;
+      submitLabel.innerHTML = loading ? "" : "Create Account";
+      if (loading) {
+        var s = document.createElement("span");
+        s.className = "spinner";
+        submitLabel.appendChild(s);
+      }
+    }
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      if (!validate()) return;
+      if (!checkAge()) return;
+      if (!document.getElementById("acceptPrivacy").checked) {
+        showToast("You must agree to the Privacy Policy to continue.", "warn");
+        return;
+      }
+
+      setLoading(true);
+      try {
+        var result = await AuthService.register({
+          role: "client",
+          email: document.getElementById("email").value.trim(),
+          password: document.getElementById("password").value,
+          confirmPassword: document.getElementById("confirmPassword").value,
+          mysteryName: document.getElementById("mysteryName").value.trim(),
+          countryName: countryInput.value.trim(),
+        });
+
+        if (!result || result.success === false) {
+          throw new Error((result && result.message) || "Registration failed");
+        }
+
+        var data = result.data;
+        var otpSent = data && data.otp_sent;
+        var token = data && data.token;
+
+        if (otpSent === true && token) {
+          var email = encodeURIComponent(document.getElementById("email").value.trim());
+          window.location.href = "/verify-otp?email=" + email + "&token=" + encodeURIComponent(token) + "&role=client";
+        } else {
+          showToast("Registration successful! Please login.", "success");
+          setTimeout(function () { window.location.href = "/login"; }, 1200);
+        }
+      } catch (err) {
+        showToast(err.message || "Registration failed");
+        setLoading(false);
+      }
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+# Blocks direct web access to internal files that should only ever be
+# `require`d by PHP or run via cron — never opened as a URL.
+# view.php (and, temporarily, whereami.php) are deliberately NOT listed
+# here because they need to be reachable directly.
+
+<FilesMatch "^(mail|mailboxConfig|mailFunctions|mailTemplate|mailboxFunctions|mailboxTemplates|tokenHelper|sendMail|supportMailFunctions|mailPoller)\.php$">
+    Deny from all
+</FilesMatch>
+
+<FilesMatch "\.(log|json)$">
+    Deny from all
+</FilesMatch>

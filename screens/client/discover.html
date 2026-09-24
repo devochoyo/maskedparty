@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Discover — Masked Party</title>
+<script src="/widgets/phosphor_icons.js"></script>
+<script>PhosphorIcons.load();</script>
+<style>
+  :root{--primary-pink:#E91E63;--soft-pink:#FF6B8B;--light-pink:#FFE4EC;--text-dark:#1A1D2E;--text-medium:#6B7280;--text-light:#9CA3AF;--bg:#F8F9FE;--gold:#FFC107;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text-dark);padding-bottom:76px;}
+
+  header{position:sticky;top:0;z-index:10;background:#fff;}
+  .head-inner{max-width:600px;margin:0 auto;padding:16px 16px 4px;}
+  h1{font-size:26px;font-weight:800;letter-spacing:-.5px;}
+  .search-wrap{margin:12px 0 12px;height:46px;background:#fff;border:1px solid rgba(255,228,236,.7);border-radius:14px;box-shadow:0 2px 8px rgba(233,30,99,.04);display:flex;align-items:center;padding:0 14px;gap:8px;}
+  .search-wrap input{flex:1;border:none;outline:none;font-size:15px;background:none;color:var(--text-dark);}
+  .search-wrap input::placeholder{color:var(--text-light);}
+  .search-wrap button{border:none;background:none;color:var(--text-light);font-size:16px;cursor:pointer;}
+
+  main{max-width:600px;margin:0 auto;padding:12px 16px;}
+
+  .inf-tile{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid rgba(255,228,236,.5);border-radius:18px;padding:12px;margin-bottom:12px;box-shadow:0 2px 10px rgba(0,0,0,.04);cursor:pointer;}
+  .inf-avatar-wrap{position:relative;width:60px;height:60px;flex:none;}
+  .inf-avatar{width:60px;height:60px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,var(--primary-pink),var(--soft-pink));display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;}
+  .online-dot{position:absolute;bottom:1px;right:1px;width:14px;height:14px;border-radius:50%;background:#00C853;border:2.5px solid #fff;}
+  .inf-name{font-weight:700;font-size:16px;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .inf-loc{margin-top:4px;font-size:13px;color:#9e9e9e;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .inf-rating{flex:none;display:flex;align-items:center;gap:3px;padding:6px 10px;background:rgba(255,193,7,.1);border:1px solid rgba(255,193,7,.3);border-radius:12px;font-size:13px;font-weight:700;}
+
+  .state{display:flex;flex-direction:column;align-items:center;text-align:center;padding:80px 24px;}
+  .state-icon-wrap{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,rgba(233,30,99,.1),rgba(255,107,139,.05));display:flex;align-items:center;justify-content:center;font-size:40px;}
+  .state-title{margin-top:18px;font-weight:600;font-size:17px;}
+  .state-sub{margin-top:6px;font-size:14px;color:var(--text-medium);}
+  .retry-btn{margin-top:24px;padding:12px 24px;border-radius:14px;border:none;background:var(--primary-pink);color:#fff;font-weight:700;font-size:14px;cursor:pointer;}
+
+  .spinner-wrap{display:flex;justify-content:center;padding:60px 0;}
+  .spinner{width:32px;height:32px;border:3px solid rgba(233,30,99,.2);border-top-color:var(--primary-pink);border-radius:50%;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+</style>
+</head>
+<body>
+  <header>
+    <div class="head-inner">
+      <h1>Discover</h1>
+      <div class="search-wrap">
+        <i class="ph ph-magnifying-glass"></i><input type="text" id="searchInput" placeholder="Search influencers…">
+        <button id="clearSearch" style="display:none" aria-label="Clear search"><i class="ph ph-x"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="listRoot">
+    <div class="spinner-wrap"><div class="spinner" role="status" aria-label="Loading"></div></div>
+  </main>
+
+  <script src="/widgets/phosphor_icons.js"></script>
+  <script src="/widgets/client_bottom_nav.js"></script>
+  <script>ClientBottomNav.mount("discover");</script>
+
+<script src="/services/api.js"></script>
+<script src="/services/api_endpoints.js"></script>
+<script src="/services/session_manager.js"></script>
+<script src="/services/client_service.js"></script>
+<script src="/services/follow_service.js"></script>
+<script src="/widgets/influencer_preview_sheet.js"></script>
+<script>
+  (function () {
+    var isLoggedIn = SessionManager.isLoggedIn();
+    var page = 1, hasMore = true, loading = false, list = [], error = null, search = "";
+    var listRoot = document.getElementById("listRoot");
+    var searchInput = document.getElementById("searchInput");
+    var clearBtn = document.getElementById("clearSearch");
+
+    function escapeHtml(s) {
+      return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    }
+
+    function openLoginPrompt() { window.location.href = "/login"; }
+
+    function tileHtml(inf) {
+      var photo = inf.profile_photo;
+      var name = inf.mystery_name || "Influencer";
+      var country = inf.country_name || "";
+      var rating = inf.average_rating;
+      var online = inf.online_status === "online" || inf.online_status === 1 || inf.online_status === true;
+
+      return (
+        '<div class="inf-tile" data-id="' + inf.id + '">' +
+        '<div class="inf-avatar-wrap">' +
+        (photo ? '<img class="inf-avatar" src="' + photo + '" alt="">' : '<div class="inf-avatar"><i class="ph ph-user"></i></div>') +
+        (online ? '<span class="online-dot"></span>' : "") +
+        "</div>" +
+        '<div style="flex:1;min-width:0">' +
+        '<div class="inf-name">' + escapeHtml(name) + "</div>" +
+        (country ? '<div class="inf-loc"><i class="ph ph-map-pin"></i> ' + escapeHtml(country) + "</div>" : "") +
+        "</div>" +
+        (rating != null ? '<div class="inf-rating"><i class="ph-fill ph-star"></i> ' + escapeHtml(rating) + "</div>" : "") +
+        "</div>"
+      );
+    }
+
+    function render() {
+      var oldSpinner = document.getElementById("loadMoreSpinner");
+      var html = list.map(tileHtml).join("");
+      listRoot.innerHTML = html;
+      listRoot.querySelectorAll(".inf-tile").forEach(function (tile) {
+        tile.addEventListener("click", function () {
+          InfluencerPreviewSheet.show({
+            influencerId: tile.getAttribute("data-id"),
+            isLoggedIn: isLoggedIn,
+            onRequireAuth: openLoginPrompt,
+          });
+        });
+      });
+      if (hasMore) {
+        var sentinel = document.createElement("div");
+        sentinel.className = "spinner-wrap";
+        sentinel.id = "loadMoreSpinner";
+        sentinel.innerHTML = '<div class="spinner" role="status" aria-label="Loading more"></div>';
+        listRoot.appendChild(sentinel);
+      }
+    }
+
+    function renderError() {
+      listRoot.innerHTML =
+        '<div class="state"><div class="state-icon-wrap"><i class="ph ph-warning"></i></div>' +
+        '<div class="state-title">Something went wrong</div>' +
+        '<div class="state-sub">' + escapeHtml(error || "") + "</div>" +
+        '<button class="retry-btn" id="retryBtn">Retry</button></div>';
+      document.getElementById("retryBtn").addEventListener("click", function () { load(true); });
+    }
+
+    function renderEmpty() {
+      listRoot.innerHTML =
+        '<div class="state"><div class="state-icon-wrap"><i class="ph ph-magnifying-glass"></i></div>' +
+        '<div class="state-title">No influencers found</div>' +
+        '<div class="state-sub">Try adjusting your search</div></div>';
+    }
+
+    async function load(refresh) {
+      if (loading) return;
+      loading = true;
+      if (refresh) { page = 1; hasMore = true; error = null; }
+      try {
+        var token = SessionManager.getToken();
+        var result = await ClientService.getInfluencers(token, { page: page, search: search });
+        if (result && result.success === true) {
+          var data = result.data;
+          var newList = (data && data.influencers) || (Array.isArray(data) ? data : []);
+          list = refresh ? newList : list.concat(newList);
+          hasMore = newList.length > 0 && (data && data.has_more !== false);
+          if (hasMore) page++;
+          if (list.length === 0) renderEmpty(); else render();
+        } else {
+          error = (result && result.message) || "Please check your connection.";
+          if (list.length === 0) renderError();
+        }
+      } catch (e) {
+        error = "Please check your connection.";
+        if (list.length === 0) renderError();
+      } finally {
+        loading = false;
+      }
+    }
+
+    let debounceTimer;
+    searchInput.addEventListener("input", function () {
+      clearBtn.style.display = searchInput.value ? "block" : "none";
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(function () {
+        search = searchInput.value.trim();
+        load(true);
+      }, 400);
+    });
+    clearBtn.addEventListener("click", function () {
+      searchInput.value = "";
+      clearBtn.style.display = "none";
+      search = "";
+      load(true);
+    });
+
+    let ticking = false;
+    window.addEventListener("scroll", function () {
+      if (ticking || !hasMore || loading) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 400) load(false);
+        ticking = false;
+      });
+    });
+
+    load(true);
+  })();
+</script>
+</body>
+</html>

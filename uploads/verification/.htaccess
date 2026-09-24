@@ -1,0 +1,4 @@
+# Verification documents (government IDs, selfies, videos) must never be
+# reachable directly via the browser. They are only served through the
+# authenticated endpoint: api/admin/verification-file.php
+Deny from all

@@ -1,0 +1,7 @@
+[2026-09-05 08:57:34] [VERIFY DEBUG] [POST /api/influencer/verification.php] verification.php started for user 9, content-length=1829532, files=government_id,selfie,verification_video
+[2026-09-05 08:57:35] [VERIFY DEBUG] [POST /api/influencer/verification.php] government_id processed in 0.35s, success=yes
+[2026-09-05 08:57:35] [VERIFY DEBUG] [POST /api/influencer/verification.php] selfie processed in 0.03s, success=yes
+[2026-09-05 08:57:36] [VERIFY DEBUG] [POST /api/influencer/verification.php] verification_video processed in 1.19s, success=yes
+[05-Sep-2026 08:57:36 UTC] Influencer 9 submitted verification documents.
+[2026-09-05 08:57:36] [VERIFY DEBUG] [POST /api/influencer/verification.php] verification.php completed successfully in 1.57s for user 9
+[05-Sep-2026 09:17:27 UTC] VideoSDK Create Room - HTTP: 200, Response: {"apiKey":"3f3d4f75-76b7-433a-922b-d6fc664c6691","webhook":{"events":[]},"disabled":false,"autoCloseConfig":{"type":"session-end"},"allowedParticipantIds":[],"createdAt":"2026-09-05T09:17:27.458Z","updatedAt":"2026-09-05T09:17:27.458Z","dataResidencyRegion":"in1","roomId":"ba7v-gg1t-mhpu","links":{"get_room":"https://api.videosdk.live/v2/rooms/ba7v-gg1t-mhpu","get_session":"https://api.videosdk.live/v2/sessions/"},"id":"6a9bde2720fe15e5a45b2e4d"}

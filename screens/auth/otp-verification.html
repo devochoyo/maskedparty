@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Verify Your Email — Masked Party</title>
+<script src="/widgets/phosphor_icons.js"></script>
+<script>PhosphorIcons.load();</script>
+<style>
+  :root{
+    --primary-pink:#E91E63; --soft-pink:#FF6B8B; --light-pink:#FFE4EC; --dark-pink:#C2185B;
+    --text-dark:#1A1D2E; --text-medium:#6B7280; --text-light:#9CA3AF; --success:#00C853;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    min-height:100dvh;
+    background:linear-gradient(to bottom, var(--primary-pink) 0%, var(--soft-pink) 30%, rgba(255,228,236,.8) 60%, rgba(255,228,236,.3) 100%);
+    position:relative;overflow-x:hidden;
+  }
+  .page{position:relative;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:20px 24px;}
+  .col{width:100%;max-width:420px;display:flex;flex-direction:column;align-items:center;text-align:center;}
+  .logo{width:80px;height:80px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:38px;box-shadow:0 8px 20px rgba(194,24,91,.4);}
+  h1{margin-top:20px;font-size:26px;font-weight:700;color:#fff;}
+  .subtitle{margin-top:8px;font-size:14px;color:#fff;font-weight:500;line-height:1.5;}
+  .subtitle b{font-weight:700;}
+
+  .card{width:100%;margin-top:32px;background:#fff;border-radius:28px;padding:28px 20px;box-shadow:0 15px 30px rgba(194,24,91,.2);border:1.5px solid rgba(255,255,255,.8);}
+
+  .otp-row{display:flex;gap:8px;justify-content:center;margin-bottom:22px;}
+  .otp-row input{
+    width:44px;height:56px;text-align:center;font-size:22px;font-weight:700;color:var(--text-dark);
+    background:var(--light-pink);border:1.5px solid transparent;border-radius:12px;
+  }
+  .otp-row input:focus{outline:none;border-color:var(--primary-pink);background:#fff;}
+
+  button.submit{width:100%;height:54px;border:none;border-radius:14px;cursor:pointer;background:linear-gradient(to right,var(--primary-pink),var(--dark-pink));color:#fff;font-size:16px;font-weight:700;box-shadow:0 5px 15px rgba(233,30,99,.4);display:flex;align-items:center;justify-content:center;gap:8px;}
+  button.submit:disabled{opacity:.5;cursor:not-allowed;box-shadow:none;background:#9CA3AF;}
+  .spinner{width:20px;height:20px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .resend-row{margin-top:20px;font-size:13px;color:var(--text-medium);}
+  .resend-row button{background:none;border:none;color:var(--primary-pink);font-weight:700;font-size:13px;cursor:pointer;padding:0;}
+  .resend-row button:disabled{color:var(--text-light);cursor:not-allowed;}
+
+  .success-overlay{
+    position:fixed;inset:0;background:rgba(26,29,46,.55);display:none;align-items:center;justify-content:center;z-index:30;padding:24px;
+  }
+  .success-overlay.show{display:flex;}
+  .success-card{background:#fff;border-radius:24px;padding:32px 24px;text-align:center;max-width:320px;width:100%;}
+  .success-icon{width:64px;height:64px;margin:0 auto;border-radius:50%;background:rgba(0,200,83,.12);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--success);}
+  .success-card h2{margin-top:16px;font-size:19px;color:var(--text-dark);}
+  .success-card p{margin-top:6px;font-size:13px;color:var(--text-medium);}
+
+  .toast{position:fixed;left:16px;right:16px;bottom:24px;background:#D32F2F;color:#fff;padding:14px 16px;border-radius:12px;box-shadow:0 6px 16px rgba(0,0,0,.2);font-size:14px;text-align:center;transform:translateY(120%);transition:transform .25s ease;max-width:420px;margin:0 auto;z-index:20;}
+  .toast.show{transform:translateY(0);}
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="col">
+      <div class="logo" aria-hidden="true"><i class="ph ph-envelope-simple"></i></div>
+      <h1>Verify Your Email</h1>
+      <p class="subtitle">We sent a 6-digit code to<br><b id="emailLabel">your email</b></p>
+
+      <form class="card" id="otpForm" novalidate>
+        <div class="otp-row" id="otpRow">
+          <input type="text" inputmode="numeric" maxlength="1" aria-label="Digit 1">
+          <input type="text" inputmode="numeric" maxlength="1" aria-label="Digit 2">
+          <input type="text" inputmode="numeric" maxlength="1" aria-label="Digit 3">
+          <input type="text" inputmode="numeric" maxlength="1" aria-label="Digit 4">
+          <input type="text" inputmode="numeric" maxlength="1" aria-label="Digit 5">
+          <input type="text" inputmode="numeric" maxlength="1" aria-label="Digit 6">
+        </div>
+
+        <button type="submit" class="submit" id="submitBtn"><span id="submitLabel">Verify</span></button>
+
+        <div class="resend-row">
+          <span id="resendCountdown">Resend code in 60s</span>
+          <button type="button" id="resendBtn" style="display:none">Resend code</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="success-overlay" id="successOverlay">
+    <div class="success-card">
+      <div class="success-icon" aria-hidden="true"><i class="ph ph-check"></i></div>
+      <h2>Verified!</h2>
+      <p>Setting up your account…</p>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="alert" aria-live="assertive"></div>
+
+<script src="/services/api.js"></script>
+<script src="/services/api_endpoints.js"></script>
+<script src="/services/session_manager.js"></script>
+<script src="/services/auth_service.js"></script>
+<script src="/services/authentication_service.js"></script>
+<script>
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var email = params.get("email") || "";
+    var token = params.get("token") || "";
+    var role = params.get("role") || "";
+
+    document.getElementById("emailLabel").textContent = email || "your email";
+
+    var inputs = Array.from(document.querySelectorAll("#otpRow input"));
+    var form = document.getElementById("otpForm");
+    var submitBtn = document.getElementById("submitBtn");
+    var submitLabel = document.getElementById("submitLabel");
+    var toast = document.getElementById("toast");
+    var toastTimer = null;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.className = "toast show";
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { toast.className = "toast"; }, 3500);
+    }
+
+    inputs.forEach(function (input, i) {
+      input.addEventListener("input", function () {
+        var digits = input.value.replace(/\D/g, "");
+        if (digits.length > 1) {
+          // Pasted code across the first box
+          digits.split("").forEach(function (d, j) {
+            if (inputs[j]) inputs[j].value = d;
+          });
+          var lastIndex = Math.min(digits.length, inputs.length) - 1;
+          inputs[lastIndex].focus();
+          return;
+        }
+        input.value = digits;
+        if (digits && i < inputs.length - 1) inputs[i + 1].focus();
+      });
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "Backspace" && !input.value && i > 0) {
+          inputs[i - 1].focus();
+        }
+      });
+    });
+    inputs[0].focus();
+
+    // Resend countdown
+    var seconds = 60;
+    var countdownEl = document.getElementById("resendCountdown");
+    var resendBtn = document.getElementById("resendBtn");
+    var timer = setInterval(function () {
+      seconds--;
+      if (seconds <= 0) {
+        clearInterval(timer);
+        countdownEl.style.display = "none";
+        resendBtn.style.display = "inline";
+      } else {
+        countdownEl.textContent = "Resend code in " + seconds + "s";
+      }
+    }, 1000);
+
+    resendBtn.addEventListener("click", async function () {
+      resendBtn.disabled = true;
+      var result = await AuthenticationService.sendOtp(email);
+      var ok = result && result.success === true;
+      showToast(ok ? "Verification code resent." : "Failed to resend code.");
+      resendBtn.disabled = false;
+      if (ok) {
+        seconds = 60;
+        resendBtn.style.display = "none";
+        countdownEl.style.display = "inline";
+        timer = setInterval(function () {
+          seconds--;
+          if (seconds <= 0) {
+            clearInterval(timer);
+            countdownEl.style.display = "none";
+            resendBtn.style.display = "inline";
+          } else {
+            countdownEl.textContent = "Resend code in " + seconds + "s";
+          }
+        }, 1000);
+      }
+    });
+
+    function setLoading(loading) {
+      submitBtn.disabled = loading;
+      submitLabel.innerHTML = loading ? "" : "Verify";
+      if (loading) {
+        var s = document.createElement("span");
+        s.className = "spinner";
+        submitLabel.appendChild(s);
+      }
+    }
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      var code = inputs.map(function (i) { return i.value; }).join("");
+      if (code.length !== 6) {
+        showToast("Please enter the complete 6-digit verification code");
+        return;
+      }
+
+      setLoading(true);
+      try {
+        var result = await AuthService.verifyOtp({ email, code });
+        if (result && result.success === true) {
+          document.getElementById("successOverlay").classList.add("show");
+          setTimeout(async function () {
+            await AuthService.routeAfterLogin(token, role || "client");
+          }, 1800);
+        } else {
+          showToast((result && result.message) || "Invalid verification code");
+          setLoading(false);
+        }
+      } catch (err) {
+        showToast("Verification failed. Please try again.");
+        setLoading(false);
+      }
+    });
+  })();
+</script>
+</body>
+</html>
