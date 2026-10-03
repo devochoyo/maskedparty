@@ -108,15 +108,7 @@
         <p class="subtitle">Join MaskedParty as an Influencer</p>
       </div>
 
-      <div class="steps">
-        <span class="step-dot active" id="dot1">1</span>
-        <span class="step-line"></span>
-        <span class="step-dot" id="dot2">2</span>
-      </div>
-      <div class="step-label" id="stepLabel">Step 1: Personal Details</div>
-
       <form class="form-card" id="registerForm" novalidate>
-        <!-- STEP 1 -->
         <div class="panel active" id="panel1">
           <div class="field" id="fullNameField">
             <label for="fullName">Full Name</label>
@@ -170,58 +162,13 @@
             <button type="button" class="age-opt" id="ageNo" aria-pressed="false"><i class="ph ph-x-circle"></i> No</button>
           </div>
 
-          <div class="btn-row">
-            <button type="button" class="submit" id="nextBtn" style="flex:1">Continue <i class="ph ph-arrow-right"></i></button>
-          </div>
-        </div>
-
-        <!-- STEP 2 -->
-        <div class="panel" id="panel2">
-          <div class="section-title">Bank Details</div>
-          <p class="subtitle" style="color:var(--text-medium);text-align:left;margin-bottom:18px;">Step 2: Payment Information</p>
-
-          <div class="field" id="bankNameField">
-            <label for="bankName">Bank Name</label>
-            <input type="text" id="bankName" autocomplete="off" required>
-            <div class="error-msg">Bank name is required</div>
-          </div>
-          <div class="field" id="accountNumberField">
-            <label for="accountNumber">Account Number</label>
-            <input type="text" id="accountNumber" autocomplete="off" required>
-            <div class="error-msg">Account number is required</div>
-          </div>
-          <div class="field" id="bankCodeTypeField">
-            <label for="bankCodeType">Bank Code Type</label>
-            <select id="bankCodeType" required>
-              <option value="">Select code type</option>
-              <option>SWIFT</option>
-              <option>IBAN</option>
-              <option>Sort Code</option>
-              <option>IFSC</option>
-              <option>BSB</option>
-              <option>Routing Number</option>
-              <option>Other</option>
-            </select>
-            <div class="error-msg">Select a bank code type</div>
-          </div>
-          <div class="field" id="customCodeTypeField" style="display:none">
-            <label for="customCodeType">Specify Code Type</label>
-            <input type="text" id="customCodeType" autocomplete="off">
-          </div>
-          <div class="field" id="bankCodeValueField">
-            <label for="bankCodeValue">Bank Code</label>
-            <input type="text" id="bankCodeValue" autocomplete="off" required>
-            <div class="error-msg">Bank code is required</div>
-          </div>
-
           <div class="privacy-row">
             <input type="checkbox" id="acceptPrivacy">
             <label for="acceptPrivacy">I agree to the <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a></label>
           </div>
 
           <div class="btn-row">
-            <button type="button" class="ghost" id="backBtn"><i class="ph ph-arrow-left"></i> Back</button>
-            <button type="submit" class="submit" id="submitBtn"><span id="submitLabel">Create Account</span></button>
+            <button type="submit" class="submit" id="submitBtn" style="flex:1"><span id="submitLabel">Create Account</span></button>
           </div>
         </div>
       </form>
@@ -290,12 +237,6 @@
     }
     ageYes.addEventListener("click", function () { selectAge(true); });
     ageNo.addEventListener("click", function () { selectAge(false); });
-
-    var bankCodeType = document.getElementById("bankCodeType");
-    var customCodeTypeField = document.getElementById("customCodeTypeField");
-    bankCodeType.addEventListener("change", function () {
-      customCodeTypeField.style.display = bankCodeType.value === "Other" ? "block" : "none";
-    });
 
     var toast = document.getElementById("toast");
     var toastTimer = null;
@@ -369,22 +310,6 @@
       return fullNameOk && mysteryOk && emailOk && passwordOk && confirmOk && countryOk;
     }
 
-    function goToStep(n) {
-      document.getElementById("panel1").classList.toggle("active", n === 1);
-      document.getElementById("panel2").classList.toggle("active", n === 2);
-      document.getElementById("dot1").classList.toggle("active", n === 1);
-      document.getElementById("dot2").classList.toggle("active", n === 2);
-      document.getElementById("stepLabel").textContent = n === 1 ? "Step 1: Personal Details" : "Step 2: Payment Information";
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    document.getElementById("nextBtn").addEventListener("click", function () {
-      if (!validateStep1()) return;
-      if (!checkAge()) return;
-      goToStep(2);
-    });
-    document.getElementById("backBtn").addEventListener("click", function () { goToStep(1); });
-
     var form = document.getElementById("registerForm");
     var submitBtn = document.getElementById("submitBtn");
     var submitLabel = document.getElementById("submitLabel");
@@ -402,32 +327,17 @@
     form.addEventListener("submit", async function (e) {
       e.preventDefault();
 
-      var bankName = document.getElementById("bankName").value.trim();
-      var accountNumber = document.getElementById("accountNumber").value.trim();
-      var codeType = bankCodeType.value;
-      var bankCodeValue = document.getElementById("bankCodeValue").value.trim();
-
-      var bankNameOk = bankName.length > 0;
-      var accountOk = accountNumber.length > 0;
-      var codeTypeOk = codeType.length > 0;
-      var codeValueOk = bankCodeValue.length > 0;
-
-      setError("bankNameField", !bankNameOk);
-      setError("accountNumberField", !accountOk);
-      setError("bankCodeTypeField", !codeTypeOk);
-      setError("bankCodeValueField", !codeValueOk);
-      if (!bankNameOk || !accountOk || !codeTypeOk || !codeValueOk) return;
+      // Check the personal details first.
+      if (!validateStep1()) return;
 
       // Safety net: re-check age before submitting.
       if (isAdult !== true) {
-        goToStep(1);
         checkAge();
         return;
       }
 
       if (usesMask === null) {
         showToast("Please select whether you use a face covering (mask/vail).", "warn");
-        goToStep(1);
         return;
       }
       if (!document.getElementById("acceptPrivacy").checked) {
@@ -435,7 +345,6 @@
         return;
       }
 
-      var finalBankCodeType = codeType === "Other" ? document.getElementById("customCodeType").value.trim() : codeType;
       var referralCode = document.getElementById("referralCode").value.trim();
 
       setLoading(true);
@@ -448,10 +357,6 @@
           mysteryName: document.getElementById("mysteryName").value.trim(),
           countryName: countryInput.value.trim(),
           fullName: document.getElementById("fullName").value.trim(),
-          bankName: bankName,
-          accountNumber: accountNumber,
-          bankCodeType: finalBankCodeType,
-          bankCodeValue: bankCodeValue,
           referralCode: referralCode || undefined,
           maskStatus: usesMask === true ? "masked" : "unmasked",
         });

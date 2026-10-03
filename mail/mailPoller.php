@@ -14,9 +14,11 @@
  * (visible in your cron job settings).
  */
 
-$POLL_SECRET = 'kP9v2Qz7mR4xT8wL1nY6bF3sJ0dH5cE';
+$MAIL_SECRETS = @include dirname(__DIR__) . '/config/secure/mail_secrets.php';
+if (!is_array($MAIL_SECRETS)) { http_response_code(500); exit; }
+$POLL_SECRET = (string) $MAIL_SECRETS['POLL_SECRET'];
 
-if (($_GET['key'] ?? '') !== $POLL_SECRET) {
+if (!is_string($_GET['key'] ?? null) || !hash_equals($POLL_SECRET, $_GET['key'])) {
     http_response_code(403);
     exit('Forbidden.');
 }
@@ -26,8 +28,8 @@ require_once __DIR__ . '/mail.php';         // your existing getMailer()
 require_once __DIR__ . '/mailTemplate.php'; // your existing baseEmailTemplate()
 
 // ==================== CONFIG (already filled in) ====================
-define('MAILBOX_EMAIL', 'support@careerkings.name.ng');
-define('MAILBOX_PASSWORD', 'Az568253@');
+define('MAILBOX_EMAIL', $MAIL_SECRETS['MAILBOX_EMAIL']);
+define('MAILBOX_PASSWORD', $MAIL_SECRETS['MAILBOX_PASSWORD']);
 define('MAILBOX_IMAP_HOST', 'mail.careerkings.name.ng');
 define('MAILBOX_IMAP_PORT', 993);
 define('MAILBOX_IMAP_ENCRYPTION', 'ssl');
@@ -36,7 +38,7 @@ define('MAILBOX_SMTP_PORT', 465);
 define('MAILBOX_SMTP_ENCRYPTION', 'ssl');
 define('NOTIFY_TO_EMAIL', 'careerkingsconsult@gmail.com');
 define('NOTIFY_TO_NAME', 'Career Kings');
-define('MAIL_LINK_SECRET', '3a5ac989c686706b3d4538c42fe0e201c08f7fc6b0732c75b9f1bfaf363727ae');
+define('MAIL_LINK_SECRET', $MAIL_SECRETS['MAIL_LINK_SECRET']);
 define('APP_BASE_URL', 'https://maskedparty.name.ng');
 // ======================================================================================
 

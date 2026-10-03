@@ -25,7 +25,7 @@
  *   one-time bootstrap script, not something that should stay deployed.
  */
 
-$secretKey   = getenv('GEOIP_IMPORT_KEY') ?: '3694';
+$secretKey   = trim((string) getenv('GEOIP_IMPORT_KEY')); // no default key: disabled until you set a long random one
 $csvFileName = 'dbip-country-ipv4-num.csv'; // change if your uploaded file has a different name
 
 $suppliedKey = $_GET['key'] ?? '';

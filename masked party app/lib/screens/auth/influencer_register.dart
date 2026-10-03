@@ -16,7 +16,6 @@ class InfluencerRegister extends StatefulWidget {
 
 class _InfluencerRegisterState extends State<InfluencerRegister> {
   final _formKeyStep1 = GlobalKey<FormState>();
-  final _formKeyStep2 = GlobalKey<FormState>();
   final PageController _pageController = PageController();
 
   final _fullNameController = TextEditingController();
@@ -24,35 +23,19 @@ class _InfluencerRegisterState extends State<InfluencerRegister> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  final _bankNameController = TextEditingController();
-  final _accountNumberController = TextEditingController();
   final _countryController = TextEditingController(text: 'Loading country...');
   final _referralCodeController = TextEditingController();
-  final _customCodeTypeController = TextEditingController();
-  final _bankCodeValueController = TextEditingController();
 
   bool _isLoading = false;
   bool _isDetectingCountry = true;
   bool _obscurePassword = true;
   bool _obscureConfirm = true;
   bool _acceptedPrivacyPolicy = false;
-  int _currentStep = 0;
 
   bool? _usesMask;
 
   // Age confirmation: null = not answered, true = 18+, false = under 18
   bool? _isAdult;
-
-  String? _selectedBankCodeType;
-  final List<String> _bankCodeTypes = [
-    'SWIFT',
-    'IBAN',
-    'Sort Code',
-    'IFSC',
-    'BSB',
-    'Routing Number',
-    'Other',
-  ];
 
   final AuthService _authService = AuthService();
 
@@ -89,12 +72,8 @@ class _InfluencerRegisterState extends State<InfluencerRegister> {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
-    _bankNameController.dispose();
-    _accountNumberController.dispose();
     _countryController.dispose();
     _referralCodeController.dispose();
-    _customCodeTypeController.dispose();
-    _bankCodeValueController.dispose();
     _pageController.dispose();
     super.dispose();
   }
@@ -195,31 +174,9 @@ class _InfluencerRegisterState extends State<InfluencerRegister> {
     return true;
   }
 
-  void _goToNextStep() {
-    FocusScope.of(context).unfocus();
-    if (!_formKeyStep1.currentState!.validate()) return;
-    if (!_checkAgeEligibility()) return;
-
-    _pageController.animateToPage(
-      1,
-      duration: const Duration(milliseconds: 400),
-      curve: Curves.easeInOut,
-    );
-    setState(() => _currentStep = 1);
-  }
-
-  void _goToPreviousStep() {
-    _pageController.animateToPage(
-      0,
-      duration: const Duration(milliseconds: 400),
-      curve: Curves.easeInOut,
-    );
-    setState(() => _currentStep = 0);
-  }
-
   void _register() async {
     FocusScope.of(context).unfocus();
-    if (!_formKeyStep2.currentState!.validate()) return;
+    if (!_formKeyStep1.currentState!.validate()) return;
 
     // Safety net: age is re-checked before submitting.
     if (!_checkAgeEligibility()) return;
@@ -234,11 +191,6 @@ class _InfluencerRegisterState extends State<InfluencerRegister> {
       return;
     }
 
-    String bankCodeType = _selectedBankCodeType ?? '';
-    if (_selectedBankCodeType == 'Other') {
-      bankCodeType = _customCodeTypeController.text.trim();
-    }
-
     setState(() => _isLoading = true);
 
     try {
@@ -250,10 +202,6 @@ class _InfluencerRegisterState extends State<InfluencerRegister> {
         mysteryName: _mysteryNameController.text.trim(),
         countryName: _countryController.text.trim(),
         fullName: _fullNameController.text.trim(),
-        bankName: _bankNameController.text.trim(),
-        accountNumber: _accountNumberController.text.trim(),
-        bankCodeType: bankCodeType,
-        bankCodeValue: _bankCodeValueController.text.trim(),
         referralCode: _referralCodeController.text.trim().isEmpty
             ? null
             : _referralCodeController.text.trim(),
@@ -312,41 +260,6 @@ class _InfluencerRegisterState extends State<InfluencerRegister> {
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
-  }
-
-  Widget _buildStepIndicator() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(2, (index) {
-        final isActive = index == _currentStep;
-        return AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          margin: const EdgeInsets.symmetric(horizontal: 4),
-          height: 8,
-          width: isActive ? 32 : 8,
-          decoration: BoxDecoration(
-            gradient: isActive
-                ? const LinearGradient(
-                    colors: [_primaryPink, _softPink],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                  )
-                : null,
-            color: isActive ? null : Colors.white.withValues(alpha: 0.3),
-            borderRadius: BorderRadius.circular(4),
-            boxShadow: isActive
-                ? [
-                    BoxShadow(
-                      color: _primaryPink.withValues(alpha: 0.3),
-                      blurRadius: 6,
-                      offset: const Offset(0, 2),
-                    ),
-                  ]
-                : null,
-          ),
-        );
-      }),
-    );
   }
 
   Widget _buildTextField({
@@ -680,139 +593,6 @@ class _InfluencerRegisterState extends State<InfluencerRegister> {
             value: _usesMask,
             onChanged: (value) => setState(() => _usesMask = value),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildStep2() {
-    return Form(
-      key: _formKeyStep2,
-      child: Column(
-        children: [
-          _buildTextField(
-            controller: _bankNameController,
-            hint: "Bank Name",
-            icon: Icons.account_balance_outlined,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return "Bank name is required";
-              }
-              return null;
-            },
-          ),
-          const SizedBox(height: 16),
-          _buildTextField(
-            controller: _accountNumberController,
-            hint: "Account Number",
-            icon: Icons.credit_card_outlined,
-            keyboardType: TextInputType.number,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return "Account number is required";
-              }
-              if (value.length < 5) {
-                return "Account number seems too short";
-              }
-              return null;
-            },
-          ),
-          const SizedBox(height: 16),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(14),
-              boxShadow: [
-                BoxShadow(
-                  color: _primaryPink.withValues(alpha: 0.04),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: DropdownButtonFormField<String>(
-              initialValue: _selectedBankCodeType,
-              style: const TextStyle(
-                fontSize: 15,
-                color: _textDark,
-                fontWeight: FontWeight.w500,
-              ),
-              decoration: InputDecoration(
-                hintText: "Select Bank Code Type",
-                hintStyle: const TextStyle(
-                  color: _textLight,
-                  fontSize: 14,
-                ),
-                prefixIcon: Container(
-                  margin: const EdgeInsets.all(8),
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        _primaryPink.withValues(alpha: 0.12),
-                        _softPink.withValues(alpha: 0.06),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Icon(
-                    Icons.qr_code_2_outlined,
-                    color: _primaryPink,
-                    size: 18,
-                  ),
-                ),
-                filled: true,
-                fillColor: _lightPink.withValues(alpha: 0.2),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide.none,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide(
-                    color: _lightPink.withValues(alpha: 0.4),
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: const BorderSide(
-                    color: _primaryPink,
-                    width: 2,
-                  ),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 16,
-                ),
-              ),
-              items: _bankCodeTypes.map((type) {
-                return DropdownMenuItem<String>(
-                  value: type,
-                  child: Text(type),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  _selectedBankCodeType = value;
-                });
-              },
-            ),
-          ),
-          if (_selectedBankCodeType == 'Other') ...[
-            const SizedBox(height: 16),
-            _buildTextField(
-              controller: _customCodeTypeController,
-              hint: "Enter Code Name (e.g. CLABE)",
-              icon: Icons.edit_outlined,
-            ),
-          ],
-          const SizedBox(height: 16),
-          _buildTextField(
-            controller: _bankCodeValueController,
-            hint: "Enter Code",
-            icon: Icons.pin_outlined,
-          ),
           const SizedBox(height: 24),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -958,11 +738,7 @@ class _InfluencerRegisterState extends State<InfluencerRegister> {
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () {
-                                if (_currentStep == 1) {
-                                  _goToPreviousStep();
-                                } else {
-                                  Navigator.pop(context);
-                                }
+                                Navigator.pop(context);
                               },
                               borderRadius: BorderRadius.circular(12),
                               splashColor: Colors.white.withValues(alpha: 0.2),
@@ -985,10 +761,6 @@ class _InfluencerRegisterState extends State<InfluencerRegister> {
                               ),
                             ),
                           ),
-                          const Spacer(),
-                          _buildStepIndicator(),
-                          const Spacer(),
-                          const SizedBox(width: 48),
                         ],
                       ),
                     ),
@@ -1036,7 +808,7 @@ class _InfluencerRegisterState extends State<InfluencerRegister> {
                                 ),
                                 const SizedBox(height: 4),
                                 const Text(
-                                  "Step 1: Personal Details",
+                                  "Personal Details",
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.white,
@@ -1064,178 +836,6 @@ class _InfluencerRegisterState extends State<InfluencerRegister> {
                                     ),
                                   ),
                                   child: _buildStep1(),
-                                ),
-                                const SizedBox(height: 24),
-                                // Next button
-                                Container(
-                                  width: double.infinity,
-                                  height: 54,
-                                  decoration: BoxDecoration(
-                                    gradient: const LinearGradient(
-                                      colors: [_primaryPink, _darkPink],
-                                      begin: Alignment.centerLeft,
-                                      end: Alignment.centerRight,
-                                    ),
-                                    borderRadius: BorderRadius.circular(14),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: _primaryPink.withValues(alpha: 0.4),
-                                        blurRadius: 15,
-                                        offset: const Offset(0, 5),
-                                      ),
-                                    ],
-                                  ),
-                                  child: ElevatedButton(
-                                    onPressed: _goToNextStep,
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.transparent,
-                                      shadowColor: Colors.transparent,
-                                      foregroundColor: Colors.white,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(14),
-                                      ),
-                                    ),
-                                    child: const Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "Next",
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                            letterSpacing: 0.3,
-                                          ),
-                                        ),
-                                        SizedBox(width: 8),
-                                        Icon(Icons.arrow_forward_rounded, size: 18),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 24),
-                                // Sign In link
-                                Container(
-                                  width: double.infinity,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 14,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(16),
-                                    border: Border.all(
-                                      color: Colors.white.withValues(alpha: 0.8),
-                                      width: 1.5,
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: _darkPink.withValues(alpha: 0.15),
-                                        blurRadius: 10,
-                                        offset: const Offset(0, 4),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Text(
-                                        "Already have an account? ",
-                                        style: TextStyle(
-                                          color: _textDark,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () => Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => const LoginScreen()),
-                                        ),
-                                        child: const Text(
-                                          "Sign In",
-                                          style: TextStyle(
-                                            color: _primaryPink,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14,
-                                            decoration: TextDecoration.underline,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 20),
-                              ],
-                            ),
-                          ),
-
-                          // ---------------- STEP 2 ----------------
-                          SingleChildScrollView(
-                            physics: const BouncingScrollPhysics(),
-                            padding: const EdgeInsets.symmetric(horizontal: 24),
-                            child: Column(
-                              children: [
-                                // Logo
-                                Container(
-                                  height: 70,
-                                  width: 70,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.circle,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: _darkPink.withValues(alpha: 0.4),
-                                        blurRadius: 20,
-                                        offset: const Offset(0, 8),
-                                      ),
-                                    ],
-                                  ),
-                                  child: const Icon(
-                                    Icons.account_balance_wallet_outlined,
-                                    color: _primaryPink,
-                                    size: 36,
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
-                                const Text(
-                                  "Bank Details",
-                                  style: TextStyle(
-                                    fontSize: 26,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    letterSpacing: -0.5,
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                const Text(
-                                  "Step 2: Payment Information",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                const SizedBox(height: 30),
-                                // Form card
-                                Container(
-                                  width: double.infinity,
-                                  padding: const EdgeInsets.all(24),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(28),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: _darkPink.withValues(alpha: 0.2),
-                                        blurRadius: 30,
-                                        offset: const Offset(0, 15),
-                                      ),
-                                    ],
-                                    border: Border.all(
-                                      color: Colors.white.withValues(alpha: 0.8),
-                                      width: 1.5,
-                                    ),
-                                  ),
-                                  child: _buildStep2(),
                                 ),
                                 const SizedBox(height: 24),
                                 // Create Account button
@@ -1292,6 +892,58 @@ class _InfluencerRegisterState extends State<InfluencerRegister> {
                                               letterSpacing: 0.3,
                                             ),
                                           ),
+                                  ),
+                                ),
+                                const SizedBox(height: 24),
+                                // Sign In link
+                                Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 14,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(16),
+                                    border: Border.all(
+                                      color: Colors.white.withValues(alpha: 0.8),
+                                      width: 1.5,
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: _darkPink.withValues(alpha: 0.15),
+                                        blurRadius: 10,
+                                        offset: const Offset(0, 4),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        "Already have an account? ",
+                                        style: TextStyle(
+                                          color: _textDark,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () => Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => const LoginScreen()),
+                                        ),
+                                        child: const Text(
+                                          "Sign In",
+                                          style: TextStyle(
+                                            color: _primaryPink,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                            decoration: TextDecoration.underline,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 const SizedBox(height: 20),

@@ -156,3 +156,5 @@ function getDatabaseConnection() {
     return $pdo;
 }
 
+// Attempt limiter + client_ip() helpers (login / OTP / registration limits).
+require_once __DIR__ . '/security.php';

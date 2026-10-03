@@ -32,7 +32,7 @@ if (!preg_match('#^admin/[a-z0-9\-]+\.php$#i', $path)) {
 }
 
 $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-$targetUrl = $scheme . '://' . $_SERVER['HTTP_HOST'] . '/api/' . $path;
+$targetUrl = admin_api_origin() . '/api/' . $path;
 
 // Forward the original query string (minus our own "path" param) so
 // ?action=list&page=2 etc. reach the real endpoint untouched.

@@ -7,6 +7,10 @@
     Deny from all
 </FilesMatch>
 
+<FilesMatch "^(debugPoller|debugPoller2)\.php$">
+    Deny from all
+</FilesMatch>
+
 <FilesMatch "\.(log|json)$">
     Deny from all
 </FilesMatch>

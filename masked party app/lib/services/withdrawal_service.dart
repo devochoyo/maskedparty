@@ -8,13 +8,20 @@ import 'api_endpoints.dart';
 
 class WithdrawalService {
   /// Backend: api/withdrawal/request.php — role: influencer — body:
-  /// {amount}. The backend pays out to the bank_name/account_number
-  /// already captured at registration (see AuthService.register) — it
-  /// does not accept a payout method/bank per request, so no such fields
-  /// are sent here. Only one pending withdrawal is allowed at a time
+  /// {amount, bank_name, account_number, bank_code_type, bank_code_value}.
+  /// Bank details are asked for here (at withdrawal time), not at
+  /// registration. The backend saves them so they are pre-filled next time.
+  /// Only one pending withdrawal is allowed at a time
   /// (HTTP 409 if one already exists); minimum amount is enforced
   /// server-side (HTTP 422 with the configured minimum in the message).
-  Future<dynamic> requestWithdrawal(String token, double amount) async {
+  Future<dynamic> requestWithdrawal(
+    String token,
+    double amount, {
+    String? bankName,
+    String? accountNumber,
+    String? bankCodeType,
+    String? bankCodeValue,
+  }) async {
     try {
       final response = await http
           .post(
@@ -22,6 +29,10 @@ class WithdrawalService {
             headers: ApiConfig.authHeaders(token),
             body: jsonEncode({
               "amount": amount,
+              "bank_name": bankName,
+              "account_number": accountNumber,
+              "bank_code_type": bankCodeType,
+              "bank_code_value": bankCodeValue,
             }),
           )
           .timeout(ApiConfig.timeoutDuration);

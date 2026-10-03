@@ -28,6 +28,10 @@
   .bank-row .k{color:var(--text-medium);}
   .bank-row .v{font-weight:600;}
 
+  .bank-field{margin-top:10px;}
+  .bank-field input,.bank-field select{width:100%;padding:13px 14px;background:var(--bg);border:1px solid #e5e5e5;border-radius:14px;font-size:14px;color:var(--text-dark);}
+  .bank-field input:focus,.bank-field select:focus{outline:none;border-color:var(--primary-pink);}
+  .bank-note{font-size:12px;color:var(--text-medium);line-height:1.4;margin-bottom:6px;}
   .amount-wrap{position:relative;margin-top:10px;}
   .amount-wrap input{width:100%;padding:14px 16px 14px 44px;background:var(--bg);border:1px solid #e5e5e5;border-radius:14px;font-size:20px;font-weight:700;color:var(--text-dark);}
   .amount-wrap input:focus{outline:none;border-color:var(--primary-pink);}
@@ -77,7 +81,9 @@
     var root = document.getElementById("root");
     document.getElementById("backBtn").addEventListener("click", function () { window.history.back(); });
 
-    var availableBalance = 0, bankName = null, accountNumber = null, accountName = null, history = [];
+    var availableBalance = 0, bankName = "", accountNumber = "", accountName = null, history = [];
+    var bankCodeType = "", bankCodeValue = "";
+    var codeTypes = ["SWIFT", "IBAN", "Sort Code", "IFSC", "BSB", "Routing Number", "Other"];
     var isSubmitting = false;
 
     function escapeHtml(s) {
@@ -113,9 +119,15 @@
       root.innerHTML =
         '<div class="balance-card"><div class="lab">Available Balance</div><div class="val">' + availableBalance.toFixed(2) + " Coins</div></div>" +
         '<div class="card"><div class="card-title"><i class="ph ph-bank"></i> Payout Bank Details</div>' +
-        '<div class="bank-row"><span class="k">Bank Name</span><span class="v">' + escapeHtml(bankName || "Not available") + "</span></div>" +
-        '<div class="bank-row"><span class="k">Account Number</span><span class="v">' + escapeHtml(accountNumber || "Not available") + "</span></div>" +
-        '<div class="bank-row"><span class="k">Account Name</span><span class="v">' + escapeHtml(accountName || "Not available") + "</span></div>" +
+        '<div class="bank-note">Enter the bank account you want to be paid into. It is saved for your next withdrawal.</div>' +
+        '<div class="bank-field"><input type="text" id="bankNameInput" placeholder="Bank Name" autocomplete="off" maxlength="100" value="' + escapeHtml(bankName) + '"></div>' +
+        '<div class="bank-field"><input type="text" id="accountNumberInput" placeholder="Account Number" autocomplete="off" inputmode="numeric" maxlength="40" value="' + escapeHtml(accountNumber) + '"></div>' +
+        '<div class="bank-field"><select id="codeTypeSelect"><option value="">Select Bank Code Type</option>' +
+        codeTypes.map(function (t) { return '<option value="' + t + '"' + (selectedCodeType() === t ? " selected" : "") + ">" + t + "</option>"; }).join("") +
+        "</select></div>" +
+        '<div class="bank-field" id="customCodeField" style="display:' + (selectedCodeType() === "Other" ? "block" : "none") + '"><input type="text" id="customCodeInput" placeholder="Enter Code Name (e.g. CLABE)" autocomplete="off" maxlength="40" value="' + escapeHtml(customCodeType()) + '"></div>' +
+        '<div class="bank-field"><input type="text" id="bankCodeValueInput" placeholder="Enter Code" autocomplete="off" maxlength="60" value="' + escapeHtml(bankCodeValue) + '"></div>' +
+        '<div class="bank-row" style="margin-top:12px"><span class="k">Account Name</span><span class="v">' + escapeHtml(accountName || "Not available") + "</span></div>" +
         "</div>" +
         '<div class="card"><div class="card-title"><i class="ph ph-credit-card"></i> Withdraw Coins</div>' +
         '<div class="amount-wrap"><span class="prefix"><i class="ph ph-coins"></i></span><input type="number" id="amountInput" placeholder="0"></div>' +
@@ -129,6 +141,18 @@
         "</div>";
 
       document.getElementById("submitBtn").addEventListener("click", requestWithdrawal);
+      document.getElementById("codeTypeSelect").addEventListener("change", function (e) {
+        document.getElementById("customCodeField").style.display = e.target.value === "Other" ? "block" : "none";
+      });
+    }
+
+    // Saved code type: one of the list, or a custom name (shown under "Other").
+    function selectedCodeType() {
+      if (!bankCodeType) return "";
+      return codeTypes.indexOf(bankCodeType) >= 0 ? bankCodeType : "Other";
+    }
+    function customCodeType() {
+      return codeTypes.indexOf(bankCodeType) >= 0 ? "" : bankCodeType;
     }
 
     function requestWithdrawal() {
@@ -141,6 +165,19 @@
         return;
       }
       errorEl.style.display = "none";
+
+      // Bank details are required at withdrawal time.
+      var bank = {
+        bankName: document.getElementById("bankNameInput").value.trim(),
+        accountNumber: document.getElementById("accountNumberInput").value.trim(),
+        bankCodeType: document.getElementById("codeTypeSelect").value,
+        bankCodeValue: document.getElementById("bankCodeValueInput").value.trim()
+      };
+      if (bank.bankCodeType === "Other") bank.bankCodeType = document.getElementById("customCodeInput").value.trim();
+      if (!bank.bankName || !bank.accountNumber || !bank.bankCodeType || !bank.bankCodeValue) {
+        showToast("Please fill in all your bank details");
+        return;
+      }
 
       var backdrop = document.createElement("div");
       backdrop.className = "modal-backdrop";
@@ -163,7 +200,7 @@
 
         var token = SessionManager.getToken();
         try {
-          var result = await WithdrawalService.requestWithdrawal(token, amount);
+          var result = await WithdrawalService.requestWithdrawal(token, amount, bank);
           isSubmitting = false;
           if (result && result.success === true) {
             showToast("Withdrawal request submitted for review", "success");
@@ -194,10 +231,11 @@
         }
         if (profileResult && profileResult.success === true) {
           var p = profileResult.data || {};
-          bankName = p.bank_name;
+          bankName = p.bank_name || "";
           accountName = p.full_name;
-          var acct = p.account_number;
-          accountNumber = acct && acct.length > 4 ? "••••" + acct.slice(-4) : acct;
+          accountNumber = p.account_number || "";
+          bankCodeType = p.bank_code_type || "";
+          bankCodeValue = p.bank_code_value || "";
         }
         if (historyResult && historyResult.success === true) {
           var raw = historyResult.data;

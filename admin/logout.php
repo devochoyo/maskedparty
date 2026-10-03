@@ -5,7 +5,7 @@ require_once __DIR__ . '/_bootstrap.php';
 // so it can't be reused if it ever leaked.
 if (admin_is_logged_in()) {
     $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-    $url = $scheme . '://' . $_SERVER['HTTP_HOST'] . '/api/auth/logout.php';
+    $url = admin_api_origin() . '/api/auth/logout.php';
 
     $ch = curl_init($url);
     curl_setopt_array($ch, [

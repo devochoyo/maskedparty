@@ -19,12 +19,25 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
   final WalletService _walletService = WalletService();
   final ProfileService _profileService = ProfileService();
   final _amountController = TextEditingController();
+  final _bankNameController = TextEditingController();
+  final _accountNumberController = TextEditingController();
+  final _customCodeTypeController = TextEditingController();
+  final _bankCodeValueController = TextEditingController();
+
+  String? _selectedBankCodeType;
+  final List<String> _bankCodeTypes = [
+    'SWIFT',
+    'IBAN',
+    'Sort Code',
+    'IFSC',
+    'BSB',
+    'Routing Number',
+    'Other',
+  ];
 
   bool _isLoading = true;
   bool _isSubmitting = false;
   num _availableBalance = 0;
-  String? _bankName;
-  String? _accountNumber;
   String? _accountName;
   List<dynamic> _history = [];
 
@@ -49,6 +62,10 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
   @override
   void dispose() {
     _amountController.dispose();
+    _bankNameController.dispose();
+    _accountNumberController.dispose();
+    _customCodeTypeController.dispose();
+    _bankCodeValueController.dispose();
     super.dispose();
   }
 
@@ -91,13 +108,19 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
         if (profileResult is Map && profileResult['success'] == true) {
           final data = profileResult['data'] ?? {};
           
-          _bankName = data['bank_name']?.toString();
-          _accountNumber = data['account_number']?.toString();
           _accountName = data['full_name']?.toString();
-          
-          if (_accountNumber != null && _accountNumber!.length > 4) {
-            final lastFour = _accountNumber!.substring(_accountNumber!.length - 4);
-            _accountNumber = '••••$lastFour';
+
+          // Pre-fill the saved bank details (empty for new accounts)
+          _bankNameController.text = data['bank_name']?.toString() ?? '';
+          _accountNumberController.text = data['account_number']?.toString() ?? '';
+          _bankCodeValueController.text = data['bank_code_value']?.toString() ?? '';
+
+          final savedCodeType = data['bank_code_type']?.toString() ?? '';
+          if (_bankCodeTypes.contains(savedCodeType)) {
+            _selectedBankCodeType = savedCodeType;
+          } else if (savedCodeType.isNotEmpty) {
+            _selectedBankCodeType = 'Other';
+            _customCodeTypeController.text = savedCodeType;
           }
         }
         
@@ -120,6 +143,27 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text('Enter a valid amount'),
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          margin: const EdgeInsets.all(16),
+        ),
+      );
+      return;
+    }
+
+    // Bank details are required at withdrawal time
+    String bankCodeType = _selectedBankCodeType ?? '';
+    if (_selectedBankCodeType == 'Other') {
+      bankCodeType = _customCodeTypeController.text.trim();
+    }
+    if (_bankNameController.text.trim().isEmpty ||
+        _accountNumberController.text.trim().isEmpty ||
+        bankCodeType.isEmpty ||
+        _bankCodeValueController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('Please fill in all your bank details'),
           backgroundColor: Colors.red,
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -207,7 +251,14 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
     }
 
     try {
-      final result = await _withdrawalService.requestWithdrawal(token, amount);
+      final result = await _withdrawalService.requestWithdrawal(
+        token,
+        amount,
+        bankName: _bankNameController.text.trim(),
+        accountNumber: _accountNumberController.text.trim(),
+        bankCodeType: bankCodeType,
+        bankCodeValue: _bankCodeValueController.text.trim(),
+      );
       if (!mounted) return;
       setState(() => _isSubmitting = false);
 
@@ -454,7 +505,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                           ),
                           const SizedBox(height: 6),
                           Text(
-                            'Withdrawals are paid to the bank account on file from registration.',
+                            'Enter the bank account you want to be paid into. It is saved for your next withdrawal.',
                             style: TextStyle(
                               fontSize: 12,
                               color: _textMedium,
@@ -462,11 +513,39 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
                             ),
                           ),
                           const SizedBox(height: 20),
-                          _buildBankDetailRow('Bank Name', _bankName ?? 'Not available'),
-                          const SizedBox(height: 14),
-                          Divider(height: 1, color: _lightPink.withValues(alpha: 0.3)),
-                          const SizedBox(height: 14),
-                          _buildBankDetailRow('Account Number', _accountNumber ?? 'Not available'),
+                          _buildBankField(_bankNameController, 'Bank Name'),
+                          const SizedBox(height: 12),
+                          _buildBankField(
+                            _accountNumberController,
+                            'Account Number',
+                            keyboardType: TextInputType.number,
+                          ),
+                          const SizedBox(height: 12),
+                          DropdownButtonFormField<String>(
+                            initialValue: _selectedBankCodeType,
+                            isExpanded: true,
+                            decoration: _bankFieldDecoration('Select Bank Code Type'),
+                            items: _bankCodeTypes.map((type) {
+                              return DropdownMenuItem<String>(
+                                value: type,
+                                child: Text(type),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedBankCodeType = value;
+                              });
+                            },
+                          ),
+                          if (_selectedBankCodeType == 'Other') ...[
+                            const SizedBox(height: 12),
+                            _buildBankField(
+                              _customCodeTypeController,
+                              'Enter Code Name (e.g. CLABE)',
+                            ),
+                          ],
+                          const SizedBox(height: 12),
+                          _buildBankField(_bankCodeValueController, 'Enter Code'),
                           const SizedBox(height: 14),
                           Divider(height: 1, color: _lightPink.withValues(alpha: 0.3)),
                           const SizedBox(height: 14),
@@ -762,6 +841,33 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
             ),
     ),
       ),
+    );
+  }
+
+  InputDecoration _bankFieldDecoration(String hint) {
+    return InputDecoration(
+      hintText: hint,
+      hintStyle: const TextStyle(color: _textLight, fontSize: 14),
+      filled: true,
+      fillColor: _bgColor,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(14),
+        borderSide: BorderSide.none,
+      ),
+    );
+  }
+
+  Widget _buildBankField(
+    TextEditingController controller,
+    String hint, {
+    TextInputType? keyboardType,
+  }) {
+    return TextFormField(
+      controller: controller,
+      keyboardType: keyboardType,
+      style: const TextStyle(fontSize: 15, color: _textDark),
+      decoration: _bankFieldDecoration(hint),
     );
   }
 

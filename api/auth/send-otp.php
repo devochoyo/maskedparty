@@ -31,6 +31,9 @@ if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 $db = getDatabaseConnection();
 
+// Stop email bombing: at most 10 code requests per IP per hour.
+rl_enforce($db, 'sendotp_ip', client_ip(), 10, 3600, 'Too many code requests. Please try again later.');
+
 // Look up user
 $stmt = $db->prepare("SELECT id, mystery_name, authenticated FROM users WHERE email = ? LIMIT 1");
 $stmt->execute([$email]);

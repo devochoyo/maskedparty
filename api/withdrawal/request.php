@@ -16,6 +16,12 @@ $data = getJsonInput();
 
 $amount = (float)($data['amount'] ?? 0);
 
+// Bank details are asked for at withdrawal time (not at registration).
+$bankName      = trim((string)($data['bank_name'] ?? ''));
+$accountNumber = trim((string)($data['account_number'] ?? ''));
+$bankCodeType  = trim((string)($data['bank_code_type'] ?? ''));
+$bankCodeValue = trim((string)($data['bank_code_value'] ?? ''));
+
 $errors = [];
 if ($amount <= 0) {
     $errors['amount'] = 'Withdrawal amount must be positive.';
@@ -24,8 +30,27 @@ if ($amount < MIN_WITHDRAWAL_AMOUNT) {
     $errors['amount'] = 'Minimum withdrawal amount is ' . MIN_WITHDRAWAL_AMOUNT . '.';
 }
 
+if ($bankName === '' && $accountNumber === '' && $bankCodeType === '' && $bankCodeValue === '') {
+    // Nothing sent: fall back to details saved from an earlier withdrawal.
+    $stmt = $db->prepare('SELECT bank_name, account_number, bank_code_type, bank_code_value FROM users WHERE id = ?');
+    $stmt->execute([$user['id']]);
+    $saved = $stmt->fetch();
+    $bankName      = trim((string)($saved['bank_name'] ?? ''));
+    $accountNumber = trim((string)($saved['account_number'] ?? ''));
+    $bankCodeType  = trim((string)($saved['bank_code_type'] ?? ''));
+    $bankCodeValue = trim((string)($saved['bank_code_value'] ?? ''));
+}
+
+if ($bankName === '')      $errors['bank_name']       = 'Bank name is required.';
+if ($accountNumber === '') $errors['account_number'] = 'Account number is required.';
+if ($bankCodeType === '')  $errors['bank_code_type']  = 'Bank code type is required.';
+if ($bankCodeValue === '') $errors['bank_code_value'] = 'Bank code is required.';
+if (strlen($bankName) > 150 || strlen($accountNumber) > 64 || strlen($bankCodeType) > 50 || strlen($bankCodeValue) > 64) {
+    $errors['bank_name'] = 'Bank details are too long.';
+}
+
 if (!empty($errors)) {
-    sendValidationError('Validation failed.', $errors);
+    sendValidationError('Please complete your bank details.', $errors);
 }
 
 try {
@@ -38,6 +63,11 @@ try {
         $db->rollBack();
         sendError('You already have a pending withdrawal request.', 409);
     }
+
+    // Save the bank details on the account (shown to the admin who pays
+    // out, and pre-filled on the next withdrawal).
+    $stmt = $db->prepare('UPDATE users SET bank_name = ?, account_number = ?, bank_code_type = ?, bank_code_value = ? WHERE id = ?');
+    $stmt->execute([$bankName, $accountNumber, $bankCodeType, $bankCodeValue, $user['id']]);
 
     // Lock wallet for atomic read-then-deduct
     $stmt = $db->prepare('SELECT balance FROM wallets WHERE user_id = ? FOR UPDATE');

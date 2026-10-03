@@ -46,6 +46,8 @@ $stmt = $db->prepare("
         u.full_name,
         u.bank_name,
         u.account_number,
+        u.bank_code_type,
+        u.bank_code_value,
         w.balance        AS wallet_balance,
         w.escrow_balance
     FROM users u

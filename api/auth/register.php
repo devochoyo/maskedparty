@@ -49,9 +49,10 @@ if ($role === 'influencer') {
     $bankCodeValue  = trim($data['bank_code_value'] ?? '');
     $maskStatusInput = trim($data['mask_status'] ?? '');
 
+    // Bank details are NOT collected at registration any more. They are
+    // asked for (and saved) when the influencer makes a withdrawal request.
+    // Older app versions may still send them; they are accepted but optional.
     if (empty($fullName))       $errors['full_name']       = 'Full name is required.';
-    if (empty($bankName))       $errors['bank_name']       = 'Bank name is required.';
-    if (empty($accountNumber))  $errors['account_number']  = 'Account number is required.';
 
     if (!in_array($maskStatusInput, ['masked', 'unmasked'])) {
         $errors['mask_status'] = 'Mask status is required. Choose either "masked" or "unmasked".';
@@ -65,6 +66,9 @@ if (!empty($errors)) {
 }
 
 $db = getDatabaseConnection();
+
+// Stop automatic mass sign-ups: at most 10 registrations per IP per hour.
+rl_enforce($db, 'register_ip', client_ip(), 10, 3600, 'Too many sign-up attempts from this network. Please try again later.');
 
 $stmt = $db->prepare("SELECT id FROM users WHERE email = ?");
 $stmt->execute([$email]);

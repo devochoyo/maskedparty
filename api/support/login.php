@@ -31,6 +31,11 @@ if (empty($email) || empty($password)) {
 
 $db = getDatabaseConnection();
 
+// Brute-force protection (same rule as the main login).
+$loginIp = client_ip();
+rl_guard($db, 'support_login_email', $loginIp . '|' . $email, 8, 900, 'Too many failed login attempts. Please try again in 15 minutes.');
+rl_guard($db, 'support_login_ip', $loginIp, 40, 900, 'Too many failed login attempts. Please try again in 15 minutes.');
+
 $stmt = $db->prepare("SELECT * FROM support_agents WHERE email = ? LIMIT 1");
 $stmt->execute([$email]);
 $agent = $stmt->fetch();
@@ -41,8 +46,12 @@ $storedHash = $agent['password_hash'] ?? '$2y$10$usedOnlyToEqualizeTimingXXXXXXX
 $passwordOk = password_verify($password, $storedHash);
 
 if (!$agent || !$passwordOk) {
+    rl_hit($db, 'support_login_email', $loginIp . '|' . $email, 900);
+    rl_hit($db, 'support_login_ip', $loginIp, 900);
     sendError('Invalid credentials.', 401);
 }
+
+rl_clear($db, 'support_login_email', $loginIp . '|' . $email);
 
 if ($agent['status'] === 'suspended') {
     sendError('Your support account has been suspended.', 403);

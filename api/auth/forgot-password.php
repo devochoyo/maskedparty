@@ -28,6 +28,9 @@ if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 $db = getDatabaseConnection();
 
+// Stop email bombing: at most 10 reset requests per IP per hour.
+rl_enforce($db, 'forgot_ip', client_ip(), 10, 3600, 'Too many requests. Please try again later.');
+
 // Look up user
 $stmt = $db->prepare("SELECT id, mystery_name FROM users WHERE email = ? LIMIT 1");
 $stmt->execute([$email]);

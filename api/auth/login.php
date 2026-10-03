@@ -21,6 +21,13 @@ if (empty($email) || empty($password)) {
 
 $db = getDatabaseConnection();
 
+// Brute-force protection: after 8 wrong passwords for one email (from one IP),
+// or 40 from one IP, wait 15 minutes.
+$loginIp    = client_ip();
+$loginEmail = strtolower(trim((string)$email));
+rl_guard($db, 'login_email', $loginIp . '|' . $loginEmail, 8, 900, 'Too many failed login attempts. Please try again in 15 minutes.');
+rl_guard($db, 'login_ip', $loginIp, 40, 900, 'Too many failed login attempts. Please try again in 15 minutes.');
+
 $stmt = $db->prepare("
     SELECT u.*, w.balance as wallet_balance, ip.profile_completed
     FROM users u
@@ -38,8 +45,12 @@ $storedHash = $user['password'] ?? '$2y$10$usedOnlyToEqualizeTimingXXXXXXXXXXXXX
 $passwordOk = password_verify($password, $storedHash);
 
 if (!$user || !$passwordOk) {
+    rl_hit($db, 'login_email', $loginIp . '|' . $loginEmail, 900);
+    rl_hit($db, 'login_ip', $loginIp, 900);
     sendError('Invalid credentials.', 401);
 }
+
+rl_clear($db, 'login_email', $loginIp . '|' . $loginEmail);
 
 if ($user['status'] === 'banned') {
     sendError('Your account has been banned.', 403);

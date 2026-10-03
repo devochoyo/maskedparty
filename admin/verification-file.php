@@ -34,7 +34,7 @@ if (!$influencerId || !in_array($field, $allowedFields, true)) {
 }
 
 $scheme    = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-$targetUrl = $scheme . '://' . $_SERVER['HTTP_HOST'] . '/api/admin/verification-file.php'
+$targetUrl = admin_api_origin() . '/api/admin/verification-file.php'
     . '?influencer_id=' . urlencode($influencerId)
     . '&field=' . urlencode($field);
 

@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Enter your email and password.';
     } else {
         $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-        $loginUrl = $scheme . '://' . $_SERVER['HTTP_HOST'] . '/api/auth/login.php';
+        $loginUrl = admin_api_origin() . '/api/auth/login.php';
 
         $ch = curl_init($loginUrl);
         curl_setopt_array($ch, [
@@ -39,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif ($result['data']['role'] !== 'admin') {
             $error = 'This account does not have admin access.';
         } else {
+            session_regenerate_id(true);
             $_SESSION['admin_token'] = $result['data']['token'];
             $_SESSION['admin_user'] = $result['data']['user'];
             header('Location: /admin/index.php');

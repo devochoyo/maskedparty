@@ -35,11 +35,16 @@ if (!empty($errors)) {
 
 $db = getDatabaseConnection();
 
+// Cap wrong guesses per email (a new code resets the per-code counter): 10 per hour.
+rl_guard($db, 'reset_fail', $email, 10, 3600, 'Too many incorrect attempts. Please try again later.');
+rl_guard($db, 'reset_fail_ip', client_ip(), 40, 3600, 'Too many incorrect attempts. Please try again later.');
+
 $stmt = $db->prepare("SELECT id FROM users WHERE email = ? LIMIT 1");
 $stmt->execute([$email]);
 $user = $stmt->fetch();
 
 if (!$user) {
+    rl_hit($db, 'reset_fail_ip', client_ip(), 3600);
     sendError("Invalid or expired reset code.", 400);
 }
 $userId = (int) $user["id"];
@@ -64,6 +69,8 @@ if ((int) $reset["attempts"] >= 5) {
 if (!hash_equals($reset["code"], $otp)) {
     $stmt = $db->prepare("UPDATE email_verification_tokens SET attempts = attempts + 1 WHERE id = ?");
     $stmt->execute([$reset["id"]]);
+    rl_hit($db, 'reset_fail', $email, 3600);
+    rl_hit($db, 'reset_fail_ip', client_ip(), 3600);
     sendError("Invalid reset code.", 400);
 }
 

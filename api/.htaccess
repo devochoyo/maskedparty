@@ -10,3 +10,19 @@ RewriteEngine On
 # Handle CORS preflight requests from browsers
 RewriteCond %{REQUEST_METHOD} OPTIONS
 RewriteRule ^ - [R=204,L]
+
+# ----------------------------------------------------------------------
+# SECURITY RULES (added)
+# ----------------------------------------------------------------------
+Options -Indexes
+
+# Logs, data files, dumps and temp files must not be downloadable.
+<FilesMatch "(?i)(^error_log$|\.(log|tmp|sql|csv|sqlite|sqlite3|db|bak|old|zip|gz|ini|md|lock)$)">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order deny,allow
+        Deny from all
+    </IfModule>
+</FilesMatch>

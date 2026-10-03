@@ -18,7 +18,16 @@ $sigHeader = $_SERVER['HTTP_VERIF_HASH'] ?? ($_SERVER['HTTP_VERIF-HASH'] ?? '');
 
 $secretHash = defined('FLUTTERWAVE_SECRET_HASH') ? FLUTTERWAVE_SECRET_HASH : (getenv('FLUTTERWAVE_SECRET_HASH') ?: '');
 
-if ($secretHash !== '' && ($sigHeader === '' || !hash_equals($secretHash, $sigHeader))) {
+// Refuse to run without a configured secret hash (an empty one would let
+// anybody call this endpoint).
+if ($secretHash === '') {
+    http_response_code(500);
+    error_log('Flutterwave Webhook Error: FLUTTERWAVE_SECRET_HASH is not configured.');
+    echo json_encode(['error' => 'Webhook is not configured.']);
+    exit();
+}
+
+if ($sigHeader === '' || !hash_equals($secretHash, $sigHeader)) {
     http_response_code(401);
     error_log('Flutterwave Webhook Error: Invalid or missing verif-hash.');
     echo json_encode(['error' => 'Invalid signature.']);
@@ -89,7 +98,7 @@ switch ($eventType) {
             // Inline credit (same logic as verify-payment)
             $db->beginTransaction();
 
-            $stmt = $db->prepare("SELECT id, user_id, coins, amount, status FROM payments WHERE payment_reference = ? FOR UPDATE");
+            $stmt = $db->prepare("SELECT id, user_id, coins, amount, currency, status FROM payments WHERE payment_reference = ? FOR UPDATE");
             $stmt->execute([$txRef]);
             $payment = $stmt->fetch();
 
@@ -112,6 +121,20 @@ switch ($eventType) {
                 $db->rollBack();
                 http_response_code(200);
                 echo json_encode(['status' => 'ignored_status']);
+                exit();
+            }
+
+            // The amount and currency Flutterwave really charged must match
+            // the payment we created, otherwise do not credit any coins.
+            $paidAmount   = isset($verified['data']['amount']) ? (float)$verified['data']['amount'] : null;
+            $paidCurrency = strtoupper((string)($verified['data']['currency'] ?? ''));
+            if ($paidAmount === null
+                || $paidAmount + 0.01 < (float)$payment['amount']
+                || ($payment['currency'] !== null && $payment['currency'] !== '' && $paidCurrency !== strtoupper((string)$payment['currency']))) {
+                $db->rollBack();
+                error_log("Flutterwave Webhook: amount/currency mismatch for {$txRef} (expected {$payment['amount']} {$payment['currency']}, got {$paidAmount} {$paidCurrency})");
+                http_response_code(200);
+                echo json_encode(['status' => 'amount_mismatch']);
                 exit();
             }
 

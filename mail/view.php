@@ -24,15 +24,17 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 // ==================== CONFIG — edit only the MAILBOX_PASSWORD line ====================
 if (!defined('MAILBOX_EMAIL')) {
-    define('MAILBOX_EMAIL', 'support@careerkings.name.ng');
-    define('MAILBOX_PASSWORD', 'Az568253@');
+    $MAIL_SECRETS = @include dirname(__DIR__) . '/config/secure/mail_secrets.php';
+    if (!is_array($MAIL_SECRETS)) { http_response_code(500); exit; }
+    define('MAILBOX_EMAIL', $MAIL_SECRETS['MAILBOX_EMAIL']);
+    define('MAILBOX_PASSWORD', $MAIL_SECRETS['MAILBOX_PASSWORD']);
     define('MAILBOX_IMAP_HOST', 'mail.careerkings.name.ng');
     define('MAILBOX_IMAP_PORT', 993);
     define('MAILBOX_IMAP_ENCRYPTION', 'ssl');
     define('MAILBOX_SMTP_HOST', 'mail.careerkings.name.ng');
     define('MAILBOX_SMTP_PORT', 587);
     define('MAILBOX_SMTP_ENCRYPTION', 'tls');
-    define('MAIL_LINK_SECRET', '3a5ac989c686706b3d4538c42fe0e201c08f7fc6b0732c75b9f1bfaf363727ae');
+    define('MAIL_LINK_SECRET', $MAIL_SECRETS['MAIL_LINK_SECRET']);
     define('APP_BASE_URL', 'https://maskedparty.name.ng');
 }
 // ======================================================================================

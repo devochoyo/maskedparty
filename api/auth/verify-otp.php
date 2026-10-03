@@ -61,7 +61,15 @@ if ((int) $user['authenticated'] === 1) {
 }
 
 // ── Validate the OTP ──────────────────────────────────────────────────────────
+// Requesting a fresh code resets the per-code attempt counter, so also cap
+// wrong guesses per email: 10 per hour.
+rl_guard($db, 'otp_fail', $email, 10, 3600, 'Too many incorrect attempts. Please try again later.');
+
 $result = validateVerificationCode($db, (int) $user['id'], 'email_verify', $code);
+
+if ($result === 'invalid') {
+    rl_hit($db, 'otp_fail', $email, 3600);
+}
 
 switch ($result) {
     case 'ok':

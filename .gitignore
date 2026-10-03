@@ -1,0 +1,24 @@
+# Secrets - never push these to GitHub
+config/secure/.env
+masked party app/android/key.properties
+*.jks
+*.keystore
+
+# Logs and runtime files
+logs/*
+!logs/.htaccess
+*.log
+error_log
+mail/state/*.json
+*.tmp
+*.sql
+!api/call-tracking/schema.sql
+
+# Data files and uploads
+api/misc/geoip.sqlite
+api/misc/*.csv
+uploads/
+
+# Build output
+masked party app/android/build/
+config/secure/mail_secrets.php
